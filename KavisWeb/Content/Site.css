@@ -1,0 +1,86 @@
+﻿body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+/*input,
+select,
+textarea {
+    max-width: 280px;
+}*/
+
+
+#main-container {
+    /*border:solid 1px black;*/
+    padding:0px;
+}
+
+
+
+
+.boxed {
+    border: solid 1px black;
+}
+
+.strateji {
+    padding: 10px;
+}
+
+.eylem {
+    margin-left: 50px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding: 10px;
+    margin-left: 50px;
+}
+
+
+.btn-mini {
+    padding:2px;
+    font-size:small;
+
+}
+
+.select-mini {
+    padding: 2px;
+    font-size: small;
+    width:100%;
+    border:none;
+}
+
+table.performans-gosterge {
+    font-size:11px;
+
+}
+
+table.performans-gosterge th,td {
+    padding:2px;
+}
+
+label.error {
+
+    font-size:small;
+    color:red;
+    font-style:italic;
+    
+
+}
+
+.icons>* {
+    width:180px;
+    margin:5px;
+}

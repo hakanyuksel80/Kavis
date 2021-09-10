@@ -1,0 +1,87 @@
+﻿
+@{
+    ViewBag.Title = "FaaliyetRaporu";
+}
+
+<h2>Performans Programı</h2>
+
+
+<div class="row mt-4">
+    <div class="col-4">
+        <div class="form-group row">
+            <label class="col-3">Aktif Yıl</label>
+            <div class="col-6">
+                <select class="form-control form-control-sm">
+                    <option>2021</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="col-4">
+        <div class="form-group row">
+            <label class="col-3">Birimler</label>
+            <div class="col-6">
+                <select class="form-control form-control-sm">
+                    <option>Hepsi</option>
+                </select>
+            </div>
+        </div>
+
+        @*<div class="form-group row">
+                <label class="col-6">Kurum</label>
+                <div class="col-6">
+                    <select class="form-control form-control-sm">
+                        <option>İl Milli Eğitim</option>
+                    </select>
+                </div>
+            </div>*@
+
+
+
+
+    </div>
+    <div class="col-4">
+        <button type="button" class="btn btn-primary"> Ara</button>
+    </div>
+</div>
+<div class="row mb-4">
+    <div class="col">
+        <button type="button" class="btn btn-success float-right"> Yazdır</button>
+    </div>
+</div>
+<div class="row">
+    <div class="col">
+
+        <table class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th valign="middle">Eylem Adı</th>
+                    <th>Faaliyet Adı</th>
+                    <th>Sorumlu Birim</th>
+                    <th>&nbsp;</th>
+             
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>3.1.1.1. Okul öncesi eğitim için derslik yapılacaktır.</td>
+                    <td>Eğitime % 100 Destek Kampanyası-hayırsever bağışı ile anaokulu binası yapımı</td>
+                    <td>
+                       İnşaat ve Emlak Hizmetleri
+                    </td>
+                    <td>
+                        <button class="btn btn-sm btn-success">Sil</button>
+                        <button class="btn btn-sm btn-success" data-target="#faaliyetEkle" data-toggle="modal">Düzenle</button>
+                        <button class="btn btn-sm btn-success" data-target="#faaliyetDurum" data-toggle="modal">Durum Gir</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>3.1.1.2.</td>
+                    <td>&nbsp;.......</td>
+                    <td>Temel Eğitim 1</td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+</div>

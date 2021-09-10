@@ -1,0 +1,265 @@
+﻿
+@{
+    ViewBag.Title = "Birim";
+}
+
+
+<style type="text/css">
+
+    .sp div {
+        border: solid 1px black;
+        margin-bottom: 10px;
+    }
+</style>
+
+
+
+<h4>PERFORMANS PROGRAMI GİRİŞ</h4>
+<p>Sorumlu Olduğunuz Eylemler</p>
+
+
+<div class="sp">
+
+    <div class="strateji">1. Strateji</div>
+    <ul class="list-group">
+        <li class="list-group-item" data-id="1"> <span>1. Eylem</span> <button class="btn btn-sm btn-success float-right btn-faaliyetEkle">+ Faaliyet Ekle</button> </li>
+        <li class="list-group-item" data-id="2"><span>2. Eylem</span> <button class="btn btn-sm btn-success float-right btn-faaliyetEkle">+ Faaliyet Ekle</button> </li>
+        <li class="list-group-item" data-id="3"><span>3. Eylem</span> <button class="btn btn-sm btn-success float-right btn-faaliyetEkle">+ Faaliyet Ekle</button> </li>
+
+    </ul>
+
+</div>
+<br />
+<table class="table table-sm table-bordered" id="tableFaliyetler">
+    <thead>
+        <tr>
+            <th>Eylem Adı</th>
+            <th>Faaliyet Adı</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>3.1.1.1. Okul Öncesi eğitim için derslik yapılacaktır.</td>
+            <td>Eğitime % 100 Destek Kampanyası-hayırsever bağışı ile anaokulu binası yapımı</td>
+            <td>
+                <div style="width:200px">
+                    <button class="btn btn-sm btn-success btn-faaliyetSil">Sil</button>
+                    <button class="btn btn-sm btn-success btn-faaliyetDuzenle" id="data">Düzenle</button>
+                    <button class="btn btn-sm btn-success btn-faaliyetDurum" data-target="#faaliyetDurum" data-toggle="modal">Durum Gir</button>
+                </div>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+
+
+
+<div class="modal" id="faaliyetEkle">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="/Home/Birim" method="post" >
+                @*<div class="modal-header">
+                        Faaliyet Ekle
+                    </div>*@
+                <div class="modal-body">
+                    <div class="row"><div class="col"><strong>Eylem:</strong><span class="eylemAdi"></span></div></div>
+                    <input type="hidden" id="id" name="id" />
+                    <input type="hidden" id="eylemId" name="eylemId" />
+                    <div class="form-group">
+                        <h5>Faaliyet Adı:</h5>
+                        <textarea id="faaliyetAdi" name="faaliyetAdi" rows="5" class="form-control w-100" style="width:100%;max-width:none;"></textarea>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" type="submit">Kaydet</button>
+                    <button class="btn btn-secondary" data-dismiss="modal">İptal</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="faaliyetDurum">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            @*<div class="modal-header">
+                    Faaliyet Ekle
+                </div>*@
+            <div class="modal-body">
+                <div class="sp">
+                    <div>Eylem: <span class="eylem">............................................</span></div>
+                    <div>Faaliyet</div>
+                </div>
+                <div class="form-group">
+                    <label>Faaliyet Kapsamında Gerçekleştirilenler:</label>
+                    <textarea rows="4" class="form-control w-100" style="width:100%;max-width:none;"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Çıktı ve Sonuç:</label>
+                    <textarea rows="4" class="form-control w-100" style="width:100%;max-width:none;"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Durum:</label>
+                    <select class="form-control" style="width:100%;max-width:none;">
+                        <option></option>
+                        <option>Devam Ediyor</option>
+                        <option>Tamamlandı</option>
+                        <option>İptal Edildi</option>
+                    </select>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary">Kaydet</button>
+                <button class="btn btn-secondary" data-dismiss="modal">İptal</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+@section scripts {
+
+    <script type="text/javascript">
+
+        class Faaliyetler {
+
+            ekle(eylem, faaliyet) {
+                let dugmelerHtml = this.tabloSatirDugmeSablon(true, true, false);
+                $('#tableFaliyetler tbody').append(this.tabloSatirSablon(eylem, faaliyet, dugmelerHtml));
+            }
+
+            guncelle(row, faaliyet) {
+                let satir = $('#faaliyetEkle')[0].row;
+                $($(row).children()[1]).text(faaliyet);
+
+
+            }
+
+            sil(button) {
+                let satir = $(button).parents("tr");
+                console.log(satir);
+                satir.hide();
+            }
+
+            tabloSatirSablon(eylem= "", faaliyet="",dugmelerHtml = "") {
+                return `<tr><td>${eylem}</td><td>${faaliyet}</td><td>${dugmelerHtml}</td></tr>`;
+            }
+
+            tabloSatirDugmeSablon(duzenle,sil,durumGir) {
+
+                let a = "";
+                a += duzenle==true ? '<button class="btn btn-sm btn-success btn-faaliyetDuzenle" id="data">Düzenle</button> ' : '';
+                a += sil == true ? '<button class="btn btn-sm btn-success btn-faaliyetSil">Sil</button> ' : '';
+                a += durumGir == true ? '<button class="btn btn-sm btn-success btn-faaliyetDurum" data-target="#faaliyetDurum" data-toggle="modal">Durum Gir</button> ' : '';
+                return a;
+
+            }
+
+            Load() {
+
+                api_get("/api/BirimFaaliyetler", function (d) {
+                    LoadList(d.Stratejiler);
+                    LoadTable(d.Faaliyetler);
+                });
+            }
+
+            SaveFaaliyet(d) {
+                api_post("/api/BirimFaaliyetler",d).done(function () {
+                });
+            }
+            
+            
+        }
+
+
+        
+
+
+        class FaaliyetForm extends Form {
+
+            Clear() {
+                super.Clear();
+            }
+
+            New(eylemId, eylemAdi) {
+                this.Clear();
+                $(this.modalId + " .eylemAdi").text(eylemAdi);              
+                this.Show();
+            }
+
+            Edit(id, eylemId, eylemAdi) {
+                $(this.modalId + " #id").val(id);
+                $(this.modalId + " .eylemAdi").text(eylemAdi);
+                $(this.modalId + " #eylemId").val(eylemId);
+                $(this.modalId + " #yeniFaaliyetAdi").val(faaliyetAdi);
+                this.Show();
+            }
+
+            Save() {
+                let data = this.GetValues();
+                let eylem = $("#faaliyetEkle .eylemAdi").text();
+
+                if (data.id == "") {
+                    faaliyet.ekle(eylem, data.faaliyetAdi);
+                } else {
+                    let faaliyet = new Faaliyetler();
+                    faaliyet.guncelle($('#faaliyetEkle')[0].row, faaliyetAdi);
+                }
+                return true;
+            }
+
+
+        }
+
+
+
+        var faaliyetForm = new FaaliyetForm("#faaliyetEkle");
+        var faaliyet = new Faaliyetler();
+
+        function onFaaliyetEkleClickEvent() {
+
+            let eylemAdi = $(this).prev().text();
+            let eylemId = $(this).parent().data("id");
+
+            faaliyetForm.New(eylemId, eylemAdi);
+        }
+
+        function onFaaliyetDuzenleClickEvent() {
+
+            let eylemAdi = $(this).parent().parent().prev().prev().text();
+            let faaliyetAdi = $(this).parent().parent().prev().text();
+            //let eylemId = $(this).parent().data("id");
+            faaliyetForm.row = $(this).parents("tr");
+
+            faaliyetForm.Edit(id, eylemId, eylemAdi, faaliyetAdi);
+        }
+
+        
+
+        function onFaaliyetSilClickEvent() {
+            faaliyet.sil(this);
+        }
+
+        $(document).ready(function () {
+         
+           
+
+            $('.btn-faaliyetEkle').on("click", onFaaliyetEkleClickEvent);
+
+            $('.btn-faaliyetDuzenle').on("click", onFaaliyetDuzenleClickEvent);
+
+            $('.btn-faaliyetSil').on("click", onFaaliyetSilClickEvent);
+                        
+
+        });
+
+
+    </script>
+
+}

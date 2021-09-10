@@ -1,0 +1,311 @@
+﻿
+@{
+    ViewBag.Title = "StratejikPlan";
+}
+
+<style type="text/css">
+
+    table.table-dar td {
+        padding: 2px;
+    }
+
+        table.table-dar td input {
+            margin: 0px;
+        }
+
+    .hedefKarti {
+        margin-bottom: 4px;
+    }
+
+    .div {
+        border: solid 1px black;
+    }
+</style>
+<h2>Stratejik Plan</h2>
+
+<div class="row">
+    <div class="col-10">
+
+        <div class="form-group row">
+            <label class="col-4">Kurum</label>
+            <div class="col-6">
+                <select class="form-control form-control-sm w-100">
+                    <option>BURSA İL MİLLİ EĞİTİM MÜDÜRLÜĞÜ</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="row mb-4">
+            <label class="col-4">Dönem Başl.</label>
+            <div class="col-6">
+                <div class="input-group">
+                    <input class="form-control form-control-sm" value="2019" />
+                    @*<div class="input-group-append">
+                            <button class="btn btn-secondary btn-sm"><span class="fa fa-calendar"></span></button>
+                        </div>*@
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group row d-none">
+            <label class="col-4">Dönem Bitiş</label>
+            <div class="col-6">
+                <div class="input-group">
+                    <input class="form-control form-control-sm" />
+                    @*<div class="input-group-append">
+                            <div class="btn btn-sm btn-secondary"><span class="fa fa-calendar"></span></div>
+                        </div>*@
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-4">SP. Türü</label>
+            <div class="col-6">
+                <select class="form-control form-control-sm w-100">
+                    <option>İL</option>
+                    <option>İLÇE</option>
+                </select>
+            </div>
+        </div>
+
+    </div>
+    <div class="col-2">
+        <a href="#" class="btn btn-sm btn-primary btn-kaydet"><span class="fa"></span> Kaydet</a>
+        <a href="/StratejikPlan" class="btn btn-sm btn-secondary w-auto"><span class="fa"></span> İptal</a>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col">
+
+
+
+
+    </div>
+
+</div>
+
+<div class="accordion" id="accordionSP">
+
+    @*@for (int i = 0; i < 3; i++)
+        {
+            var show = i == 0 ? "show" : "";
+            var collapsed = i != 0 ? "collapsed" : "";
+
+
+
+            <div class="card amac">
+                <div class="card-header" id="panelHeaderAmac@i">
+
+                        <div class="">
+                            <button class="btn btn-link text-left btn-title" type="button" data-toggle="collapse" data-target="#collapseAmac_@i" aria-expanded="true" aria-controls="collapseAmac@i" >
+
+                                    AMAÇ : @(i+1). <span class="title">XXXXXXXX</span>
+
+                            </button>
+                        </div>
+                        <div class="input-group title-edit" style="display:none;">
+                            <input type="text" class="form-control form-control-sm" />
+                            <div class="input-group-append">
+                                <button class="btn btn-sm btn-outline-success"><span class="fa fa-check"></span></button>
+                                <button class="btn btn-sm btn-outline-danger"><span class="fa fa-remove"></span></button>
+                            </div>
+                        </div>
+
+                        <div class="float-right toolbar-edit">
+                            <button class="btn btn-sm btn-edit"><span class="fa fa-pencil"></span></button>
+                            <button class="btn btn-sm btn-delete" data-target="amac"><span class="fa fa-trash"></span></button>
+                        </div>
+
+                </div>
+
+                <div id="collapseAmac_@i" class="collapse @show" aria-labelledby="heading@i" data-parent="#accordionSP">
+                    <div class="card-body">
+                        <div>
+                            @for (int j = 1; j < 3; j++)
+                            {
+                                <div class="hedefKarti card">
+                                    <div class="card-header">
+                                        Hedef 1.@j.
+                                        <div class="float-right toolbar">
+                                            <button class="btn btn-sm"><span class="fa fa-pencil"></span></button>
+                                            <button class="btn btn-sm btn-delete" data-target="hedef"><span class="fa fa-trash"></span></button>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+
+                                        <h6>PERFORMANS GÖSTERGELERİ</h6>
+
+                                        <table class="table table-bordered table-dar performans-gosterge">
+                                            <thead>
+                                                <tr>
+                                                    <th>No</th>
+                                                    <th width="150">&nbsp;</th>
+
+                                                    <th>Hedef Etkisi</th>
+                                                    <th>Başlangıç</th>
+                                                    <th>2019</th>
+                                                    <th>2020</th>
+                                                    <th>2021</th>
+                                                    <th>2022</th>
+                                                    <th>2023</th>
+                                                    <th>İzleme<br />Sıklığı</th>
+                                                    <th>Rapor<br />Sıklığı</th>
+                                                    <th>Sorumlu Birim</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>P.G.1.1.1</td>
+                                                    <td contenteditable="true">Performans G.1</td>
+                                                    <td contenteditable="true"></td>
+                                                    <td contenteditable="true"></td>
+                                                    <td contenteditable="true"></td>
+                                                    <td contenteditable="true"></td>
+                                                    <td contenteditable="true"></td>
+                                                    <td contenteditable="true"></td>
+                                                    <td contenteditable="true"></td>
+                                                    <td>
+                                                        <select class="select-mini">
+                                                            <option></option>
+                                                            <option>6 Ay</option>
+                                                            <option>1 Yıl</option>
+                                                        </select>
+                                                    </td>
+                                                    <td>
+                                                        <select class="select-mini">
+                                                            <option></option>
+                                                            <option>6 Ay</option>
+                                                            <option>1 Yıl</option>
+                                                        </select>
+                                                    </td>
+                                                    <td>
+                                                        <select class="select-mini">
+                                                            <option></option>
+                                                            <option>TEMEL EĞİTİM</option>
+                                                            <option>ORTA ÖĞRETİM</option>
+                                                        </select>
+                                                    </td>
+                                                    <td>
+                                                        <button class="btn btn-sm btn-delete" data-target="performans"><span class="fa fa-trash"></span></button>
+                                                    </td>
+                                                </tr>
+
+                                            </tbody>
+                                        </table>
+                                        <div class="text-center"><button class="text-center btn-add btn-add-performans" data-target="performans">Performans Göstergesi Ekle</button></div>
+                                        <br />
+                                        <table class="table table-sm table-bordered">
+                                            <tr>
+                                                <td rowspan="50" width="150" style="vertical-align:middle;">STRATEJİLER</td>
+                                            </tr>
+                                            <tr><td>1.</td><td><button class="btn btn-sm btn-delete" data-target="strateji"><span class="fa fa-trash"></span></button></td></tr>
+
+                                        </table>
+                                        <div class="text-center"><button class="text-center btn-add btn-add-strateji">Strateji Ekle</button></div>
+                                        <br />
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                        <div class="text-center"><button class="text-center btn-add btn-add-hedef">Hedef Ekle</button></div>
+                        <br />
+                    </div>
+                </div>
+            </div>
+        }*@
+
+
+</div>
+
+<div class="text-center m-4"><button class="text-center btn-add btn-add-amac">Amaç Ekle</button></div>
+<br />
+
+
+
+<div class="modal" id="amacDuzenle">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            @*<div class="modal-header">
+                    Faaliyet Ekle
+                </div>*@
+            <form>
+                <div class="modal-body">
+                    <input type="hidden" name="Id" id="Id" />
+                    <input type="hidden" name="Index" id="Index" />
+                    <div class="form-group">
+                        <h5 class="baslik">Amaç:</h5>
+                        <input class="form-control w-100" name="Baslik" style="width:100%;max-width:none;" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Kaydet</button>
+                    <button class="btn btn-secondary" data-dismiss="modal">İptal</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+
+@section scripts {
+
+    <script type="text/javascript">
+
+
+        class FormEditAmac extends Form {
+
+            
+            Save() {
+                let d = formEditAmac.GetValues();
+                console.log(d);
+                
+                if (d.Id == "" || d.Id == undefined && d.Id == "0")
+                    sp.add_amac(d.Id, d.Baslik);                
+                else {
+                    sp.update_amac(d.Index, d.Baslik);
+                }
+                this.Close();
+            }
+
+            Edit(btn) {
+                let index = $($(btn).parents(".card")[0]).index();
+
+                let id = $($(btn).parents(".card")[0]).data("id");
+                let baslik = $($(btn).parents(".card")[0]).find(".amac-title").text();
+
+                let d = { Id: id, Baslik: baslik, Index: index };
+                console.log(d);
+                this.PutValues(d);
+                this.Show();
+
+            }
+
+        }
+
+
+        var formEditAmac = new FormEditAmac("#amacDuzenle");
+
+
+        var id = @(ViewContext.RouteData.Values["id"]??0 );
+
+
+
+        $(document).ready(function () {
+
+            a.Get(id);
+
+            $('.btn-kaydet').on("click", function () {
+
+                a.Post();
+
+            });
+        });
+
+    </script>
+
+
+
+}
