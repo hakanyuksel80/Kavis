@@ -1,4 +1,6 @@
-﻿using KavisWeb.Enitites.DbModels;
+﻿using KavisWeb.DataLayer.Abstract;
+using KavisWeb.DataLayer.EF;
+using KavisWeb.Enitites.DbModels;
 using KavisWeb.Enitites.Views;
 using System;
 using System.Collections.Generic;
@@ -39,35 +41,67 @@ namespace KavisWeb.BusinessLayer
                 }
         };
 
+        private IStratejikPlanDal _planDal;
+
+        private IStrategyItemDal _planItemDal;
+
+        public StratejikPlanManager()
+        {
+            _planDal = new EfStratejikPlanDal();
+
+            _planItemDal = new EfStrategyItemDal();
+        }
+
+        public List<StratejikPlanListView> GetViewList()
+        {
+            var plans = _planDal.GetAll();
+
+            var list = from x in plans
+                       select new StratejikPlanListView() { Id = x.Id, Donem = x.Baslangic.ToString() + " " + x.Bitis.ToString(), Kurum = x.KurumAdi, Turu = Convert.ToInt32(x.KurumTipi) };
+
+            return list.ToList();
+        }
+
         public void Delete(int id)
         {
             throw new NotImplementedException();
         }
 
-        public StratejikPlanItem Get(int id)
+        public StratejikPlan Get(int id)
         {
-            return SP_Data;
-        }       
-
-        public List<StratejikPlanListView> GetViewList()
-        {
-            return new List<StratejikPlanListView>()
+            if (id > 0)
             {
-                new StratejikPlanListView()
-                {
-                    Id = 1, Donem = "2019-2023", Kurum = "BURSA İL MİLLİ EĞİTİM MÜDÜRLÜĞÜ",  Turu = "İL",
-                }
-            };
+                var plan = _planDal.Get(x => x.Id == id);              
+
+                return plan;
+            }
+            return new StratejikPlan();
+
         }
 
         public void Update(StratejikPlan plan)
         {
+            _planDal.Update(plan);
+        }
+
+        public void Add(StratejikPlan plan)
+        {
             throw new NotImplementedException();
         }
 
-        public void UpdateByItem(StratejikPlanItem model)
+        public void SaveStratejikPlan(StratejikPlan plan)
         {
-            SP_Data = model;
+            throw new NotImplementedException();
+        }
+
+        public Amac GetAmac(int ıd)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void DeleteAmac(Amac amac)
+        {
+            throw new NotImplementedException();
         }
     }
 }

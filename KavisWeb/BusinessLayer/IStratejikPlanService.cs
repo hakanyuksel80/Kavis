@@ -10,20 +10,17 @@ namespace KavisWeb.BusinessLayer
 {
     public interface IStratejikPlanService
     {
-        StratejikPlanItem Get(int id);
+        StratejikPlan Get(int id);
 
         List<StratejikPlanListView> GetViewList();
 
-        void Update(StratejikPlan plan);
+        void Add(StratejikPlan plan);
 
-        void UpdateByItem(StratejikPlanItem model);
+        void Update(StratejikPlan plan);        
 
         void Delete(int id);
-        
-    }
-
-    interface IPlanItem
-    {
-
+        void SaveStratejikPlan(StratejikPlan plan);
+        Amac GetAmac(int ıd);
+        void DeleteAmac(Amac amac);
     }
 }

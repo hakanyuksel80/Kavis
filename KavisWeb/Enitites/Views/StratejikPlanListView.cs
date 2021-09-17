@@ -13,7 +13,7 @@ namespace KavisWeb.Enitites.Views
 
         public string Kurum { get; set; }
 
-        public string Turu { get; set; }
+        public int Turu { get; set; }
 
     }
 }

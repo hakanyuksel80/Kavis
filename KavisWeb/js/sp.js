@@ -1,7 +1,7 @@
 ﻿
 class PlanItem {
 
-    constructor(id, title, siraNo, items = [], state="") {
+    constructor(id, title, siraNo, items = [], state = "") {
         this.Id = id;
 
         this.SiraNo = siraNo;
@@ -364,7 +364,7 @@ class GostergePlanItem extends PlanItem {
     constructor(data) {
         super(data.Id, data.Baslik, data.SiraNo);
         this.data = data;
-        
+
     }
 
     Add(item) {
@@ -388,7 +388,7 @@ class GostergePlanItem extends PlanItem {
     performans_satir(data) {
 
         return `<tr data-id='${this.Id}'>
-                <td>P.G.<span class="gosterge-order"  contenteditable="true">${data.PGNo??""}</span></td>
+                <td>P.G.<span class="gosterge-order"  contenteditable="true">${data.PGNo ?? ""}</span></td>
                 <td contenteditable="true" class="gosterge-title">${this.Title}</td>
                 <td contenteditable="true">${data.Etkisi ?? ""}</td>
                 <td contenteditable="true">${data.Baslangic ?? ""}</td>
@@ -453,10 +453,15 @@ class GostergePlanItem extends PlanItem {
 
 class StratejikPlanItem extends PlanItem {
 
+
+
+
+
     constructor(data) {
         if (data != undefined) {
             super(data.Id, data.Baslik);
             this.Build(data);
+
             this.Draw("#accordionSP");
         } else {
             super(0, "");
@@ -464,6 +469,8 @@ class StratejikPlanItem extends PlanItem {
     }
 
     Build(data) {
+
+        this.Items = [];
 
         for (var i = 0; i < data.Amaclar.length; i++) {
             const amac_data = data.Amaclar[i];
@@ -475,7 +482,7 @@ class StratejikPlanItem extends PlanItem {
     }
 
     Draw(container) {
-
+        $(container).empty();
         for (var i = 0; i < this.Items.length; i++) {
             const item = this.Items[i];
             let obj = item.Draw();
@@ -498,10 +505,12 @@ class StratejikPlanItem extends PlanItem {
         return { Id: 0, Baslik: "Deneme", Amaclar: amac_data };
     }
 
-    Get() {
+    Get(id) {
+
         let THIS = this;
-        api_get("/api/StratejikPlan/1").done(function (d) {
+        return api_get("/api/StratejikPlan/" + id).done(function (d) {
             console.log(d);
+            
             THIS.Build(d);
             THIS.Draw("#accordionSP");
         });
@@ -512,8 +521,20 @@ class StratejikPlanItem extends PlanItem {
 
         let data = this.Collect();
 
+        data.Id = this.Id;
+        data.KurumAdi = this.KurumAdi;
+        data.Baslangic = this.Baslangic;
+        data.Tur = this.Tur;        
+
         api_post("/api/StratejikPlan", data).done(function (d) {
 
+            console.log(d);
+            if (d.Success) {
+                successMessage("Kayıt Yapıldı");
+                THIS.Get(data.Id);
+            } else {
+                errorMessage(d.Message);
+            }
 
 
         });

@@ -47,6 +47,15 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Core">
+      <HintPath>..\..\Sorulama\Core\bin\Release\Core.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -138,19 +147,35 @@
     <Compile Include="BusinessLayer\IStratejikPlanService.cs" />
     <Compile Include="BusinessLayer\StreatejikPlanManager.cs" />
     <Compile Include="Controllers\api\BirimFaaliyetlerController.cs" />
+    <Compile Include="Controllers\api\DenemeController.cs" />
     <Compile Include="Controllers\api\EylemlerController.cs" />
     <Compile Include="Controllers\api\StratejikPlanController.cs" />
+    <Compile Include="Controllers\DenemeController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\StratejikPlanController.cs" />
-    <Compile Include="DataLayer\KavisDBContext.cs" />
+    <Compile Include="Controllers\StratejikPlansController.cs" />
+    <Compile Include="DataLayer\Abstract\IStratejikPlanDal.cs" />
+    <Compile Include="DataLayer\EF\EfStratejikPlanDal.cs" />
+    <Compile Include="DataLayer\EF\EfStrategyItemDal.cs" />
+    <Compile Include="DataLayer\Abstract\IStrategyItemDal.cs" />
+    <Compile Include="DataLayer\StrategyDBContext.cs" />
     <Compile Include="Enitites\DbModels\Birim.cs" />
     <Compile Include="Enitites\DbModels\PlanItem.cs" />
-    <Compile Include="Enitites\DbModels\StratejikPlan.cs" />
+    <Compile Include="Enitites\DbModels\StrategyItem.cs" />
     <Compile Include="Enitites\Dtos\PerformansDto.cs" />
     <Compile Include="Enitites\Views\StratejikPlanListView.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202109151228034_InitialCreate.cs" />
+    <Compile Include="Migrations\202109151228034_InitialCreate.designer.cs">
+      <DependentUpon>202109151228034_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202109151252229_a.cs" />
+    <Compile Include="Migrations\202109151252229_a.designer.cs">
+      <DependentUpon>202109151252229_a.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -2282,6 +2307,7 @@
     <Content Include="Views\Home\Gostergeler.cshtml" />
     <Content Include="Views\Home\BirimGosterge.cshtml" />
     <Content Include="Views\StratejikPlan\Index.cshtml" />
+    <Content Include="Views\Deneme\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -2292,6 +2318,7 @@
     <Folder Include="assets\jquery-file-upload\server\php\files\thumbnail\" />
     <Folder Include="Models\" />
     <Folder Include="Views\BirimPerformans\" />
+    <Folder Include="Views\StratejikPlans\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -2303,6 +2330,14 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202109151228034_InitialCreate.resx">
+      <DependentUpon>202109151228034_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202109151252229_a.resx">
+      <DependentUpon>202109151252229_a.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

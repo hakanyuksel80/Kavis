@@ -25,13 +25,15 @@
 
 <div class="row">
     <div class="col-10">
-
+        <input type="hidden" name="StratejikPlanId" id="StratejikPlanId" />
         <div class="form-group row">
             <label class="col-4">Kurum</label>
             <div class="col-6">
-                <select class="form-control form-control-sm w-100">
+                @*<select class="form-control form-control-sm w-100">
                     <option>BURSA İL MİLLİ EĞİTİM MÜDÜRLÜĞÜ</option>
-                </select>
+                </select>*@
+
+                <input type="text" name="KurumAdi" id="KurumAdi" class="form-control form-control-sm w-100" />
             </div>
         </div>
 
@@ -39,10 +41,10 @@
             <label class="col-4">Dönem Başl.</label>
             <div class="col-6">
                 <div class="input-group">
-                    <input class="form-control form-control-sm" value="2019" />
+                    <input class="form-control form-control-sm" value="2019" name="DonemBaslangic" id="DonemBaslangic" />
                     @*<div class="input-group-append">
-                            <button class="btn btn-secondary btn-sm"><span class="fa fa-calendar"></span></button>
-                        </div>*@
+                        <button class="btn btn-secondary btn-sm"><span class="fa fa-calendar"></span></button>
+                    </div>*@
                 </div>
             </div>
         </div>
@@ -53,8 +55,8 @@
                 <div class="input-group">
                     <input class="form-control form-control-sm" />
                     @*<div class="input-group-append">
-                            <div class="btn btn-sm btn-secondary"><span class="fa fa-calendar"></span></div>
-                        </div>*@
+                        <div class="btn btn-sm btn-secondary"><span class="fa fa-calendar"></span></div>
+                    </div>*@
                 </div>
             </div>
         </div>
@@ -62,9 +64,8 @@
         <div class="form-group row">
             <label class="col-4">SP. Türü</label>
             <div class="col-6">
-                <select class="form-control form-control-sm w-100">
-                    <option>İL</option>
-                    <option>İLÇE</option>
+                <select class="form-control form-control-sm w-100" id="PlanTuru">
+                    <option value="0">İL</option>
                 </select>
             </div>
         </div>
@@ -257,13 +258,13 @@
 
         class FormEditAmac extends Form {
 
-            
+
             Save() {
                 let d = formEditAmac.GetValues();
                 console.log(d);
-                
+
                 if (d.Id == "" || d.Id == undefined && d.Id == "0")
-                    sp.add_amac(d.Id, d.Baslik);                
+                    sp.add_amac(d.Id, d.Baslik);
                 else {
                     sp.update_amac(d.Index, d.Baslik);
                 }
@@ -295,10 +296,23 @@
 
         $(document).ready(function () {
 
-            a.Get(id);
+            a.Get(id).then(function (d) {
+
+                
+                $("#StratejikPlanId").val(d.Id);
+                $("#KurumAdi").val(d.KurumAdi);
+                $("#DonemBaslangic").val(d.Baslangic);
+                $("#PlanTuru").val(d.KurumTipi);
+
+
+            });
 
             $('.btn-kaydet').on("click", function () {
 
+                a.Id = id;
+                a.Baslik = a.KurumAdi = $("#KurumAdi").val();
+                a.Baslangic = $("#DonemBaslangic").val();
+                a.Tur = 0;
                 a.Post();
 
             });
