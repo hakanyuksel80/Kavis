@@ -145,6 +145,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="BusinessLayer\IStratejikPlanService.cs" />
+    <Compile Include="BusinessLayer\StreatejikPlanManager2.cs" />
     <Compile Include="BusinessLayer\StreatejikPlanManager.cs" />
     <Compile Include="Controllers\api\BirimFaaliyetlerController.cs" />
     <Compile Include="Controllers\api\DenemeController.cs" />
@@ -167,13 +168,21 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202109151228034_InitialCreate.cs" />
-    <Compile Include="Migrations\202109151228034_InitialCreate.designer.cs">
-      <DependentUpon>202109151228034_InitialCreate.cs</DependentUpon>
+    <Compile Include="Migrations\202109201005096_InitialCreate.cs" />
+    <Compile Include="Migrations\202109201005096_InitialCreate.Designer.cs">
+      <DependentUpon>202109201005096_InitialCreate.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202109151252229_a.cs" />
-    <Compile Include="Migrations\202109151252229_a.designer.cs">
-      <DependentUpon>202109151252229_a.cs</DependentUpon>
+    <Compile Include="Migrations\202109201040407_SiraNo.cs" />
+    <Compile Include="Migrations\202109201040407_SiraNo.Designer.cs">
+      <DependentUpon>202109201040407_SiraNo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202109201115413_GostergeIzleme.cs" />
+    <Compile Include="Migrations\202109201115413_GostergeIzleme.Designer.cs">
+      <DependentUpon>202109201115413_GostergeIzleme.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202109201241586_eylem.cs" />
+    <Compile Include="Migrations\202109201241586_eylem.Designer.cs">
+      <DependentUpon>202109201241586_eylem.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -2332,11 +2341,17 @@
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202109151228034_InitialCreate.resx">
-      <DependentUpon>202109151228034_InitialCreate.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202109201005096_InitialCreate.resx">
+      <DependentUpon>202109201005096_InitialCreate.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202109151252229_a.resx">
-      <DependentUpon>202109151252229_a.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202109201040407_SiraNo.resx">
+      <DependentUpon>202109201040407_SiraNo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202109201115413_GostergeIzleme.resx">
+      <DependentUpon>202109201115413_GostergeIzleme.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202109201241586_eylem.resx">
+      <DependentUpon>202109201241586_eylem.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

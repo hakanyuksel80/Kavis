@@ -13,9 +13,9 @@ namespace KavisWeb.DataLayer
        
         public StrategyDBContext()
         {
-            this.Configuration.ProxyCreationEnabled = false;
+            //this.Configuration.ProxyCreationEnabled = false;
 
-            this.Configuration.LazyLoadingEnabled = false;
+            //this.Configuration.LazyLoadingEnabled = false;
         }
 
         public DbSet<StratejikPlan> StratejikPlanlar { get; set; }
@@ -27,6 +27,8 @@ namespace KavisWeb.DataLayer
         public DbSet<Strateji> Stratejiler { get; set; }
 
         public DbSet<Gosterge> Gostergeler { get; set; }
+
+        public DbSet<Eylem> Eylemler { get; set; }
         
 
     }

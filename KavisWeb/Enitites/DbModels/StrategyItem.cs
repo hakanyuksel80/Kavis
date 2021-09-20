@@ -32,6 +32,8 @@ namespace KavisWeb.Enitites.DbModels
 
         public string Baslik { get; set; }
 
+        public int SiraNo { get; set; }
+
         [NotMapped]
         public string State { get; set; }
 
@@ -96,8 +98,26 @@ namespace KavisWeb.Enitites.DbModels
         public string Yil4G { get; set; }
 
         public string Yil5G { get; set; }
+
+        public string Izleme { get; set; }
+
+        public string Rapor { get; set; }
+
+        public int SorumluBirimId { get; set; }
+
+        public string SorumluBirim { get; set; }
     }
 
+    [Table("Eylemler")]
+    public class Eylem : StratejiTipi
+    {
+        public string Birim { get; set; }
+
+        public int StratejiId { get; set; }
+
+        [JsonIgnore]
+        public Strateji Strateji { get; set; }
+    }
 
 
     [Table("Plans")]

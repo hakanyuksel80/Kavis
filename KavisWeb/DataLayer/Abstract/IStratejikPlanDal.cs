@@ -10,6 +10,6 @@ namespace KavisWeb.DataLayer.Abstract
 {
     public interface IStratejikPlanDal : IEntityRepository<StratejikPlan>
     {
-
+        
     }
 }

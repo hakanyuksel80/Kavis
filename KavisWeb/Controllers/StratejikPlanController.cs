@@ -13,7 +13,7 @@ namespace KavisWeb.Controllers
 
         public StratejikPlanController()
         {
-            _stratejikPlanManager = new StratejikPlanManager();
+            _stratejikPlanManager = new StratejikPlanManager2();
         }
 
         // GET: StratejikPlan

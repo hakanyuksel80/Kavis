@@ -149,8 +149,11 @@ class StratejikPlan {
         let container = $(button).parents("tbody")[0];
         let $s = $($(button).parents("tr")[0]);
         let id = $s.data("id");
+           
+        
         if (id != "" && id != undefined && id != "0") {
             $s.data("state", "deleted");
+            console.log($s.data("state"));
             $s.hide();
         }
         else

@@ -1,4 +1,5 @@
 ﻿using Core.DataAccess;
+using Core.Entities;
 using KavisWeb.Enitites.DbModels;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace KavisWeb.DataLayer.Abstract
 {
-    public interface IStrategyItemDal : IEntityRepository<StratejiTipi>
+    public interface IStrategyItemDal<T> : IEntityRepository<T> where T : StratejiTipi, IEntity, new()
     {
 
     }

@@ -124,7 +124,7 @@ class AmacPlanItem extends PlanItem {
         if (data.Hedefler != undefined)
             for (var i = 0; i < data.Hedefler.length; i++) {
                 const item = data.Hedefler[i];
-                let planItem = new HedefPlanItem(item.Id, item.Baslik, item.SiraNo);
+                let planItem = new HedefPlanItem(item.Id, item.Baslik, i+1);
                 this.Add(planItem);
                 planItem.Build(item);
 
@@ -210,7 +210,7 @@ class HedefPlanItem extends PlanItem {
 
         return `<div class="hedefKarti card" data-id="${i}" data-state="${state}">
                             <div class="card-header">
-                                Hedef <span class="hedef-order">${siraNo}</span>. <span class="hedef-title" contenteditable="true">${baslik}</span>
+                                Hedef <span class="hedef-order">${siraNo??''}</span>. <span class="hedef-title" contenteditable="true">${baslik}</span>
                                 <div class="float-right toolbar">                                   
                                     <button class="btn btn-sm btn-delete" data-target="hedef"><span class="fa fa-trash"></span></button>
                                 </div>
@@ -347,8 +347,9 @@ class StratejiPlanItem extends PlanItem {
     Collect() {
         let id = this.obj.data("id");
         let text = this.obj.find(".strateji-title").text();
+        let state = this.obj.data("state");
 
-        let d = { Id: id, Baslik: text };
+        let d = { Id: id, Baslik: text, State : state };
 
         return d;
     }
@@ -390,7 +391,7 @@ class GostergePlanItem extends PlanItem {
         return `<tr data-id='${this.Id}'>
                 <td>P.G.<span class="gosterge-order"  contenteditable="true">${data.PGNo ?? ""}</span></td>
                 <td contenteditable="true" class="gosterge-title">${this.Title}</td>
-                <td contenteditable="true">${data.Etkisi ?? ""}</td>
+                <td contenteditable="true">${data.HedefeEtkisi ?? ""}</td>
                 <td contenteditable="true">${data.Baslangic ?? ""}</td>
                 <td contenteditable="true">${data.Yil1 ?? ""}</td>
                 <td contenteditable="true">${data.Yil2 ?? ""}</td>
@@ -399,10 +400,10 @@ class GostergePlanItem extends PlanItem {
                 <td contenteditable="true">${data.Yil5 ?? ""}</td>
                 
                 <td>
-                    ${this.period_list(data.IzlemeSikligi)}
+                    ${this.period_list(data.Izleme)}
                 </td>
                 <td>
-                    ${this.period_list(data.RaporSikligi)}
+                    ${this.period_list(data.Rapor)}
                 </td>
                 <td>
                    ${this.birim_list(data.Birim)}
@@ -414,11 +415,11 @@ class GostergePlanItem extends PlanItem {
             </tr>`;
     }
 
-    period_list() {
+    period_list(v) {
         return `<select class="select-mini">
-                        <option></option>
-                        <option>6 Ay</option>
-                        <option>1 Yıl</option>
+                        <option ></option>
+                        <option ${v =="6 Ay"?"selected":""}>6 Ay</option>
+                        <option ${v == "1 Yıl" ? "selected" : ""}>1 Yıl</option>
                     </select>`;
     }
 
@@ -430,11 +431,12 @@ class GostergePlanItem extends PlanItem {
                     </select>`;
     }
 
-    Collect() {
+    Collect() {        
         let id = this.obj.data("id");
+        let state = this.obj.data("state");
         let text = this.obj.find(".gosterge-title").text();
         let fields = this.obj.children();
-        let hedefeEtkisi = fields[2].innerText;
+        let hedefeEtkisi = fields[2].innerText;        
         let baslangic = fields[3].innerText;
         let yil1 = fields[4].innerText;
         let yil2 = fields[5].innerText;
@@ -444,8 +446,9 @@ class GostergePlanItem extends PlanItem {
         let izlemeSikligi = $(fields[9]).find("select").val();
         let raporSikligi = $(fields[10]).find("select").val();
         let birim = $(fields[11]).find("select").val();
+        //let birimAdi = $(fields[11]).find("select").val();
 
-        let d = { Id: this.Id, Baslik: text, Baslangic: baslangic, HedefeEtkisi: hedefeEtkisi, Yil1: yil1, Yil2: yil2, Yil3: yil3, Yil4: yil4, Yil5: yil5, IzlemeSikligi: izlemeSikligi, RaporSikligi: raporSikligi, Birim: birim };
+        let d = { Id: id, Baslik: text, Baslangic: baslangic, HedefeEtkisi: hedefeEtkisi, Yil1: yil1, Yil2: yil2, Yil3: yil3, Yil4: yil4, Yil5: yil5, Izleme: izlemeSikligi, Rapor: raporSikligi, SorumluBirim: birim, State : state };
 
         return d;
     }
@@ -508,8 +511,7 @@ class StratejikPlanItem extends PlanItem {
     Get(id) {
 
         let THIS = this;
-        return api_get("/api/StratejikPlan/" + id).done(function (d) {
-            console.log(d);
+        return api_get("/api/StratejikPlan/" + id).done(function (d) {           
             
             THIS.Build(d);
             THIS.Draw("#accordionSP");
@@ -525,10 +527,10 @@ class StratejikPlanItem extends PlanItem {
         data.KurumAdi = this.KurumAdi;
         data.Baslangic = this.Baslangic;
         data.Tur = this.Tur;        
-
+       
         api_post("/api/StratejikPlan", data).done(function (d) {
 
-            console.log(d);
+            
             if (d.Success) {
                 successMessage("Kayıt Yapıldı");
                 THIS.Get(data.Id);

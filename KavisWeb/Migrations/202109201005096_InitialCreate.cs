@@ -1,4 +1,4 @@
-﻿namespace KavisWeb.Migrations
+namespace KavisWeb.Migrations
 {
     using System;
     using System.Data.Entity.Migrations;

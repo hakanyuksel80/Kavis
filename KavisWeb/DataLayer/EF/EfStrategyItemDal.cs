@@ -8,7 +8,22 @@ using System.Web;
 
 namespace KavisWeb.DataLayer.EF
 {
-    public class EfStrategyItemDal : EfEntityRepositoryBase<StratejiTipi, StrategyDBContext>, IStrategyItemDal
+    public class EfAmacDal : EfEntityRepositoryBase<Amac, StrategyDBContext>, IStrategyItemDal<Amac>
+    {
+
+    }
+
+    public class EfHedefDal : EfEntityRepositoryBase<Hedef, StrategyDBContext>, IStrategyItemDal<Hedef>
+    {
+
+    }
+
+    public class EfGostergeDal : EfEntityRepositoryBase<Gosterge, StrategyDBContext>, IStrategyItemDal<Gosterge>
+    {
+
+    }
+
+    public class EfStratejiDal : EfEntityRepositoryBase<Strateji, StrategyDBContext>, IStrategyItemDal<Strateji>
     {
 
     }
