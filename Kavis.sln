@@ -5,6 +5,8 @@ VisualStudioVersion = 16.0.30204.135
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KavisWeb", "KavisWeb\KavisWeb.csproj", "{D96048F7-9819-4BC5-87F7-43F114C7DEE8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "Core\Core.csproj", "{9C56584A-2EB8-458D-9282-1CEE9F43855F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{D96048F7-9819-4BC5-87F7-43F114C7DEE8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D96048F7-9819-4BC5-87F7-43F114C7DEE8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D96048F7-9819-4BC5-87F7-43F114C7DEE8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9C56584A-2EB8-458D-9282-1CEE9F43855F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C56584A-2EB8-458D-9282-1CEE9F43855F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C56584A-2EB8-458D-9282-1CEE9F43855F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C56584A-2EB8-458D-9282-1CEE9F43855F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

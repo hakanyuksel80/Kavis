@@ -153,5 +153,15 @@ namespace KavisWeb.BusinessLayer
         {
             return context.Eylemler.SingleOrDefault(x => x.Id == id);
         }
+
+        public List<Strateji> GetAllStratejiByBirim(string birim)
+        {
+            return new List<Strateji>();
+        }
+
+        public List<FaaliyetListView> GetAllFaaliyetByBirim(string birim)
+        {
+            return new List<FaaliyetListView>();
+        }
     }
 }

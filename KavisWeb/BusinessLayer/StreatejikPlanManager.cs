@@ -122,7 +122,6 @@ namespace KavisWeb.BusinessLayer
                 _AmacDal.Add(amac);
         }
 
-
         public Hedef GetHedef(int id)
         {
             return _HedefDal.Get(x => x.Id == id);
@@ -141,7 +140,6 @@ namespace KavisWeb.BusinessLayer
                 _HedefDal.Add(hedef);
         }
 
-
         public Strateji GetStrateji(int id)
         {
             return _StratejiDal.Get(x => x.Id == id);
@@ -159,7 +157,6 @@ namespace KavisWeb.BusinessLayer
             else
                 _StratejiDal.Add(strateji);
         }
-
 
         public Gosterge GetGosterge(int id)
         {
