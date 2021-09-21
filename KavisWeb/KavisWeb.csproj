@@ -151,8 +151,10 @@
     <Compile Include="Controllers\api\DenemeController.cs" />
     <Compile Include="Controllers\api\EylemlerController.cs" />
     <Compile Include="Controllers\api\StratejikPlanController.cs" />
+    <Compile Include="Controllers\BirimController.cs" />
     <Compile Include="Controllers\DenemeController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\PerformansProgramiController.cs" />
     <Compile Include="Controllers\StratejikPlanController.cs" />
     <Compile Include="Controllers\StratejikPlansController.cs" />
     <Compile Include="DataLayer\Abstract\IStratejikPlanDal.cs" />
@@ -164,6 +166,7 @@
     <Compile Include="Enitites\DbModels\PlanItem.cs" />
     <Compile Include="Enitites\DbModels\StrategyItem.cs" />
     <Compile Include="Enitites\Dtos\PerformansDto.cs" />
+    <Compile Include="Enitites\Views\FaaliyetListView.cs" />
     <Compile Include="Enitites\Views\StratejikPlanListView.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -185,6 +188,7 @@
       <DependentUpon>202109201241586_eylem.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\ViewPerformansGirisModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -2309,12 +2313,12 @@
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Home\Ayarlar.cshtml" />
     <Content Include="Views\Home\FaaliyetRaporu.cshtml" />
-    <Content Include="Views\Home\PerformansProgrami.cshtml" />
+    <Content Include="Views\PerformansProgrami\Index.cshtml" />
     <Content Include="Views\StratejikPlan\Edit.cshtml" />
     <Content Include="Views\StratejikPlan\Eylemler.cshtml" />
-    <Content Include="Views\Home\Birim.cshtml" />
+    <Content Include="Views\Birim\Index.cshtml" />
     <Content Include="Views\Home\Gostergeler.cshtml" />
-    <Content Include="Views\Home\BirimGosterge.cshtml" />
+    <Content Include="Views\Birim\Gosterge.cshtml" />
     <Content Include="Views\StratejikPlan\Index.cshtml" />
     <Content Include="Views\Deneme\Index.cshtml" />
   </ItemGroup>
@@ -2325,7 +2329,6 @@
     <Folder Include="assets\jquery-file-upload\server\node\public\files\thumbnail\" />
     <Folder Include="assets\jquery-file-upload\server\node\tmp\" />
     <Folder Include="assets\jquery-file-upload\server\php\files\thumbnail\" />
-    <Folder Include="Models\" />
     <Folder Include="Views\BirimPerformans\" />
     <Folder Include="Views\StratejikPlans\" />
   </ItemGroup>

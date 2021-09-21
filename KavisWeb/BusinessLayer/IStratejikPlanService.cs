@@ -19,6 +19,8 @@ namespace KavisWeb.BusinessLayer
         
         Amac GetAmac(int id);
         void DeleteAmac(Amac amac);
+        List<Strateji> GetAllStratejiByBirim(string birim);
+        List<FaaliyetListView> GetAllFaaliyetByBirim(string birim);
         void SaveAmac(Amac amac);
         
         Hedef GetHedef(int id);
@@ -37,5 +39,7 @@ namespace KavisWeb.BusinessLayer
         void SaveChanges();
         List<Strateji> GetAllStrateji(int planId);
         List<Eylem> GetListEylemByStrateji(int id);
+
+        Eylem GetEylem(int id);
     }
 }

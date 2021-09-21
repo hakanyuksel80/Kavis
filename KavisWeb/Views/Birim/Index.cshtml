@@ -12,7 +12,50 @@
     }
 </style>
 
+@* <div class="sp">
 
+        @foreach (var strateji in Model.Stratejiler)
+        {
+            <div class="strateji">@strateji.Kod - @strateji.Baslik</div>
+            <ul class="list-group">
+                @foreach (var eylem in strateji.Eylemler)
+                {
+                    <li class="list-group-item" data-id="@eylem.Id"> <span>@eylem.SiraNo. @eylem.Baslik</span> <button class="btn btn-sm btn-success float-right btn-faaliyetEkle">+ Faaliyet Ekle</button> </li>
+                }
+            </ul>
+        }
+
+
+
+
+    </div>
+    <br />
+    <table class="table table-sm table-bordered" id="tableFaliyetler">
+        <thead>
+            <tr>
+                <th>Eylem Adı</th>
+                <th>Faaliyet Adı</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Faaliyetler)
+            {
+                <tr>
+                    <td>@item.EylemAdi</td>
+                    <td>Eğitime % 100 Destek Kampanyası-hayırsever bağışı ile anaokulu binası yapımı</td>
+                    <td>
+                        <div style="width:200px">
+                            <button class="btn btn-sm btn-success btn-faaliyetSil">Sil</button>
+                            <button class="btn btn-sm btn-success btn-faaliyetDuzenle" id="data">Düzenle</button>
+                            <button class="btn btn-sm btn-success btn-faaliyetDurum" data-target="#faaliyetDurum" data-toggle="modal">Durum Gir</button>
+                        </div>
+                    </td>
+                </tr>
+            }
+
+        </tbody>
+    </table>*@
 
 <h4>PERFORMANS PROGRAMI GİRİŞ</h4>
 <p>Sorumlu Olduğunuz Eylemler</p>
@@ -59,7 +102,7 @@
 <div class="modal" id="faaliyetEkle">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form action="/Home/Birim" method="post" >
+            <form action="/Home/Birim" method="post">
                 @*<div class="modal-header">
                         Faaliyet Ekle
                     </div>*@
@@ -147,14 +190,14 @@
                 satir.hide();
             }
 
-            tabloSatirSablon(eylem= "", faaliyet="",dugmelerHtml = "") {
+            tabloSatirSablon(eylem = "", faaliyet = "", dugmelerHtml = "") {
                 return `<tr><td>${eylem}</td><td>${faaliyet}</td><td>${dugmelerHtml}</td></tr>`;
             }
 
-            tabloSatirDugmeSablon(duzenle,sil,durumGir) {
+            tabloSatirDugmeSablon(duzenle, sil, durumGir) {
 
                 let a = "";
-                a += duzenle==true ? '<button class="btn btn-sm btn-success btn-faaliyetDuzenle" id="data">Düzenle</button> ' : '';
+                a += duzenle == true ? '<button class="btn btn-sm btn-success btn-faaliyetDuzenle" id="data">Düzenle</button> ' : '';
                 a += sil == true ? '<button class="btn btn-sm btn-success btn-faaliyetSil">Sil</button> ' : '';
                 a += durumGir == true ? '<button class="btn btn-sm btn-success btn-faaliyetDurum" data-target="#faaliyetDurum" data-toggle="modal">Durum Gir</button> ' : '';
                 return a;
@@ -170,15 +213,15 @@
             }
 
             SaveFaaliyet(d) {
-                api_post("/api/BirimFaaliyetler",d).done(function () {
+                api_post("/api/BirimFaaliyetler", d).done(function () {
                 });
             }
-            
-            
+
+
         }
 
 
-        
+
 
 
         class FaaliyetForm extends Form {
@@ -189,7 +232,7 @@
 
             New(eylemId, eylemAdi) {
                 this.Clear();
-                $(this.modalId + " .eylemAdi").text(eylemAdi);              
+                $(this.modalId + " .eylemAdi").text(eylemAdi);
                 this.Show();
             }
 
@@ -240,22 +283,22 @@
             faaliyetForm.Edit(id, eylemId, eylemAdi, faaliyetAdi);
         }
 
-        
+
 
         function onFaaliyetSilClickEvent() {
             faaliyet.sil(this);
         }
 
         $(document).ready(function () {
-         
-           
+
+
 
             $('.btn-faaliyetEkle').on("click", onFaaliyetEkleClickEvent);
 
             $('.btn-faaliyetDuzenle').on("click", onFaaliyetDuzenleClickEvent);
 
             $('.btn-faaliyetSil').on("click", onFaaliyetSilClickEvent);
-                        
+
 
         });
 

@@ -148,5 +148,10 @@ namespace KavisWeb.BusinessLayer
         {
             return context.Eylemler.Where(x => x.StratejiId == id).ToList();
         }
+
+        public Eylem GetEylem(int id)
+        {
+            return context.Eylemler.SingleOrDefault(x => x.Id == id);
+        }
     }
 }

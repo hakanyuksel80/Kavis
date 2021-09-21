@@ -9,7 +9,7 @@ class Eylemler_Templates {
     birim_select() {
 
         return `<select class="select-mini birim-select">
-            <option>(BİRİM SEÇİNİZ)</option>
+            <option value="">(BİRİM SEÇİNİZ)</option>
         </select>`;
 
     }
@@ -61,7 +61,7 @@ class StratejiListItem extends PlanItem {
             for (var i = 0; i < this.Items.length; i++) {
                 let item = this.Items[i];
 
-                let newItem = new EylemItem(item.Id, item.Baslik, item.SiraNo, null, '');
+                let newItem = new EylemItem(item.Id, item.Baslik, i + 1, null, '');//item.SiraNo
                 newItems.push(newItem);
                 newItem.No = item.No;
                 let h = newItem.Draw();
@@ -83,6 +83,13 @@ class EylemItem extends PlanItem {
     }
 
 }
+
+function reorder(container, target_name) {
+    $(container).find(target_name).each(function (b, d) {
+        d.innerText = b + 1;
+    });
+}
+
 
 class Eylemler extends PlanItem {
 
@@ -122,14 +129,15 @@ class Eylemler extends PlanItem {
 
         let data = this.Collect();
         console.log(data);
-        api_post("/api/Eylemler", JSON.stringify(data)).done(function (d) {
-            successMessage("Kaydedildi."+d);
+
+        api_post("/api/Eylemler", JSON.stringify(data), function (d) {
+            successMessage("Kaydedildi.");
         });
     }
 
     Collect() {
 
-        let data = [];      
+        let data = [];
 
         let $stratejiler = $('.stratejiContainer');
 
@@ -162,21 +170,33 @@ var etemp = new Eylemler_Templates();
 
 function on_btnDeleteEylem_click_event() {
 
+    let main_container = $(this).parents('.eylemler')[0];
 
     let $a = $($(this).parents('.eylem')[0]);
     let id = $a.data("id") ?? 0;
     if (id > 0) {
         $a.hide();
         $a.data("state", "deleted");
-    } else        
+    } else
         $($(this).parents('.eylem')[0]).remove();
+        
+
+    reorder(main_container, '.eylem:visible .eylem-no');
 
 }
 
 function on_btnAddEylem_click_event() {
-    $($(this).parents('.stratejiContainer')[0]).find('.eylemler').append(etemp.eylem("", "","","",""));
+    let container = $($(this).parents('.stratejiContainer')[0]).find('.eylemler');
+    let c = container.find(".eylem").length;
+    container.append(etemp.eylem("", "", c+1, "", ""));
 
 };
+
+
+function on_btnSaveEylemler_click_event() {
+
+    e.Post();
+}
 
 var e = new Eylemler();
 
@@ -190,6 +210,8 @@ $(function () {
     $(document).on('click', '.btn-add-eylem', on_btnAddEylem_click_event);
 
     $(document).on('click', '.btn-delete-eylem', on_btnDeleteEylem_click_event);
+
+    $(document).on('click', '.btn-kaydet-eylemler', on_btnSaveEylemler_click_event);
 
 });
 

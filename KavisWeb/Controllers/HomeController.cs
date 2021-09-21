@@ -32,20 +32,11 @@ namespace KavisWeb.Controllers
         {           
 
             return View();
-        }
-
-        public ActionResult PerformansProgrami()
-        {
-
-            return View();
-        }      
+        }    
 
         
 
-        public ActionResult Birim()
-        {
-            return View();
-        }
+      
 
         public ActionResult BirimGosterge()
         {

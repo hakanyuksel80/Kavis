@@ -67,6 +67,8 @@ namespace KavisWeb.Enitites.DbModels
     {
         [JsonIgnore]
         public Hedef Hedef { get; set; }
+
+        public List<Eylem> Eylemler { get; set; }
     }
 
     [Table("Gostergeler")]
@@ -117,6 +119,27 @@ namespace KavisWeb.Enitites.DbModels
 
         [JsonIgnore]
         public Strateji Strateji { get; set; }
+    }
+
+    [Table("Faaliyetler")]
+    public class Faaliyet
+    {
+
+        public int Id { get; set; }
+
+        public int EylemId { get; set; }
+
+        [JsonIgnore]
+        public Eylem Eylem { get; set; }
+
+        public string Adi { get; set; }
+
+        public string Gerceklesme { get; set; }
+
+        public string Sonuc { get; set; }
+
+        public string Durum { get; set; }
+
     }
 
 

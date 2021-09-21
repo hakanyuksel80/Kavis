@@ -9,7 +9,7 @@ using System.Web;
 
 namespace KavisWeb.BusinessLayer
 {
-    public class StratejikPlanManager : IStratejikPlanService
+    public class StratejikPlanManager 
     {
         public static StratejikPlanItem SP_Data = new StratejikPlanItem()
         {
@@ -190,6 +190,11 @@ namespace KavisWeb.BusinessLayer
         }
 
         public List<Eylem> GetListEylemByStrateji(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Eylem GetEylem(int id)
         {
             throw new NotImplementedException();
         }
