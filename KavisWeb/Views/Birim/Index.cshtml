@@ -63,13 +63,16 @@
 
 <div class="sp">
 
-    <div class="strateji">1. Strateji</div>
-    <ul class="list-group">
-        <li class="list-group-item" data-id="1"> <span>1. Eylem</span> <button class="btn btn-sm btn-success float-right btn-faaliyetEkle">+ Faaliyet Ekle</button> </li>
-        <li class="list-group-item" data-id="2"><span>2. Eylem</span> <button class="btn btn-sm btn-success float-right btn-faaliyetEkle">+ Faaliyet Ekle</button> </li>
-        <li class="list-group-item" data-id="3"><span>3. Eylem</span> <button class="btn btn-sm btn-success float-right btn-faaliyetEkle">+ Faaliyet Ekle</button> </li>
-
-    </ul>
+    @foreach (var strateji in Model.Stratejiler)
+    {
+        <div class="strateji">@strateji.Kod - @strateji.Baslik</div>
+        <ul class="list-group">
+            @foreach (var eylem in strateji.Eylemler)
+            {
+                <li class="list-group-item" data-id="@eylem.Id"> <span>@eylem.SiraNo. @eylem.Baslik</span> <button class="btn btn-sm btn-success float-right btn-faaliyetEkle">+ Faaliyet Ekle</button> </li>
+            }
+        </ul>
+    }   
 
 </div>
 <br />
@@ -82,17 +85,20 @@
         </tr>
     </thead>
     <tbody>
-        <tr>
-            <td>3.1.1.1. Okul Öncesi eğitim için derslik yapılacaktır.</td>
-            <td>Eğitime % 100 Destek Kampanyası-hayırsever bağışı ile anaokulu binası yapımı</td>
-            <td>
-                <div style="width:200px">
-                    <button class="btn btn-sm btn-success btn-faaliyetSil">Sil</button>
-                    <button class="btn btn-sm btn-success btn-faaliyetDuzenle" id="data">Düzenle</button>
-                    <button class="btn btn-sm btn-success btn-faaliyetDurum" data-target="#faaliyetDurum" data-toggle="modal">Durum Gir</button>
-                </div>
-            </td>
-        </tr>
+        @foreach (var item in Model.Faaliyetler)
+        {
+            <tr>
+                <td>@item.EylemAdi</td>
+                <td>Eğitime % 100 Destek Kampanyası-hayırsever bağışı ile anaokulu binası yapımı</td>
+                <td>
+                    <div style="width:200px">
+                        <button class="btn btn-sm btn-success btn-faaliyetSil">Sil</button>
+                        <button class="btn btn-sm btn-success btn-faaliyetDuzenle" id="data">Düzenle</button>
+                        <button class="btn btn-sm btn-success btn-faaliyetDurum" data-target="#faaliyetDurum" data-toggle="modal">Durum Gir</button>
+                    </div>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
 

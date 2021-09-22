@@ -88,8 +88,12 @@ class StratejikPlan {
     }
 
     add_performans(element) {
-        let amac_index = $(element).parents(".card").index();
+
+        let amac_index = $(element).parents(".amac-card").index();        
         let hedef_index = $(element).parents(".hedefKarti").index();
+
+        console.log({ amac: amac_index, hedef: hedef_index });
+
         let amac = a.GetItem(amac_index);
         let hedef = amac.GetItem(hedef_index);
 
@@ -102,7 +106,7 @@ class StratejikPlan {
     }
 
     add_strateji(element) {
-        let amac_index = $(element).parents(".card").index();
+        let amac_index = $(element).parents(".amac-card").index();
         let hedef_index = $(element).parents(".hedefKarti").index();
         let i = $(element).parent().prev().find("tbody").children().length;
         let item = new StratejiPlanItem("", "", i);
@@ -194,9 +198,7 @@ var sp = new StratejikPlan("#accordionSP", SP_Data);
 
 
 function add_performans_click_event() {
-
     sp.add_performans(this);
-
 }
 
 function add_strateji_click_event() {

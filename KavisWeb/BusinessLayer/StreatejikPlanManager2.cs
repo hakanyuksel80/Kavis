@@ -30,6 +30,8 @@ namespace KavisWeb.BusinessLayer
             return list.ToList();
         }
 
+
+
         public StratejikPlan GetPlan(int id)
         {
             if (id > 0)
@@ -47,7 +49,7 @@ namespace KavisWeb.BusinessLayer
             if (plan.Id < 1)
                 context.StratejikPlanlar.Add(plan);
 
-            
+
 
         }
 
@@ -74,7 +76,7 @@ namespace KavisWeb.BusinessLayer
             if (amac.Id < 1)
                 context.Amaclar.Add(amac);
 
-            
+
         }
 
 
@@ -92,7 +94,7 @@ namespace KavisWeb.BusinessLayer
         {
             if (hedef.Id < 1)
                 context.Hedefler.Add(hedef);
- 
+
 
         }
 
@@ -112,7 +114,7 @@ namespace KavisWeb.BusinessLayer
             if (strateji.Id < 1)
                 context.Stratejiler.Add(strateji);
 
-            
+
         }
 
 
@@ -131,7 +133,7 @@ namespace KavisWeb.BusinessLayer
             if (gosterge.Id < 1)
                 context.Gostergeler.Add(gosterge);
 
-           
+
         }
 
         public void SaveChanges()
@@ -142,7 +144,7 @@ namespace KavisWeb.BusinessLayer
         public List<Strateji> GetAllStrateji(int planId)
         {
             return context.Stratejiler.Where(x => x.Hedef.Amac.StratejikPlanId == planId).ToList();
-        }        
+        }
 
         public List<Eylem> GetListEylemByStrateji(int id)
         {
@@ -154,14 +156,68 @@ namespace KavisWeb.BusinessLayer
             return context.Eylemler.SingleOrDefault(x => x.Id == id);
         }
 
+        public Faaliyet GetFaaliyet(int id)
+        {
+            return context.Faaliyetler.SingleOrDefault(x => x.Id == id);
+        }
+
+        public void AddFaaliyet(Faaliyet faaliyet)
+        {
+            context.Faaliyetler.Add(faaliyet);
+        }
+
         public List<Strateji> GetAllStratejiByBirim(string birim)
         {
-            return new List<Strateji>();
+            return context.Stratejiler.Where(x => x.Eylemler.Where(y => y.Birim == birim).Count() > 0).ToList();
         }
+
+        public List<FaaliyetListView> GetAllFaaliyet()
+        {
+            var faaliyetler = context.Faaliyetler.OrderBy(x => x.Eylem.Kod).ThenBy(x => x.SiraNo).ToList();
+
+            return (from x in faaliyetler
+                    select new FaaliyetListView() { Id = x.Id, EylemAdi = x.Eylem.Kod + " " + x.Eylem.Baslik, FaaliyetAdi = x.Baslik }).ToList();
+        }
+
+
 
         public List<FaaliyetListView> GetAllFaaliyetByBirim(string birim)
         {
-            return new List<FaaliyetListView>();
+            var faaliyetler = context.Faaliyetler.Where(x => x.Birim == birim);
+
+            return (from x in faaliyetler
+                    select new FaaliyetListView() { Id = x.Id, EylemAdi = x.Eylem.Kod + " " + x.Eylem.Baslik, FaaliyetAdi = x.Baslik, Birim = x.Birim }).ToList();
+        }
+
+
+        public List<FaaliyetRaporListView> GetFaaliyetRapor()
+        {
+            var faaliyetler = context.Faaliyetler.OrderBy(x => x.Eylem.Kod).ThenBy(x => x.SiraNo).ToList();
+
+            return (from x in faaliyetler
+                    select new FaaliyetRaporListView() { Id = x.Id, EylemAdi = x.Eylem.Kod + " " + x.Eylem.Baslik, FaaliyetAdi = x.Baslik, Birim = x.Birim, Gerceklesme = x.Gerceklesme, Durum = x.Durum, Sonuc = x.Sonuc, Tarih = x.Baslama.ToShortDateString() + " " + x.Bitis.ToShortDateString() }).ToList();
+        }
+
+        public void DeleteEylem(Eylem eylem)
+        {
+            context.Eylemler.Remove(eylem);
+        }
+
+        public void AddEylem(Eylem eylem)
+        {
+            context.Eylemler.Add(eylem);
+        }
+
+        public void DeleteFaaliyet(Faaliyet faaliyet)
+        {
+            context.Faaliyetler.Remove(faaliyet);
+        }
+
+        public StratejikPlan GetAktifStratejikPlan()
+        {
+            StratejikPlan plan = context.StratejikPlanlar.First();
+
+            return GetPlan(plan.Id);
         }
     }
 }

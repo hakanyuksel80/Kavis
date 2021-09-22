@@ -122,17 +122,19 @@ namespace KavisWeb.Enitites.DbModels
     }
 
     [Table("Faaliyetler")]
-    public class Faaliyet
+    public class Faaliyet : StratejiTipi
     {
-
-        public int Id { get; set; }
 
         public int EylemId { get; set; }
 
         [JsonIgnore]
         public Eylem Eylem { get; set; }
 
-        public string Adi { get; set; }
+        //public string Adi { get; set; }
+
+        public DateTime Baslama { get; set; }
+
+        public DateTime Bitis { get; set; }
 
         public string Gerceklesme { get; set; }
 
@@ -140,6 +142,9 @@ namespace KavisWeb.Enitites.DbModels
 
         public string Durum { get; set; }
 
+        public string Birim { get; set; }
+
+        //public int SiraNo { get; set; }
     }
 
 

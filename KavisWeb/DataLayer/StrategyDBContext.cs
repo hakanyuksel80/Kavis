@@ -29,6 +29,8 @@ namespace KavisWeb.DataLayer
         public DbSet<Gosterge> Gostergeler { get; set; }
 
         public DbSet<Eylem> Eylemler { get; set; }
+
+        public DbSet<Faaliyet> Faaliyetler { get; set; }
         
 
     }

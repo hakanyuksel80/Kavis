@@ -1,4 +1,5 @@
 ﻿
+
 class PlanItem {
 
     constructor(id, title, siraNo, items = [], state = "") {
@@ -59,7 +60,7 @@ class AmacPlanItem extends PlanItem {
 
     Draw(state = "") {
 
-        let $obj = $(`<div class="card" data-id="${this.Id}"  data-state="${state}"></div>`);
+        let $obj = $(`<div class="card amac-card" data-id="${this.Id}"  data-state="${state}"></div>`);
 
         let $obj1 = $(this.amac_panel_baslik(this.SiraNo, this.Title));
 
@@ -133,6 +134,7 @@ class AmacPlanItem extends PlanItem {
     }
 
     Collect() {
+
         let id = this.obj.data("id");
         let text = this.obj.find(".amac-title").text();
         let state = this.obj.data("state");
@@ -388,8 +390,9 @@ class GostergePlanItem extends PlanItem {
 
     performans_satir(data) {
 
+
         return `<tr data-id='${this.Id}'>
-                <td>P.G.<span class="gosterge-order"  contenteditable="true">${data.PGNo ?? ""}</span></td>
+                <td>P.G.<span class="gosterge-order"  contenteditable="true">${data.Kod ?? ""}</span></td>
                 <td contenteditable="true" class="gosterge-title">${this.Title}</td>
                 <td contenteditable="true">${data.HedefeEtkisi ?? ""}</td>
                 <td contenteditable="true">${data.Baslangic ?? ""}</td>
@@ -431,8 +434,12 @@ class GostergePlanItem extends PlanItem {
                     </select>`;
     }
 
-    Collect() {        
+    Collect() {
+
+        
+
         let id = this.obj.data("id");
+        let no = this.obj.find(".gosterge-order").text();
         let state = this.obj.data("state");
         let text = this.obj.find(".gosterge-title").text();
         let fields = this.obj.children();
@@ -448,17 +455,13 @@ class GostergePlanItem extends PlanItem {
         let birim = $(fields[11]).find("select").val();
         //let birimAdi = $(fields[11]).find("select").val();
 
-        let d = { Id: id, Baslik: text, Baslangic: baslangic, HedefeEtkisi: hedefeEtkisi, Yil1: yil1, Yil2: yil2, Yil3: yil3, Yil4: yil4, Yil5: yil5, Izleme: izlemeSikligi, Rapor: raporSikligi, SorumluBirim: birim, State : state };
+        let d = { Id: id, Baslik: text, Kod : no, Baslangic: baslangic, HedefeEtkisi: hedefeEtkisi, Yil1: yil1, Yil2: yil2, Yil3: yil3, Yil4: yil4, Yil5: yil5, Izleme: izlemeSikligi, Rapor: raporSikligi, SorumluBirim: birim, State : state };
 
         return d;
     }
 }
 
 class StratejikPlanItem extends PlanItem {
-
-
-
-
 
     constructor(data) {
         if (data != undefined) {
@@ -512,7 +515,7 @@ class StratejikPlanItem extends PlanItem {
 
         let THIS = this;
         return api_get("/api/StratejikPlan/" + id).done(function (d) {           
-            
+           
             THIS.Build(d);
             THIS.Draw("#accordionSP");
         });

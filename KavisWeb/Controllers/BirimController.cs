@@ -1,4 +1,5 @@
 ﻿using KavisWeb.BusinessLayer;
+using KavisWeb.Enitites.DbModels;
 using KavisWeb.Models;
 using System;
 using System.Collections.Generic;
@@ -33,13 +34,16 @@ namespace KavisWeb.Controllers
                 Faaliyetler = faaliyetler,
             };
 
-
             return View(model);
         }
 
         public ActionResult Gosterge()
         {
-            return View();
+            ViewBag.AktifYil = 3;
+
+            StratejikPlan stratejikPlan = this.manager.GetAktifStratejikPlan();
+
+            return View(stratejikPlan);
         }
         
     }

@@ -1,4 +1,5 @@
-﻿
+﻿@model List<KavisWeb.Enitites.Views.FaaliyetRaporListView>
+
 @{
     ViewBag.Title = "FaaliyetRaporu";
 }
@@ -66,41 +67,28 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>3.1.1.1. Okul öncesi eğitim için derslik yapılacaktır.</td>
-                    <td>Eğitime % 100 Destek Kampanyası-hayırsever bağışı ile anaokulu binası yapımı</td>
-                    <td>
-                        20/03/2020
-                        30/06/2020
-                    </td>
-                    <td>Etimesgut ilçesinde 5 derslikli 1, Çankaya ilçesinde toplamda 10 derslikli 2 anaokulu hayırseverler tarafından yaptırılmıştır.</td>
-                    <td>Üç anaokulu eğitime kazandırılarak il genelinde okul öncesi eğitimde okullaşma oranı %1 artırılmıştır.</td>
-                    <td>Tamamlandı</td>
-                    <td>İnşaat ve Emlak Hizmetleri</td>
-                    <td>
-                        <div class="" style="width:200px;">
-                            <button class="btn btn-sm btn-success">Sil</button>
-                            <button class="btn btn-sm btn-success" data-target="#faaliyetEkle" data-toggle="modal">Düzenle</button>
-                            <button class="btn btn-sm btn-success" data-target="#faaliyetDurum" data-toggle="modal">Durum Gir</button>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>3.1.1.2.</td>
-                    <td>&nbsp;.......</td>
-                    <td>&nbsp;.......</td>
-                    <td>&nbsp;.......</td>
-                    <td>&nbsp;.......</td>
-                    <td>&nbsp;.......</td>
-                    <td>&nbsp;.......</td>
-                    <td>
-                        <div class="" style="width:200px;">
-                            <button class="btn btn-sm btn-success">Sil</button>
-                            <button class="btn btn-sm btn-success" data-target="#faaliyetEkle" data-toggle="modal">Düzenle</button>
-                            <button class="btn btn-sm btn-success" data-target="#faaliyetDurum" data-toggle="modal">Durum Gir</button>
-                        </div>
-                    </td>
-                </tr>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.EylemAdi</td>
+                        <td>@item.FaaliyetAdi</td>
+                        <td>
+                            @item.Tarih
+                        </td>
+                        <td>@item.Gerceklesme</td>
+                        <td>@item.Sonuc</td>
+                        <td>@item.Durum</td>
+                        <td>@item.Birim</td>
+                        <td>
+                            <div class="" style="width:200px;">
+                                <button class="btn btn-sm btn-success" data-id="@item.Id">Sil</button>                                
+                                <button class="btn btn-sm btn-success" data-id="@item.Id" data-target="#faaliyetDurum" data-toggle="modal">Degistir</button>
+                            </div>
+                        </td>
+                    </tr>
+                }
+
+              
             </tbody>
         </table>
 

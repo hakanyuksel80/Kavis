@@ -5,8 +5,9 @@ using System.Web;
 
 namespace KavisWeb.Enitites.Views
 {
-    public class FaaliyetListView
+    public class FaaliyetRaporListView
     {
+
         public int Id { get; set; }
 
         public string EylemAdi { get; set; }
@@ -14,5 +15,14 @@ namespace KavisWeb.Enitites.Views
         public string FaaliyetAdi { get; set; }
 
         public string Birim { get; set; }
+
+        public string Tarih { get; set; }
+
+        public string Gerceklesme { get; set; }
+
+        public string Sonuc { get; set; }
+
+        public string Durum { get; set; }
+        
     }
 }

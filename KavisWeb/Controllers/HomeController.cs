@@ -1,4 +1,6 @@
-﻿using System;
+﻿using KavisWeb.BusinessLayer;
+using KavisWeb.Enitites.Views;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -29,9 +31,13 @@ namespace KavisWeb.Controllers
 
 
         public ActionResult FaaliyetRaporu()
-        {           
+        {
 
-            return View();
+            StratejikPlanManager2 manager = new StratejikPlanManager2();
+
+            List<FaaliyetRaporListView> model = manager.GetFaaliyetRapor();
+
+            return View(model);
         }    
 
         

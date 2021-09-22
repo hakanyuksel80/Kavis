@@ -1,4 +1,5 @@
-﻿
+﻿@model  KavisWeb.Enitites.DbModels.StratejikPlan
+
 @{
     ViewBag.Title = "BirimGosterge";
 }
@@ -8,89 +9,139 @@
         border: solid 1px black;
         margin-bottom: 10px;
     }
+
+    .amac {
+        padding:10px;
+        background-color:#ffdb00;
+    }
+
+    .hedef {
+        padding: 10px;
+        background-color: #06cefb;
+    }
+
+    .strateji {
+       
+        background-color: #8dcfd8;
+    }
 </style>
 
 <h4>Sorumlu Olduğunuz Stratejik Plan Öğeleri</h4>
 <br />
+
 <div class="sp">
+    @if (Model.Amaclar != null)
+    {
+        foreach (var amac in Model.Amaclar)
+        {
+            <div class="amac"><strong>AMAÇ</strong> @amac.SiraNo @amac.Baslik</div>
+            foreach (var hedef in amac.Hedefler)
+            {
+                <div class="hedef"><strong>HEDEF</strong> @hedef.SiraNo @hedef.Baslik </div>
+                <table class="table table-bordered table-dar table-sm table-striped table-info ">
+                    <thead>
+                        <tr>
+                            <td colspan="20"><h4 class="text-center">GÖSTERGELER</h4></td>
+                        </tr>
+                        <tr>
+                            <th width="150" rowspan="2">&nbsp;</th>
+                            <th rowspan="2">Hedef Etkisi</th>
+                            <th rowspan="2">Başlangıç</th>
+                            <th colspan="2">2019</th>
+                            <th colspan="2">2020</th>
+                            <th colspan="2">2021</th>
+                            <th colspan="2">2022</th>
+                            <th colspan="2">2023</th>
+                            <th rowspan="2">İzleme<br>Sıklığı</th>
+                            <th rowspan="2">Rapor<br>Sıklığı</th>
+                        </tr>
+                        <tr>
+                            <th style="height:2px;">P</th>
+                            <th>G</th>
+                            <th>P</th>
+                            <th>G</th>
+                            <th>P</th>
+                            <th>G</th>
+                            <th>P</th>
+                            <th>G</th>
+                            <th>P</th>
+                            <th>G</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var gosterge in hedef.Gostergeler)
+                        {
 
-    <div class="amac">1. AMAÇ</div>
-    <div class="hedef">
-        1. HEDEF
-    </div>
-    <table class="table table-bordered table-dar table-sm">
-        <thead>
-            <tr>
-                <th width="150" rowspan="2">&nbsp;</th>
-                <th rowspan="2">Hedef Etkisi</th>
-                <th rowspan="2">Başlangıç</th>
-                <th colspan="2">2019</th>
-                <th colspan="2">2020</th>
-                <th colspan="2">2021</th>
-                <th colspan="2">2022</th>
-                <th colspan="2">2023</th>
-                <th rowspan="2">İzleme<br>Sıklığı</th>
-                <th rowspan="2">Rapor<br>Sıklığı</th>
-            </tr>
-            <tr>
-                <th style="height:2px;">P</th>
-                <th>G</th>
-                <th>P</th>
-                <th>G</th>
-                <th>P</th>
-                <th>G</th>
-                <th>P</th>
-                <th>G</th>
-                <th>P</th>
-                <th>G</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>Performans G.1</td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td style="background-color:#fef2ae" contenteditable="true"></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td>Performans G.2</td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td style="background-color:#fef2ae" contenteditable="true"></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-        </tbody>
-    </table>
+                            <tr>
+                                <td>@gosterge.Kod @gosterge.Baslik</td>
+                                <td>@gosterge.HedefeEtkisi</td>
+                                <td>@gosterge.Baslangic</td>
+                                <td>@gosterge.Yil1</td>
+                                <td>@gosterge.Yil1G</td>
+                                <td>@gosterge.Yil2</td>
+                                <td>@gosterge.Yil2G</td>
+                                <td @gosterge.Yil3></td>
+                                <td class="aktifYil" data-id="@gosterge.Id">@gosterge.Yil3G</td>
+                                <td>@gosterge.Yil4</td>
+                                <td>@gosterge.Yil4G</td>
+                                <td>@gosterge.Yil5</td>
+                                <td>@gosterge.Yil5G</td>
+                                <td>@gosterge.Izleme</td>
+                                <td>@gosterge.Rapor</td>
+                            </tr>
 
+                        }
+                    </tbody>
+                </table>
 
+                foreach (var strateji in hedef.Stratejiler)
+                {
+                    <div class="strateji">@strateji.SiraNo @strateji.Baslik</div>
+                }
+            }
+        }
+    }
 
-    <div class="strateji">1. Strateji</div>
-    <div class="strateji">2. Strateji</div>
-    <div class="strateji">3. Strateji</div>
-
-    <hr />
-    <div class="amac">2. AMAÇ</div>
 </div>
 
-<button class="btn btn-primary "> Kaydet</button>
+
+
+<button class="btn btn-primary .btn-birim-gosterge-save"> Kaydet</button>
+
+@section scripts {
+
+
+    <script type="text/javascript">
+
+        var aktifYil = @ViewBag.AktifYil;
+
+        $(document).ready(function () {
+
+            $('td.aktifYil').attr("contenteditable", "true").style("background-color", "#fef2ae");
+
+
+            $('.btn-birim-gosterge-save').on("click", function () {
+
+                let data = [];
+
+                $('td.aktifYil').each(function (i, v) {
+                    let id = v.data("id");
+                    let val = v.text();
+                    let yil =
+                    data.push({ GostergeId: id, Value: val, Yil: });
+                });
+
+                api_post("api/BirimGosterge", data, function (d) {
+                    if (d.Success) {
+                        successMessage("Kayıt Yapıldı");
+                    } else {
+                        errorMessage("Kaydedilemedi:" + d.Message);
+                    }
+                });
+
+            });
+        });
+
+    </script>
+
+}
