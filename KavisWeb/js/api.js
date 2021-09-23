@@ -12,6 +12,20 @@ function api_get(url, onSuccess) {
     });
 }
 
+
+function api_delete(url, onSuccess) {
+
+    return $.ajax({
+        url: url,
+        type: 'DELETE',
+        
+        success: onSuccess,
+    }).fail(function (e) {
+        errorMessage("Bağlantı Hatası Hata Oluştu");
+    });    
+}
+
+
 function successMessage(baslik, mesaj) {
     //swal(baslik, mesaj, "success");
     toastr.success(mesaj, baslik);

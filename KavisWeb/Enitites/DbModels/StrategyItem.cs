@@ -39,6 +39,26 @@ namespace KavisWeb.Enitites.DbModels
 
     }
 
+    [Table("Plans")]
+    public class StratejikPlan : IEntity
+    {
+        public int Id { get; set; }
+
+        public int KurumKodu { get; set; }
+
+        public string KurumAdi { get; set; }
+
+        public int Baslangic { get; set; }
+
+        public int Bitis { get; set; }
+
+        public KurumTipi KurumTipi { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public List<Amac> Amaclar { get; set; }
+
+    }
+
     [Table("Amaclar")]
     public class Amac : StratejiTipi
     {
@@ -48,6 +68,7 @@ namespace KavisWeb.Enitites.DbModels
         [JsonIgnore]
         public virtual StratejikPlan StratejikPlan { get; set; }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public virtual List<Hedef> Hedefler { get; set; }
     }
 
@@ -57,8 +78,10 @@ namespace KavisWeb.Enitites.DbModels
         [JsonIgnore]
         public Amac Amac { get; set; }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public virtual List<Gosterge> Gostergeler { get; set; }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public virtual List<Strateji> Stratejiler { get; set; }
     }
 
@@ -148,25 +171,7 @@ namespace KavisWeb.Enitites.DbModels
     }
 
 
-    [Table("Plans")]
-    public class StratejikPlan : IEntity
-    {
-        public int Id { get; set; }
-
-        public int KurumKodu { get; set; }
-
-        public string KurumAdi { get; set; }
-
-        public int Baslangic { get; set; }
-
-        public int Bitis { get; set; }
-
-        public KurumTipi KurumTipi { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public List<Amac> Amaclar { get; set; }
-
-    }
+   
 
 
 

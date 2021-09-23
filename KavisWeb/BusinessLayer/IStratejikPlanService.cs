@@ -15,7 +15,7 @@ namespace KavisWeb.BusinessLayer
         List<StratejikPlanListView> GetViewList();
         
         void SavePlan(StratejikPlan plan);      
-        void DeletePlan(int id);
+        bool DeletePlan(int id);
         
         Amac GetAmac(int id);
         void DeleteAmac(Amac amac);

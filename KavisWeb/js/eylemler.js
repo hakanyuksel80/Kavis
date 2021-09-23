@@ -6,11 +6,11 @@ class Eylemler_Templates {
     }
 
 
-    birim_select() {
+    birim_select(value) {
 
-        return `<select class="select-mini birim-select">
-            <option value="">(BİRİM SEÇİNİZ)</option>
-        </select>`;
+
+
+        return birimListe(value);
 
     }
 
@@ -48,7 +48,10 @@ class Eylemler_Templates {
 
 class StratejiListItem extends PlanItem {
 
+    //constructor(id, title, siraNo, items = [], state = "") {
 
+    //    super(id, title, siraNo, items = [], state)
+    //}
 
     Draw() {
 
@@ -61,9 +64,10 @@ class StratejiListItem extends PlanItem {
             for (var i = 0; i < this.Items.length; i++) {
                 let item = this.Items[i];
 
-                let newItem = new EylemItem(item.Id, item.Baslik, i + 1, null, '');//item.SiraNo
+                let newItem = new EylemItem(item.Id, item.Baslik, i + 1, item.Birim, '');//item.SiraNo
                 newItems.push(newItem);
                 newItem.No = item.No;
+                newItem.Birim = item.Birim;
                 let h = newItem.Draw();
                 $obj.find(".eylemler").append($(h));
             }
@@ -75,11 +79,11 @@ class StratejiListItem extends PlanItem {
 
 class EylemItem extends PlanItem {
 
-    Birim = "";
-
+    
     Draw(state) {
         let template = new Eylemler_Templates();
-        return template.eylem(this.Id, this.Title, this.No, this.Order, this.State);
+       
+        return template.eylem(this.Id, this.Title, this.No, this.Birim, this.State);
     }
 
 }

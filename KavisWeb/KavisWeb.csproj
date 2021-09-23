@@ -140,11 +140,14 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="BusinessLayer\BirimManager.cs" />
+    <Compile Include="BusinessLayer\IBirimService.cs" />
     <Compile Include="BusinessLayer\IStratejikPlanService.cs" />
     <Compile Include="BusinessLayer\StreatejikPlanManager2.cs" />
     <Compile Include="BusinessLayer\StreatejikPlanManager.cs" />
     <Compile Include="Controllers\api\BirimFaaliyetlerController.cs" />
     <Compile Include="Controllers\api\BirimGostergelerController.cs" />
+    <Compile Include="Controllers\api\BirimlerController.cs" />
     <Compile Include="Controllers\api\DenemeController.cs" />
     <Compile Include="Controllers\api\EylemlerController.cs" />
     <Compile Include="Controllers\api\StratejikPlanController.cs" />
@@ -154,7 +157,9 @@
     <Compile Include="Controllers\PerformansProgramiController.cs" />
     <Compile Include="Controllers\StratejikPlanController.cs" />
     <Compile Include="Controllers\StratejikPlansController.cs" />
+    <Compile Include="DataLayer\Abstract\IBirimDal.cs" />
     <Compile Include="DataLayer\Abstract\IStratejikPlanDal.cs" />
+    <Compile Include="DataLayer\EF\EfBirimDal.cs" />
     <Compile Include="DataLayer\EF\EfStratejikPlanDal.cs" />
     <Compile Include="DataLayer\EF\EfStrategyItemDal.cs" />
     <Compile Include="DataLayer\Abstract\IStrategyItemDal.cs" />
@@ -189,11 +194,19 @@
     <Compile Include="Migrations\202109220911365_Faaliyet.Designer.cs">
       <DependentUpon>202109220911365_Faaliyet.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202109230902448_birim.cs" />
+    <Compile Include="Migrations\202109230902448_birim.Designer.cs">
+      <DependentUpon>202109230902448_birim.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ViewPerformansGirisModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\KavisWeb.DataLayer.StrategyDBContext.mdf" />
+    <Content Include="App_Data\KavisWeb.DataLayer.StrategyDBContext_log.ldf">
+      <DependentUpon>KavisWeb.DataLayer.StrategyDBContext.mdf</DependentUpon>
+    </Content>
     <Content Include="assets\advanced-datatable\docs\34cdb56b2c.html" />
     <Content Include="assets\advanced-datatable\docs\DataTable.defaults.columns.html" />
     <Content Include="assets\advanced-datatable\docs\DataTable.defaults.html" />
@@ -2325,7 +2338,6 @@
     <Content Include="Views\Deneme\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
     <Folder Include="assets\file-uploader\server\node\public\files\" />
     <Folder Include="assets\file-uploader\server\node\tmp\" />
     <Folder Include="assets\jquery-file-upload\server\node\public\files\thumbnail\" />
@@ -2360,6 +2372,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202109220911365_Faaliyet.resx">
       <DependentUpon>202109220911365_Faaliyet.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202109230902448_birim.resx">
+      <DependentUpon>202109230902448_birim.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

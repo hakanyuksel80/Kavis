@@ -37,14 +37,34 @@ namespace KavisWeb.Controllers
             return View(model);
         }
 
-        public ActionResult Gosterge()
+        public ActionResult Gosterge(int id = 0)
         {
-            ViewBag.AktifYil = 3;
+            ViewBag.AktifYil = 3;            
 
-            StratejikPlan stratejikPlan = this.manager.GetAktifStratejikPlan();
+            if (id > 0)
+            {
+                StratejikPlan stratejikPlan = this.manager.GetAktifStratejikPlan();
 
-            return View(stratejikPlan);
+
+                foreach (var amac in stratejikPlan.Amaclar)
+                {
+                    foreach (var hedef in amac.Hedefler)
+                    {
+                        hedef.Gostergeler = hedef.Gostergeler.Where(x => x.SorumluBirimId == id).ToList();
+                    }
+
+                    amac.Hedefler = amac.Hedefler.Where(x => x.Gostergeler.Count() > 0).ToList();
+                }
+
+                stratejikPlan.Amaclar = stratejikPlan.Amaclar.Where(x => x.Hedefler.Count() > 0).ToList();
+
+
+                return View(stratejikPlan);
+
+            }
+
+            return View(new StratejikPlan());
         }
-        
+
     }
 }

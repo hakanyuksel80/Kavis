@@ -89,7 +89,7 @@ class StratejikPlan {
 
     add_performans(element) {
 
-        let amac_index = $(element).parents(".amac-card").index();        
+        let amac_index = $(element).parents(".amac-card").index();
         let hedef_index = $(element).parents(".hedefKarti").index();
 
         console.log({ amac: amac_index, hedef: hedef_index });
@@ -153,8 +153,8 @@ class StratejikPlan {
         let container = $(button).parents("tbody")[0];
         let $s = $($(button).parents("tr")[0]);
         let id = $s.data("id");
-           
-        
+
+
         if (id != "" && id != undefined && id != "0") {
             $s.data("state", "deleted");
             console.log($s.data("state"));
@@ -228,7 +228,7 @@ function on_btnDelete_click_event() {
         case "hedef": sp.delete_hedef(this); break;
         case "performans": sp.delete_performans(this); break;
         case "strateji": sp.delete_strateji(this); break;
-        case "sp": on_delete_sp_click_event();
+        case "sp": on_delete_sp_click_event(this);
     }
 }
 
@@ -245,15 +245,28 @@ function on_btnEdit_click_event() {
     }
 }
 
-function on_delete_sp_click_event() {
+function on_delete_sp_click_event(button) {
 
-    silmeMesaji("Stratejik Planı silmek istediğinize emin misiniz? Bu kayda bağlı tüm kayıtlar silinecektir.");
+    let id = $(button).data("id");
+
+    silmeMesaji("Stratejik Planı silmek istediğinize emin misiniz? Bu kayda bağlı tüm kayıtlar silinecektir.").then(function (d) {
+
+        if (d) {
+            a.Delete(id).done(function (d) {
+                $(button).parents("tr").hide(500, function () { $(this).remove(); });
+            });
+        }
+
+    });
 
 
 }
 
 var a;
 
+var birimler;
+
+var birimListStr = "";
 
 $(function () {
 
@@ -277,5 +290,25 @@ $(function () {
     });
 
 
+    api_get("/api/Birimler").done(function (d) {
+        birimler = d;        
+    });
+
 
 });
+
+function birimListe(selectedValue) {
+
+    let html = "";
+
+    for (var i = 0; i < birimler.length; i++) {
+        const birim = birimler[i];
+        if (selectedValue == birim.Id)
+            html += `<option selected value="${birim.Id}">${birim.Baslik}</option>`;
+        else
+            html += `<option value="${birim.Id}">${birim.Baslik}</option>`;
+    }
+
+    return `<select class="select-mini birim-select"><option value="">(BİRİM SEÇİNİZ)</option>${html}</select>`;
+
+}

@@ -1,6 +1,10 @@
 ﻿
+@using KavisWeb.Enitites.DbModels;
+
 @{
     ViewBag.Title = "Ayarlar";
+
+    List<Birim> birimler = ViewBag.Birimler as List<Birim>;
 }
 
 <div class="container">
@@ -60,19 +64,17 @@
                                         <th width="%">Birim Adı</th>
                                         <th style="width:50px;">&nbsp;</th>
                                     </tr>
-                                    <tr>
-                                        <td>TEM1</td>
-                                        <td>Temel Eğitim</td>
-                                        <td style="text-align:center;"></td>
-                                    </tr>
-                                    <tr>
-                                        <td>TEM1</td>
-                                        <td>Temel Eğitim</td>
-                                        <td style="text-align:center;"></td>
-                                    </tr>
                                 </thead>
-                                <tr>
-                                </tr>
+                                <tbody>
+                                    @foreach (var item in birimler)
+                                    {
+                                        <tr>
+                                            <td>@item.Id</td>
+                                            <td>@item.Baslik</td>
+                                            <td style="text-align:center;"></td>
+                                        </tr>
+                                    }
+                                </tbody>
                             </table>
 
 

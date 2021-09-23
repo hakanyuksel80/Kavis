@@ -36,8 +36,21 @@ textarea {
     border: solid 1px black;
 }
 
+
+.amac {
+    padding: 10px;
+    background-color: #ffdb00;
+}
+
+.hedef {
+    padding: 10px;
+    background-color: #06cefb;
+}
+
+
 .strateji {
     padding: 10px;
+    background-color: #8dcfd8;
 }
 
 .eylem {
@@ -47,6 +60,9 @@ textarea {
     padding: 10px;
     margin-left: 50px;
 }
+
+
+
 
 
 .btn-mini {
@@ -83,4 +99,9 @@ label.error {
 .icons>* {
     width:180px;
     margin:5px;
+}
+
+
+.stratejiContainer {
+    margin-bottom:20px;
 }

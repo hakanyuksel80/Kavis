@@ -1,4 +1,5 @@
 ﻿using KavisWeb.BusinessLayer;
+using KavisWeb.DataLayer.EF;
 using KavisWeb.Enitites.Views;
 using System;
 using System.Collections.Generic;
@@ -17,6 +18,13 @@ namespace KavisWeb.Controllers
 
         public ActionResult Ayarlar()
         {
+
+            EfBirimDal birimDal = new EfBirimDal();
+
+            var birimler = birimDal.GetAll();
+
+            ViewBag.Birimler = birimler;
+
             ViewBag.Message = "Your application description page.";
 
             return View();

@@ -31,6 +31,8 @@ namespace KavisWeb.DataLayer
         public DbSet<Eylem> Eylemler { get; set; }
 
         public DbSet<Faaliyet> Faaliyetler { get; set; }
+
+        public DbSet<Birim> Birimler { get; set; }
         
 
     }

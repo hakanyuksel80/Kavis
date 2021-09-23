@@ -10,21 +10,14 @@
         margin-bottom: 10px;
     }
 
-    .amac {
-        padding:10px;
-        background-color:#ffdb00;
-    }
-
-    .hedef {
-        padding: 10px;
-        background-color: #06cefb;
-    }
-
-    .strateji {
-       
-        background-color: #8dcfd8;
-    }
+   
 </style>
+
+<div class="row">
+    <div class="col">
+        <div class="birimListe"></div>
+    </div>
+</div>
 
 <h4>Sorumlu Olduğunuz Stratejik Plan Öğeleri</h4>
 <br />
@@ -44,7 +37,7 @@
                             <td colspan="20"><h4 class="text-center">GÖSTERGELER</h4></td>
                         </tr>
                         <tr>
-                            <th width="150" rowspan="2">&nbsp;</th>
+                            <th width="45%" rowspan="2">&nbsp;</th>
                             <th rowspan="2">Hedef Etkisi</th>
                             <th rowspan="2">Başlangıç</th>
                             <th colspan="2">2019</th>
@@ -115,10 +108,10 @@
 
         var aktifYil = @ViewBag.AktifYil;
 
-        $(document).ready(function () {
+        $(function () {
 
-            $('td.aktifYil').attr("contenteditable", "true").style("background-color", "#fef2ae");
-
+            //$('td.aktifYil').attr("contenteditable", "true").style("background-color", "#fef2ae");
+                      
 
             $('.btn-birim-gosterge-save').on("click", function () {
 
@@ -128,7 +121,7 @@
                     let id = v.data("id");
                     let val = v.text();
                     let yil =
-                    data.push({ GostergeId: id, Value: val, Yil: });
+                    data.push({ GostergeId: id, Value: val, Yil: '' });
                 });
 
                 api_post("api/BirimGosterge", data, function (d) {
@@ -140,6 +133,10 @@
                 });
 
             });
+
+            console.log(birimler);
+
+            $('.birimListe').html(birimListe());
         });
 
     </script>

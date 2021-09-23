@@ -261,7 +261,7 @@ namespace KavisWeb.Controllers.api
                 strateji.Baslik = model.Baslik;
                 strateji.SiraNo = ++siraNo;
                 strateji.Kod = hedef.Kod + "." + siraNo;
-                
+
 
                 manager.SaveStrateji(strateji);
             }
@@ -300,16 +300,29 @@ namespace KavisWeb.Controllers.api
                 gosterge.Rapor = model.Rapor;
                 gosterge.SorumluBirimId = model.SorumluBirimId;
                 gosterge.SorumluBirim = model.SorumluBirim;
-                
+
 
                 manager.SaveGosterge(gosterge);
             }
         }
 
         // DELETE: api/StratejikPlan/5
-        public void Delete(int id)
+        public IResult Delete(int id)
         {
-            stratejikPlanManager.DeletePlan(id);
+            try
+            {
+                if (stratejikPlanManager.DeletePlan(id))
+                    return new SuccessResult();
+                else
+                    return new ErrorResult("Plan Silinemedi");
+
+            }
+            catch (Exception ex)
+            {
+                return new ErrorResult(ex.Message);
+            }
+
+
         }
     }
 

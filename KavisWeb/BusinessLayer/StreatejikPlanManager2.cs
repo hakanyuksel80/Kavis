@@ -53,12 +53,14 @@ namespace KavisWeb.BusinessLayer
 
         }
 
-        public void DeletePlan(int id)
+        public bool DeletePlan(int id)
         {
             var plan = GetPlan(id);
 
             if (plan != null)
                 context.StratejikPlanlar.Remove(plan);
+
+            return context.SaveChanges() > 0;
         }
 
         public Amac GetAmac(int id)
