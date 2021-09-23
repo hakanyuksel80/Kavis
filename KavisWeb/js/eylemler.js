@@ -130,7 +130,7 @@ class Eylemler extends PlanItem {
         let data = this.Collect();
         console.log(data);
 
-        api_post("/api/Eylemler", JSON.stringify(data), function (d) {
+        api_post("/api/Eylemler", { Items: data }, function (d) {
             successMessage("Kaydedildi.");
         });
     }
@@ -179,7 +179,7 @@ function on_btnDeleteEylem_click_event() {
         $a.data("state", "deleted");
     } else
         $($(this).parents('.eylem')[0]).remove();
-        
+
 
     reorder(main_container, '.eylem:visible .eylem-no');
 
@@ -188,7 +188,7 @@ function on_btnDeleteEylem_click_event() {
 function on_btnAddEylem_click_event() {
     let container = $($(this).parents('.stratejiContainer')[0]).find('.eylemler');
     let c = container.find(".eylem").length;
-    container.append(etemp.eylem("", "", c+1, "", ""));
+    container.append(etemp.eylem("", "", c + 1, "", ""));
 
 };
 

@@ -168,7 +168,8 @@ namespace KavisWeb.BusinessLayer
 
         public List<Strateji> GetAllStratejiByBirim(string birim)
         {
-            return context.Stratejiler.Where(x => x.Eylemler.Where(y => y.Birim == birim).Count() > 0).ToList();
+            return context.Stratejiler.Include("Eylemler").ToList();
+            //return context.Stratejiler.Where(x => x.Eylemler.Where(y => y.Birim == birim).Count() > 0).ToList();
         }
 
         public List<FaaliyetListView> GetAllFaaliyet()

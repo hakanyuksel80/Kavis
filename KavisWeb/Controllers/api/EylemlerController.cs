@@ -94,7 +94,7 @@ namespace KavisWeb.Controllers.api
         }
 
         // POST: api/Eylemler
-        public void Post([FromBody] IEnumerable<PlanItem> model)
+        public void Post([FromBody]ParentPlanItem model)
         {
             var manager = this.stratejikPlanManager;
             //Eylemler = list;
@@ -102,7 +102,7 @@ namespace KavisWeb.Controllers.api
             int stratejiId = 0;
             int siraNo = 0;
 
-            foreach (var modelEylem in model)
+            foreach (var modelEylem in model.Items)
             {
                 Eylem eylem = null;
                 if (modelEylem.Id > 0)
@@ -123,9 +123,14 @@ namespace KavisWeb.Controllers.api
                 eylem.Birim = modelEylem.Birim;
                 eylem.SiraNo = ++siraNo;
                 eylem.Kod = strateji.Kod+"."+siraNo;                
-                eylem.StratejiId = modelEylem.Id;
+                eylem.StratejiId = modelEylem.ParentId;
                 eylem.Strateji = strateji;
+
+                if (eylem.Id == 0)
+                    manager.AddEylem(eylem);
             }
+
+            manager.SaveChanges();
         }
 
     }

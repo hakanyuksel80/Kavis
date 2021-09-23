@@ -69,10 +69,12 @@
         <ul class="list-group">
             @foreach (var eylem in strateji.Eylemler)
             {
-                <li class="list-group-item" data-id="@eylem.Id"> <span>@eylem.SiraNo. @eylem.Baslik</span> <button class="btn btn-sm btn-success float-right btn-faaliyetEkle">+ Faaliyet Ekle</button> </li>
+                <li class="list-group-item" data-id="@eylem.Id"> <span>@eylem.SiraNo. @eylem.Baslik</span> <button class="btn btn-sm btn-success float-right btn-faaliyetEkle"><span class="fa fa-plus"></span> Faaliyet Ekle</button> </li>
             }
         </ul>
-    }   
+        <br />
+    }
+
 
 </div>
 <br />
@@ -147,6 +149,14 @@
                     <textarea rows="4" class="form-control w-100" style="width:100%;max-width:none;"></textarea>
                 </div>
                 <div class="form-group">
+                    <label>Başlama Tarihi:</label>
+                    <input class="form-control w-100" type="date" />
+                </div>
+                <div class="form-group">
+                    <label>Bitiş Tarihi:</label>
+                    <input class="form-control w-100" type="date" />
+                </div>
+                <div class="form-group">
                     <label>Çıktı ve Sonuç:</label>
                     <textarea rows="4" class="form-control w-100" style="width:100%;max-width:none;"></textarea>
                 </div>
@@ -179,7 +189,7 @@
         class Faaliyetler {
 
             ekle(eylem, faaliyet) {
-                let dugmelerHtml = this.tabloSatirDugmeSablon(true, true, false);
+                let dugmelerHtml = this.tabloSatirDugmeSablon(true, true, true);
                 $('#tableFaliyetler tbody').append(this.tabloSatirSablon(eylem, faaliyet, dugmelerHtml));
             }
 
@@ -301,9 +311,9 @@
 
             $('.btn-faaliyetEkle').on("click", onFaaliyetEkleClickEvent);
 
-            $('.btn-faaliyetDuzenle').on("click", onFaaliyetDuzenleClickEvent);
+            $(document).on("click", '.btn-faaliyetDuzenle', onFaaliyetDuzenleClickEvent);
 
-            $('.btn-faaliyetSil').on("click", onFaaliyetSilClickEvent);
+            $(document).on("click", '.btn-faaliyetSil', onFaaliyetSilClickEvent);
 
 
         });
