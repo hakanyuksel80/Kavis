@@ -11,6 +11,8 @@ namespace KavisWeb.BusinessLayer
     {
         IBirimDal birimDal;
 
+        
+
         public BirimManager(IBirimDal birimDal)
         {
             this.birimDal = birimDal;

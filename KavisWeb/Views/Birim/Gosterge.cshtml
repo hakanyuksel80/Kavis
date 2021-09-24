@@ -2,6 +2,9 @@
 
 @{
     ViewBag.Title = "BirimGosterge";
+
+    List<SelectListItem> birimListe = ViewBag.BirimSelectList as List<SelectListItem>;
+
 }
 <style type="text/css">
 
@@ -10,12 +13,15 @@
         margin-bottom: 10px;
     }
 
-   
+    td.aktifYil {
+        background-color: white;
+    }
 </style>
 
 <div class="row">
     <div class="col">
-        <div class="birimListe"></div>
+
+        @Html.DropDownList("id", birimListe, "SEÇİNİZ")
     </div>
 </div>
 
@@ -99,7 +105,7 @@
 
 
 
-<button class="btn btn-primary .btn-birim-gosterge-save"> Kaydet</button>
+<button class="btn btn-primary" id="btn-birim-gosterge-save"> Kaydet</button>
 
 @section scripts {
 
@@ -110,21 +116,22 @@
 
         $(function () {
 
-            //$('td.aktifYil').attr("contenteditable", "true").style("background-color", "#fef2ae");
-                      
+            $('td.aktifYil').attr("contenteditable", "true").css("background-color", "#fef2ae");
 
-            $('.btn-birim-gosterge-save').on("click", function () {
 
-                let data = [];
+
+            $('#btn-birim-gosterge-save').on("click", function () {
+
+                let data = [];               
 
                 $('td.aktifYil').each(function (i, v) {
-                    let id = v.data("id");
-                    let val = v.text();
-                    let yil =
-                    data.push({ GostergeId: id, Value: val, Yil: '' });
+                    let id = $(v).data("id");
+                    let val = $(v).text();
+                    let yil = aktifYil;
+                    data.push({ GostergeId: id, Value: val, Yil: aktifYil });
                 });
 
-                api_post("api/BirimGosterge", data, function (d) {
+                api_post("/api/BirimGostergeler", { Items:data }, function (d) {
                     if (d.Success) {
                         successMessage("Kayıt Yapıldı");
                     } else {
@@ -134,9 +141,17 @@
 
             });
 
-            console.log(birimler);
 
-            $('.birimListe').html(birimListe());
+            $('#id').change(function () {
+                let birimId = $(this).val();
+
+                window.location = "/Birim/Gosterge/" + birimId;
+            });
+
+
+
+
+
         });
 
     </script>
