@@ -165,7 +165,9 @@ namespace KavisWeb.Enitites.DbModels
 
         public string Durum { get; set; }
 
-        public string Birim { get; set; }
+        public int Birim { get; set; }
+
+        public string BirimAdi { get; set; }
 
         //public int SiraNo { get; set; }
     }

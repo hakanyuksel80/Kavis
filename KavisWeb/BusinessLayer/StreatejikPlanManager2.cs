@@ -168,7 +168,7 @@ namespace KavisWeb.BusinessLayer
             context.Faaliyetler.Add(faaliyet);
         }
 
-        public List<Strateji> GetAllStratejiByBirim(string birim)
+        public List<Strateji> GetAllStratejiByBirim(int birim)
         {
             return context.Stratejiler.Include("Eylemler").ToList();
             //return context.Stratejiler.Where(x => x.Eylemler.Where(y => y.Birim == birim).Count() > 0).ToList();
@@ -184,12 +184,12 @@ namespace KavisWeb.BusinessLayer
 
 
 
-        public List<FaaliyetListView> GetAllFaaliyetByBirim(string birim)
+        public List<FaaliyetListView> GetAllFaaliyetByBirim(int birim)
         {
             var faaliyetler = context.Faaliyetler.Where(x => x.Birim == birim);
 
             return (from x in faaliyetler
-                    select new FaaliyetListView() { Id = x.Id, EylemAdi = x.Eylem.Kod + " " + x.Eylem.Baslik, FaaliyetAdi = x.Baslik, Birim = x.Birim }).ToList();
+                    select new FaaliyetListView() { Id = x.Id, EylemAdi = x.Eylem.Kod + " " + x.Eylem.Baslik, FaaliyetAdi = x.Baslik, Birim = x.BirimAdi }).ToList();
         }
 
 
@@ -198,7 +198,7 @@ namespace KavisWeb.BusinessLayer
             var faaliyetler = context.Faaliyetler.OrderBy(x => x.Eylem.Kod).ThenBy(x => x.SiraNo).ToList();
 
             return (from x in faaliyetler
-                    select new FaaliyetRaporListView() { Id = x.Id, EylemAdi = x.Eylem.Kod + " " + x.Eylem.Baslik, FaaliyetAdi = x.Baslik, Birim = x.Birim, Gerceklesme = x.Gerceklesme, Durum = x.Durum, Sonuc = x.Sonuc, Tarih = x.Baslama.ToShortDateString() + " " + x.Bitis.ToShortDateString() }).ToList();
+                    select new FaaliyetRaporListView() { Id = x.Id, EylemAdi = x.Eylem.Kod + " " + x.Eylem.Baslik, FaaliyetAdi = x.Baslik, Birim = x.BirimAdi, Gerceklesme = x.Gerceklesme, Durum = x.Durum, Sonuc = x.Sonuc, Tarih = x.Baslama.ToShortDateString() + " " + x.Bitis.ToShortDateString() }).ToList();
         }
 
         public void DeleteEylem(Eylem eylem)

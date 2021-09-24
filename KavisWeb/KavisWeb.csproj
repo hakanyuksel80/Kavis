@@ -198,6 +198,10 @@
     <Compile Include="Migrations\202109230902448_birim.Designer.cs">
       <DependentUpon>202109230902448_birim.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202109241251272_Birim.cs" />
+    <Compile Include="Migrations\202109241251272_Birim.Designer.cs">
+      <DependentUpon>202109241251272_Birim.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ViewPerformansGirisModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -2375,6 +2379,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202109230902448_birim.resx">
       <DependentUpon>202109230902448_birim.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202109241251272_Birim.resx">
+      <DependentUpon>202109241251272_Birim.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

@@ -23,11 +23,15 @@ namespace KavisWeb.Controllers
         }
 
         // GET: Birim
-        public ActionResult Index()
+        public ActionResult Index(int id = 0)
         {
+            int birim = id;
+
             var stratejiler = manager.GetAllStratejiByBirim(birim);
 
             var faaliyetler = manager.GetAllFaaliyetByBirim(birim);
+
+            BirimListesiYukle();
 
             ViewPerformansGirisModel model = new ViewPerformansGirisModel()
             {
@@ -40,17 +44,11 @@ namespace KavisWeb.Controllers
 
         public ActionResult Gosterge(int id = 0)
         {
-            ViewBag.AktifYil = 3;
-
-            BirimManager birimManager = new BirimManager(new EfBirimDal());
-
-            var birimler = birimManager.GetAll();
-
-            List<SelectListItem> birimSelectList = (from x in birimler select new SelectListItem { Value = x.Id.ToString(), Text = x.Baslik }).ToList();
+            ViewBag.AktifYil = 2;
+            
+            BirimListesiYukle();
 
             
-
-            ViewBag.BirimSelectList = birimSelectList;
 
             if (id > 0)
             {
@@ -76,5 +74,16 @@ namespace KavisWeb.Controllers
             return View(new StratejikPlan());
         }
 
+        private void BirimListesiYukle()
+        {
+            BirimManager birimManager = new BirimManager(new EfBirimDal());
+
+            var birimler = birimManager.GetAll();
+
+            List<SelectListItem> birimSelectList = (from x in birimler select new SelectListItem { Value = x.Id.ToString(), Text = x.Baslik }).ToList();
+            
+
+            ViewBag.BirimSelectList = birimSelectList;
+        }
     }
 }

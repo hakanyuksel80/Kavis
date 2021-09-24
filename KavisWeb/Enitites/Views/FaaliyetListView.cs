@@ -14,5 +14,8 @@ namespace KavisWeb.Enitites.Views
         public string FaaliyetAdi { get; set; }
 
         public string Birim { get; set; }
+
+        
+
     }
 }

@@ -1,6 +1,10 @@
 ﻿
 @{
     ViewBag.Title = "Birim";
+
+    List<SelectListItem> birimListe = ViewBag.BirimSelectList as List<SelectListItem>;
+
+    
 }
 
 
@@ -59,6 +63,16 @@
 
 <h4>PERFORMANS PROGRAMI GİRİŞ</h4>
 <p>Sorumlu Olduğunuz Eylemler</p>
+
+<div class="row mt-4 mb-4">
+    <div class="col">
+        <div class="form-group">
+            <label for="id">Birim</label>
+            @Html.DropDownList("id", birimListe, "SEÇİNİZ", new { @class = "form-control" })
+        </div>
+
+    </div>
+</div>
 
 
 <div class="sp">

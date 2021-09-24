@@ -8,8 +8,6 @@ class Eylemler_Templates {
 
     birim_select(value) {
 
-
-
         return birimListe(value);
 
     }
