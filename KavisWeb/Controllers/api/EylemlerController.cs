@@ -15,12 +15,13 @@ namespace KavisWeb.Controllers.api
         
         IStratejikPlanService stratejikPlanManager = null;
 
+        
         public EylemlerController()
         {
             this.stratejikPlanManager = new StratejikPlanManager2();
         }
 
-        // GET: api/Eylemler
+        // GET: api/Eylemler        
         public ParentPlanItem Get(int id)
         {
             var stratejiler = stratejikPlanManager.GetAllStrateji(id);

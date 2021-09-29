@@ -297,18 +297,31 @@ $(function () {
 
 });
 
-function birimListe(selectedValue) {
+function birimListe(selectedValue,multiselect = false) {
 
     let html = "";
+    selectedValue = selectedValue ?? "";
+    
+    try {
+        selectedValue = selectedValue.split(',');
+    } catch  {
+        console.log(selectedValue);
+        selectedValue = "";
+    }
+    
 
     for (var i = 0; i < birimler.length; i++) {
         const birim = birimler[i];
-        if (selectedValue == birim.Id)
+        if (selectedValue.indexOf(birim.Id.toString()) >= 0)
             html += `<option selected value="${birim.Id}">${birim.Baslik}</option>`;
         else
             html += `<option value="${birim.Id}">${birim.Baslik}</option>`;
     }
 
-    return `<select class="select-mini birim-select"><option value="">(BİRİM SEÇİNİZ)</option>${html}</select>`;
+    return `<select class="select-mini birim-select" ${multiselect?"multiple":""}><option value="">(BİRİM SEÇİNİZ)</option>${html}</select>`;
 
+}
+
+function showTab(tab) {
+    return $('.nav-tabs a[href="#' + tab + '"]').tab('show',true);
 }

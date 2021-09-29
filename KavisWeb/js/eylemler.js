@@ -8,23 +8,30 @@ class Eylemler_Templates {
 
     birim_select(value) {
 
-        return birimListe(value);
+        return birimListe(value,true);
 
     }
 
     eylem(id, title, no, birim, state) {
-        return ` <div class="boxed eylem" data-id="${id}" data-state="${state}">
-                Eylem <span class='eylem-no'>${no}</span>
-                <span class='eylem-title' contenteditable="true">${title}</span>
-                <div class="float-right d-flex">
-                    <div>
-                       ${this.birim_select(birim)}
+        return `<div class="boxed eylem" data-id="${id}" data-state="${state}">
+                    <div class="d-flex d-flex-row">
+                        <div style="flex-grow:4">
+                            Eylem <span class='eylem-no'>${no}</span>
+                                  <span class='eylem-title' contenteditable="true">${title}</span>
+                        </div>
+                        <div class="">
+                            <button class="btn btn-sm btn-outline-danger btn-delete-eylem"><span class="fa fa-trash"></span></button>
+                        </div>
                     </div>
-                   <div><button class="btn btn-sm btn-outline-danger btn-delete-eylem"><span class="fa fa-trash"></span></button></div>
-
+                <div>
+                <hr/>
+                <div class="float-right">
+                        ${this.birim_select(birim)}                              
                 </div>
+<div style="clear:both"></div>
+               </div>
             </div>
-
+            
            `;
     }
 
@@ -119,7 +126,7 @@ class Eylemler extends PlanItem {
 
     Get() {
         let THIS = this;
-        api_get("/api/Eylemler/1").done(function (d) {
+        return api_get("/api/Eylemler/1").done(function (d) {
             console.log(d);
             THIS.Build(d);
             THIS.Draw();
@@ -153,7 +160,7 @@ class Eylemler extends PlanItem {
                 let state = $eylemObj.data("state");
                 let eylemNo = $eylemObj.find(".eylem-no").text();
                 let text = $eylemObj.find(".eylem-title").text();
-                let birim = $eylemObj.find(".birim-select").val();
+                let birim = $eylemObj.find(".birim-select").val().toString();
 
                 data.push({ Id: eylemId, ParentId: id, Baslik: text, State: state, Birim: birim, No: eylemNo });
 
@@ -203,17 +210,25 @@ function on_btnSaveEylemler_click_event() {
 var e = new Eylemler();
 
 
-$(function () {
+$(document).ready(function () {
 
 
 
-    e.Get();
+    e.Get().then(function () {
+
+        $('select').parent().css("width", "50%")
+        $('select.birim-select').select2({width:"100%"});
+
+    });
 
     $(document).on('click', '.btn-add-eylem', on_btnAddEylem_click_event);
 
     $(document).on('click', '.btn-delete-eylem', on_btnDeleteEylem_click_event);
 
     $(document).on('click', '.btn-kaydet-eylemler', on_btnSaveEylemler_click_event);
+
+  
+
 
 });
 

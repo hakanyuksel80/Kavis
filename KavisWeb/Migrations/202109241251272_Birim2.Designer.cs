@@ -7,9 +7,9 @@ namespace KavisWeb.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class Birim : IMigrationMetadata
+    public sealed partial class Birim2 : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(Birim));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(Birim2));
         
         string IMigrationMetadata.Id
         {

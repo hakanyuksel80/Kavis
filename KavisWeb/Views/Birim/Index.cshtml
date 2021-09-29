@@ -62,7 +62,6 @@
     </table>*@
 
 <h4>PERFORMANS PROGRAMI GİRİŞ</h4>
-<p>Sorumlu Olduğunuz Eylemler</p>
 
 <div class="row mt-4 mb-4">
     <div class="col">
@@ -74,49 +73,60 @@
     </div>
 </div>
 
+<ul class="nav nav-tabs">
+    <li class="nav-item"><a class="nav-link active" href="#eylemler" data-toggle="tab" >Sorumlu Olduğunuz Eylemler</a></li>
+    <li class="nav-item"><a class="nav-link" href="#faaliyetler" data-toggle="tab">Planladığınız Faaliyetler</a></li>
+</ul>
 
-<div class="sp">
+<div class="tab-content">
+    <div class="tab-pane active show fade in p-2" id="eylemler">
+        
+        <div class="sp">
 
-    @foreach (var strateji in Model.Stratejiler)
-    {
-        <div class="strateji">@strateji.Kod - @strateji.Baslik</div>
-        <ul class="list-group">
-            @foreach (var eylem in strateji.Eylemler)
+            @foreach (var strateji in Model.Stratejiler)
             {
-                <li class="list-group-item" data-id="@eylem.Id"> <span>@eylem.SiraNo. @eylem.Baslik</span> <button class="btn btn-sm btn-success float-right btn-faaliyetEkle"><span class="fa fa-plus"></span> Faaliyet Ekle</button> </li>
+                <div class="strateji">@strateji.Kod - @strateji.Baslik</div>
+                <ul class="list-group">
+                    @foreach (var eylem in strateji.Eylemler)
+                    {
+                        <li class="list-group-item" data-id="@eylem.Id"> <span>@eylem.SiraNo. @eylem.Baslik</span> <button class="btn btn-sm btn-success float-right btn-faaliyetEkle"><span class="fa fa-plus"></span> Faaliyet Ekle</button> </li>
+                    }
+                </ul>
+                <br />
             }
-        </ul>
+        </div>
+    </div>
+    <div class="tab-pane fade in p-2" id="faaliyetler">
         <br />
-    }
+        <table class="table table-sm table-bordered" id="tableFaliyetler">
+            <thead>
+                <tr>
+                    <th>Eylem Adı</th>
+                    <th>Faaliyet Adı</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Faaliyetler)
+                {
+                    <tr>
+                        <td>@item.EylemAdi</td>
+                        <td>Eğitime % 100 Destek Kampanyası-hayırsever bağışı ile anaokulu binası yapımı</td>
+                        <td>
+                            <div style="width:200px">
+                                <button class="btn btn-sm btn-success btn-faaliyetSil">Sil</button>
+                                <button class="btn btn-sm btn-success btn-faaliyetDuzenle" id="data">Düzenle</button>
+                                <button class="btn btn-sm btn-success btn-faaliyetDurum" data-target="#faaliyetDurum" data-toggle="modal">Durum Gir</button>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
 
-
+    </div>
 </div>
 <br />
-<table class="table table-sm table-bordered" id="tableFaliyetler">
-    <thead>
-        <tr>
-            <th>Eylem Adı</th>
-            <th>Faaliyet Adı</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model.Faaliyetler)
-        {
-            <tr>
-                <td>@item.EylemAdi</td>
-                <td>Eğitime % 100 Destek Kampanyası-hayırsever bağışı ile anaokulu binası yapımı</td>
-                <td>
-                    <div style="width:200px">
-                        <button class="btn btn-sm btn-success btn-faaliyetSil">Sil</button>
-                        <button class="btn btn-sm btn-success btn-faaliyetDuzenle" id="data">Düzenle</button>
-                        <button class="btn btn-sm btn-success btn-faaliyetDurum" data-target="#faaliyetDurum" data-toggle="modal">Durum Gir</button>
-                    </div>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
 
 
 
@@ -204,13 +214,17 @@
 
             ekle(eylem, faaliyet) {
                 let dugmelerHtml = this.tabloSatirDugmeSablon(true, true, true);
-                $('#tableFaliyetler tbody').append(this.tabloSatirSablon(eylem, faaliyet, dugmelerHtml));
+                let st = $(this.tabloSatirSablon(eylem, faaliyet, dugmelerHtml)).hide();
+                $('#tableFaliyetler tbody').append(st);
+                showTab("faaliyetler");
+                st.fadeIn("5000");
             }
 
             guncelle(row, faaliyet) {
                 let satir = $('#faaliyetEkle')[0].row;
                 $($(row).children()[1]).text(faaliyet);
-
+                console.log(faaliyet);
+                this.SaveFaaliyet(faaliyet);
 
             }
 
@@ -321,14 +335,9 @@
 
         $(document).ready(function () {
 
-
-
             $('.btn-faaliyetEkle').on("click", onFaaliyetEkleClickEvent);
-
             $(document).on("click", '.btn-faaliyetDuzenle', onFaaliyetDuzenleClickEvent);
-
             $(document).on("click", '.btn-faaliyetSil', onFaaliyetSilClickEvent);
-
 
         });
 

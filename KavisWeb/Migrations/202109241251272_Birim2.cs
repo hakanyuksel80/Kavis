@@ -3,7 +3,7 @@ namespace KavisWeb.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class Birim : DbMigration
+    public partial class Birim2 : DbMigration
     {
         public override void Up()
         {

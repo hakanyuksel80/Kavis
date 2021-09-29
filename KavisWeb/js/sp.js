@@ -427,7 +427,7 @@ class GostergePlanItem extends PlanItem {
     }
 
     birim_list(value) {
-        return birimListe(value);
+        return birimListe(value,true);
     }
 
     Collect() {
