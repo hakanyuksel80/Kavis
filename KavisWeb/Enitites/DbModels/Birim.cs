@@ -18,5 +18,11 @@ namespace KavisWeb.Enitites.DbModels
 
         public string Baslik { get; set; }
 
+        public Kurum Kurum { get; set; }
+
+        public int KurumId { get; set; }
+
     }
+
+
 }

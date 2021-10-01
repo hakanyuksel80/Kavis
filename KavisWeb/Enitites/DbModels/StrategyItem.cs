@@ -10,12 +10,7 @@ using System.Web;
 namespace KavisWeb.Enitites.DbModels
 {
 
-    public enum KurumTipi
-    {
-        Il,
-        Ilce,
-        Okul,
-    }
+    
 
     public interface IStratejiTipi
     {
@@ -42,17 +37,16 @@ namespace KavisWeb.Enitites.DbModels
     [Table("Plans")]
     public class StratejikPlan : IEntity
     {
-        public int Id { get; set; }
-
-        public int KurumKodu { get; set; }
-
-        public string KurumAdi { get; set; }
+        public int Id { get; set; }        
 
         public int Baslangic { get; set; }
 
         public int Bitis { get; set; }
 
-        public KurumTipi KurumTipi { get; set; }
+        //[ForeignKey("KurumId")]
+        //public virtual Kurum Kurum { get; set; }
+
+        public int KurumId { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public List<Amac> Amaclar { get; set; }
@@ -153,7 +147,7 @@ namespace KavisWeb.Enitites.DbModels
         [JsonIgnore]
         public Eylem Eylem { get; set; }
 
-        //public string Adi { get; set; }
+        public byte Yil { get; set; }
 
         public DateTime Baslama { get; set; }
 
@@ -169,7 +163,10 @@ namespace KavisWeb.Enitites.DbModels
 
         public string BirimAdi { get; set; }
 
-        //public int SiraNo { get; set; }
+        public bool Onay1 { get; set; }
+
+        public bool Onay2 { get; set; }
+
     }
 
 

@@ -139,9 +139,10 @@ namespace KavisWeb.Controllers.api
                     plan = new StratejikPlan();
                 }
 
-                plan.KurumAdi = model.KurumAdi;
-                plan.KurumKodu = model.KurumKodu;
-                plan.KurumTipi = model.KurumTipi;
+                //plan.KurumAdi = model.KurumAdi;
+                //plan.KurumKodu = model.KurumKodu;
+                //plan.KurumTipi = model.KurumTipi;
+                plan.KurumId = model.KurumId;
                 plan.Baslangic = model.Baslangic;
                 plan.Bitis = model.Baslangic + 4;
 

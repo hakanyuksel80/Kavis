@@ -142,7 +142,9 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="BusinessLayer\BirimManager.cs" />
     <Compile Include="BusinessLayer\IBirimService.cs" />
+    <Compile Include="BusinessLayer\IKurumService.cs" />
     <Compile Include="BusinessLayer\IStratejikPlanService.cs" />
+    <Compile Include="BusinessLayer\KurumManager.cs" />
     <Compile Include="BusinessLayer\StreatejikPlanManager2.cs" />
     <Compile Include="BusinessLayer\StreatejikPlanManager.cs" />
     <Compile Include="Controllers\api\BirimFaaliyetlerController.cs" />
@@ -150,21 +152,26 @@
     <Compile Include="Controllers\api\BirimlerController.cs" />
     <Compile Include="Controllers\api\DenemeController.cs" />
     <Compile Include="Controllers\api\EylemlerController.cs" />
+    <Compile Include="Controllers\api\KurumController.cs" />
     <Compile Include="Controllers\api\StratejikPlanController.cs" />
     <Compile Include="Controllers\BirimController.cs" />
-    <Compile Include="Controllers\DenemeController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\KurumController.cs" />
     <Compile Include="Controllers\PerformansProgramiController.cs" />
     <Compile Include="Controllers\StratejikPlanController.cs" />
     <Compile Include="Controllers\StratejikPlansController.cs" />
     <Compile Include="DataLayer\Abstract\IBirimDal.cs" />
+    <Compile Include="DataLayer\Abstract\IKurumDal.cs" />
     <Compile Include="DataLayer\Abstract\IStratejikPlanDal.cs" />
     <Compile Include="DataLayer\EF\EfBirimDal.cs" />
+    <Compile Include="DataLayer\EF\EfKurumDal.cs" />
     <Compile Include="DataLayer\EF\EfStratejikPlanDal.cs" />
     <Compile Include="DataLayer\EF\EfStrategyItemDal.cs" />
     <Compile Include="DataLayer\Abstract\IStrategyItemDal.cs" />
     <Compile Include="DataLayer\StrategyDBContext.cs" />
     <Compile Include="Enitites\DbModels\Birim.cs" />
+    <Compile Include="Enitites\DbModels\GostergeGiris.cs" />
+    <Compile Include="Enitites\DbModels\Kurum.cs" />
     <Compile Include="Enitites\DbModels\PlanItem.cs" />
     <Compile Include="Enitites\DbModels\StrategyItem.cs" />
     <Compile Include="Enitites\Dtos\PerformansDto.cs" />
@@ -201,6 +208,10 @@
     <Compile Include="Migrations\202109241251272_Birim2.cs" />
     <Compile Include="Migrations\202109241251272_Birim2.Designer.cs">
       <DependentUpon>202109241251272_Birim2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202110011157173_kurumlar.cs" />
+    <Compile Include="Migrations\202110011157173_kurumlar.Designer.cs">
+      <DependentUpon>202110011157173_kurumlar.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ViewPerformansGirisModel.cs" />
@@ -2402,7 +2413,7 @@
     <Content Include="Views\Home\Gostergeler.cshtml" />
     <Content Include="Views\Birim\Gosterge.cshtml" />
     <Content Include="Views\StratejikPlan\Index.cshtml" />
-    <Content Include="Views\Deneme\Index.cshtml" />
+    <Content Include="Views\Kurum\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="assets\file-uploader\server\node\public\files\" />
@@ -2445,6 +2456,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202109241251272_Birim2.resx">
       <DependentUpon>202109241251272_Birim2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202110011157173_kurumlar.resx">
+      <DependentUpon>202110011157173_kurumlar.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

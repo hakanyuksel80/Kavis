@@ -24,10 +24,11 @@ namespace KavisWeb.BusinessLayer
         {
             var plans = context.StratejikPlanlar.ToList();
 
-            var list = from x in plans
-                       select new StratejikPlanListView() { Id = x.Id, Donem = x.Baslangic.ToString() + " " + x.Bitis.ToString(), Kurum = x.KurumAdi, Turu = Convert.ToInt32(x.KurumTipi) };
+            //var list = from x in plans
+            //           select new StratejikPlanListView() { Id = x.Id, Donem = x.Baslangic.ToString() + " " + x.Bitis.ToString(), Kurum = x.Kurum.Adi, Turu = Convert.ToInt32(x.Kurum.Turu) };
 
-            return list.ToList();
+            //return list.ToList();
+            return null;
         }
 
 

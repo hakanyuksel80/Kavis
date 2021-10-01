@@ -16,23 +16,23 @@ namespace Core.DataAccess.EntityFramework
 
 
 
-        public void Add(TEntity entity)
+        public bool Add(TEntity entity)
         {
             using (TContext context = new TContext())
             {
                 var addedEntity = context.Entry(entity);
                 addedEntity.State = EntityState.Added;
-                context.SaveChanges();
+                return context.SaveChanges() > 0 ;
             }
         }
 
-        public void Delete(TEntity entity)
+        public bool Delete(TEntity entity)
         {
             using (TContext context = new TContext())
             {
                 var deletedEntity = context.Entry(entity);
                 deletedEntity.State = EntityState.Deleted;
-                context.SaveChanges();
+                return context.SaveChanges() > 0;
             }
         }
 
@@ -60,13 +60,13 @@ namespace Core.DataAccess.EntityFramework
             }
         }
 
-        public void Update(TEntity entity)
+        public bool Update(TEntity entity)
         {
             using (TContext context = new TContext())
             {
                 var updatedEntity = context.Entry(entity);
                 updatedEntity.State = EntityState.Modified;
-                context.SaveChanges();
+                return context.SaveChanges() > 0;
             }
         }
     }

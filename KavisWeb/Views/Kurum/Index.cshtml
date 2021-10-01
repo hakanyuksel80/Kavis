@@ -1,0 +1,194 @@
+﻿@model IEnumerable<KavisWeb.Enitites.DbModels.Kurum>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    <a href="#" class="btn btn-success btn-sm btn-kurumEkle">Yeni Kurum</a>
+</p>
+<table class="table" id="tableKurumlar">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Adi)
+        </th>
+        <th></th>
+    </tr>
+
+    <tbody>
+    </tbody>
+
+</table>
+
+
+<div class="modal" id="KurumEdit">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="" method="post">
+                <div class="modal-header">
+                    Kurum
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="KurumId" name="KurumId" />
+                    <div class="form-group">
+                        <label>Adı:</label>
+                        <input type="text" name="KurumAdi" id="KurumAdi" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label>Kodu:</label>
+                        <input type="text" name="KurumKodu" id="KurumKodu" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label>Türü:</label>
+                        <select class="form-control" name="KurumTuru" id="KurumTuru">
+                            <option value="">SEÇİNİZ</option>
+                            <option value="">İL</option>
+                            <option value="">İLÇE</option>
+                            <option value="">OKUL</option>
+                        </select>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" type="submit">Kaydet</button>
+                    <button class="btn btn-secondary" data-dismiss="modal">İptal</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+@section scripts {
+
+    <script type="text/javascript">
+
+        class Kurumlar {
+
+            ekle(kurum) {
+                let dugmelerHtml = this.tabloSatirDugmeSablon(true, true);
+                let st = $(this.tabloSatirSablon(eylem, faaliyet, dugmelerHtml)).hide();
+                $('#tableKurumlar tbody').append(st);
+            }
+
+            guncelle(row, faaliyet) {
+                let satir = $('#faaliyetEkle')[0].row;
+                $($(row).children()[1]).text(faaliyet);
+                console.log(faaliyet);
+                this.SaveFaaliyet(faaliyet);
+            }
+
+            sil(button) {
+                let satir = $(button).parents("tr");
+                console.log(satir);
+                satir.hide();
+            }
+
+            tabloSatirSablon(kurumAdi = "", dugmelerHtml = "") {
+                return `<tr><td>${kurumAdi}</td><td>&nbsp;</td><td>${dugmelerHtml}</td></tr>`;
+            }
+
+            tabloSatirDugmeSablon(id, duzenle, sil) {
+                let a = "";
+                a += duzenle == true ? `<button class="btn btn-sm btn-success btn-kurumDuzenle" data-id="${id}">Düzenle</button>` : '';
+                a += sil == true ? `<button class="btn btn-sm btn-success btn-kurumSil"  data-id="${id}">Sil</button> ` : '';
+                return a;
+            }
+
+            LoadList() {
+                api_get("/api/Kurumlar", function (d) {
+                    LoadTable(d);
+                });
+            }
+
+            SaveKurum(d) {
+                api_post("/api/Kurumlar", d).done(function () {
+                });
+            }
+
+            LoadTable(d) {
+                $('#tableKurumlar tbody').empty();
+                for (var i = 0; i < d.length; i++) {
+                    const satir = d[i];
+                    kurumlar.ekle(satir);
+                }
+            }
+
+        }
+
+
+        var kurumlar = new Kurumlar();
+
+        class KurumForm extends Form {
+
+            Clear() {
+                super.Clear();
+            }
+
+            New() {
+                this.Clear();
+                this.Show();
+            }
+
+            Edit(kurum) {
+                //$(this.modalId + " #Id").val(kurum.Id);
+                //$(this.modalId + " #KurumAdi").text(kurum.Adi);
+                //$(this.modalId + " #KurumKodu").val(kurum.Kodu);
+                //$(this.modalId + " #KurumTuru").val(kurum.Turu);
+                this.PutValues(kurum);
+                this.Show();
+            }
+
+            Load(id) {
+                let THIS = this;
+                api_get("/api/Kurumlar/" + id, function (d) {
+                    THIS.PutValues(d);
+                });
+            }
+
+            Save() {
+                let data = this.GetValues();
+
+                api_post("/api/Kurumlar/", data).done(function () {
+                    kurumlar.LoadList();
+                });
+
+                return true;
+            }           
+
+
+        }
+
+
+
+        var kurumForm = new KurumForm("#KurumEdit");
+
+
+        function onKurumEkleClickEvent() {
+            kurumForm.New();
+        }
+
+        function onKurumDuzenleClickEvent() {
+            let id = $(this).data("id");
+            kurumForm.Edit(id);
+        }
+
+        function onKurumSilClickEvent() {
+            faaliyet.sil(this);
+        }
+
+        $(document).ready(function () {
+
+            $('.btn-kurumEkle').on("click", onKurumEkleClickEvent);
+            $(document).on("click", '.btn-kurumDuzenle', onKurumDuzenleClickEvent);
+            $(document).on("click", '.btn-kurumSil', onKurumSilClickEvent);
+
+        });
+
+
+    </script>
+
+}
