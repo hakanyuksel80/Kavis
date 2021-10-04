@@ -30,7 +30,7 @@ namespace KavisWeb.Migrations
             //
 
 
-
+            /*
             context.Birimler.AddOrUpdate( 
                 new Birim { Id = 1, BurbisId = 1, Baslik = "Arge" },
                 new Birim { Id = 2, BurbisId = 2, Baslik = "Arþiv" },
@@ -79,7 +79,7 @@ namespace KavisWeb.Migrations
                 new Birim { Id = 46, BurbisId = 54, Baslik = "Yemekhane" },
                 new Birim { Id = 47, BurbisId = 55, Baslik = "Yönetici Atama" }
 
-                );
+                );*/
         }
     }
 }

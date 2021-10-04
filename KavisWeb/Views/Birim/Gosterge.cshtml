@@ -129,6 +129,8 @@ foreach (var strateji in hedef.Stratejiler)
 
                 let data = [];
 
+                let birim = $("#id").val();
+
                 $('td.aktifYil').each(function (i, v) {
                     let id = $(v).data("id");
                     let val = $(v).text();
@@ -136,7 +138,7 @@ foreach (var strateji in hedef.Stratejiler)
                     data.push({ GostergeId: id, Value: val, Yil: aktifYil });
                 });
 
-                api_post("/api/BirimGostergeler", { Items:data }, function (d) {
+                api_post("/api/BirimGostergeler", { Items: data, BirimId: birim }, function (d) {
                     if (d.Success) {
                         successMessage("Kayıt Yapıldı");
                     } else {

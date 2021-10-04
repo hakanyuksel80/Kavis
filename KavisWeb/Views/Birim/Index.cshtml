@@ -21,7 +21,6 @@
             <label for="id">Birim</label>
             @Html.DropDownList("id", birimListe, "SEÇİNİZ", new { @class = "form-control" })
         </div>
-
     </div>
 </div>
 
@@ -290,6 +289,12 @@
             $('.btn-faaliyetEkle').on("click", onFaaliyetEkleClickEvent);
             $(document).on("click", '.btn-faaliyetDuzenle', onFaaliyetDuzenleClickEvent);
             $(document).on("click", '.btn-faaliyetSil', onFaaliyetSilClickEvent);
+
+            $('#id').change(function () {
+                let birimId = $(this).val();
+
+                window.location = "/Birim/Index/" + birimId;
+            });
 
         });
 

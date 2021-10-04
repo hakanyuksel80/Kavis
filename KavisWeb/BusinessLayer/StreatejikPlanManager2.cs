@@ -24,11 +24,11 @@ namespace KavisWeb.BusinessLayer
         {
             var plans = context.StratejikPlanlar.ToList();
 
-            //var list = from x in plans
-            //           select new StratejikPlanListView() { Id = x.Id, Donem = x.Baslangic.ToString() + " " + x.Bitis.ToString(), Kurum = x.Kurum.Adi, Turu = Convert.ToInt32(x.Kurum.Turu) };
+            var list = from x in plans
+                       select new StratejikPlanListView() { Id = x.Id, Donem = x.Baslangic.ToString() + " " + x.Bitis.ToString(), Kurum = x.Kurum.Adi, Turu = Convert.ToInt32(x.Kurum.Turu) };
 
-            //return list.ToList();
-            return null;
+            return list.ToList();
+            
         }
 
 
@@ -171,8 +171,10 @@ namespace KavisWeb.BusinessLayer
 
         public List<Strateji> GetAllStratejiByBirim(int birim)
         {
-            return context.Stratejiler.Include("Eylemler").ToList();
-            //return context.Stratejiler.Where(x => x.Eylemler.Where(y => y.Birim == birim).Count() > 0).ToList();
+            //List<Strateji> liste = new List<Strateji>();
+
+            //return context.Stratejiler.Include("Eylemler").ToList();
+            //return context.Stratejiler.Where(x => x.Eylemler.Where(y => y.Birim. == birim.ToString()).Count() > 0).ToList();
         }
 
         public List<FaaliyetListView> GetAllFaaliyet()

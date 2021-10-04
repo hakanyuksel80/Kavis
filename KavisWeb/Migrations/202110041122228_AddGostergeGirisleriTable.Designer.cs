@@ -7,13 +7,13 @@ namespace KavisWeb.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class kurumlar : IMigrationMetadata
+    public sealed partial class AddGostergeGirisleriTable : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(kurumlar));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(AddGostergeGirisleriTable));
         
         string IMigrationMetadata.Id
         {
-            get { return "202110011157173_kurumlar"; }
+            get { return "202110041122228_AddGostergeGirisleriTable"; }
         }
         
         string IMigrationMetadata.Source

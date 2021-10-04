@@ -1,5 +1,6 @@
 ﻿using Core.Utilities.Results;
 using KavisWeb.BusinessLayer;
+using KavisWeb.DataLayer.EF;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,20 +18,35 @@ namespace KavisWeb.Controllers.api
         {
             StratejikPlanManager2 manager = new StratejikPlanManager2();
 
+            GostergeGirisManager gostergeGirisManager = new GostergeGirisManager(new EfGostergeGirisDal());
+
             foreach (var item in model.Items)
             {
                 var gosterge = manager.GetGosterge(item.GostergeId);
 
                 if (gosterge != null)
                 {
-                    switch (item.Yil)
+                    var gostergeGiris = gostergeGirisManager.GetByBirim(model.BirimId, item.GostergeId, (byte)item.Yil);
+
+                    if (gostergeGiris == null)
                     {
-                        case 1: gosterge.Yil1G = item.Value; break;
-                        case 2: gosterge.Yil2G = item.Value; break;
-                        case 3: gosterge.Yil3G = item.Value; break;
-                        case 4: gosterge.Yil4G = item.Value; break;
-                        case 5: gosterge.Yil5G = item.Value; break;
-                    }
+                        gostergeGiris = new Enitites.DbModels.GostergeGiris()
+                        {
+                            BirimId = model.BirimId,
+                            GostergeId = item.GostergeId,
+                            Onay = false,
+                            Yil = (byte)item.Yil,
+                            Deger = item.Value,
+                        };
+
+                        gostergeGirisManager.Add(gostergeGiris);
+
+                    } else
+                    {
+                        gostergeGiris.Deger = item.Value;
+                        gostergeGirisManager.Update(gostergeGiris);
+                    }                   
+                    
                 }
 
                 manager.SaveChanges();
@@ -43,7 +59,9 @@ namespace KavisWeb.Controllers.api
 
     public class GostergeModel
     {
-       public List<GostergeModelItem> Items { get; set; }
+        public int BirimId { get; set; }
+
+        public List<GostergeModelItem> Items { get; set; }
     }
 
     public class GostergeModelItem
@@ -52,7 +70,7 @@ namespace KavisWeb.Controllers.api
 
         public string Value { get; set; }
 
-        public int Yil { get; set; }
+        public int Yil { get; set; }       
 
     }
 }

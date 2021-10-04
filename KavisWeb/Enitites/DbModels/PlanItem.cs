@@ -34,7 +34,7 @@ namespace KavisWeb.Enitites.DbModels
 
         public string SPTuru { get; set; }
 
-        public List<AmacItem> Amaclar { get; set; }
+        public List<AmacItem> Amaclar { get; set; }        
     }
 
     public class AmacItem : PlanItem

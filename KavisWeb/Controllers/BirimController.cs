@@ -17,6 +17,10 @@ namespace KavisWeb.Controllers
 
         string birim = "";
 
+        int birimId = 0;
+
+        byte aktifYil = 2;
+
         public BirimController()
         {
             this.manager = new StratejikPlanManager2();
@@ -25,6 +29,13 @@ namespace KavisWeb.Controllers
         // GET: Birim
         public ActionResult Index(int id = 0)
         {
+            //Kullanıcını kurumunu bul
+            int kurumId = 2;
+
+            //Aktif Sp yi nul
+            var aktifSP = this.manager.GetAktifStratejikPlan(kurumId);
+
+            //SP 'nin 
             int birim = id;
 
             var stratejiler = manager.GetAllStratejiByBirim(birim);
@@ -44,21 +55,39 @@ namespace KavisWeb.Controllers
 
         public ActionResult Gosterge(int id = 0)
         {
-            ViewBag.AktifYil = 2;
-            
+
+            birimId = id;
+
+            aktifYil = 2;
+
+            ViewBag.AktifYil = aktifYil;
+
             BirimListesiYukle();
 
-            
+            GostergeGirisManager girisManager = new GostergeGirisManager(new EfGostergeGirisDal());
 
-            if (id > 0)
+
+            if (birimId > 0)
             {
                 StratejikPlan stratejikPlan = this.manager.GetAktifStratejikPlan();
+
 
                 foreach (var amac in stratejikPlan.Amaclar)
                 {
                     foreach (var hedef in amac.Hedefler)
                     {
                         hedef.Gostergeler = hedef.Gostergeler.Where(x => x.SorumluBirimId == id).ToList();
+
+                        foreach (var aGosterge in hedef.Gostergeler)
+                        {
+                            // Burada birimin girdiği değerler varsa onu gösterelerim. Yoksa boş girelim, girilen değeri göremesin
+                            var giris = girisManager.GetByBirim(birimId, aGosterge.Id, aktifYil);
+                            if (giris != null)
+                                aGosterge.SetGerceklesenDeger(giris.Yil, giris.Deger);
+                            else
+                                aGosterge.SetGerceklesenDeger(aktifYil, "");
+
+                        }
                     }
 
                     amac.Hedefler = amac.Hedefler.Where(x => x.Gostergeler.Count() > 0).ToList();
@@ -81,7 +110,7 @@ namespace KavisWeb.Controllers
             var birimler = birimManager.GetAll();
 
             List<SelectListItem> birimSelectList = (from x in birimler select new SelectListItem { Value = x.Id.ToString(), Text = x.Baslik }).ToList();
-            
+
 
             ViewBag.BirimSelectList = birimSelectList;
         }

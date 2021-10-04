@@ -26,6 +26,6 @@ namespace KavisWeb.Enitites.DbModels
         public KurumTipi Turu { get; set; }
 
         public List<Birim> Birimler { get; set; }
-        
+
     }
 }

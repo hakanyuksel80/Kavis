@@ -10,7 +10,7 @@ using System.Web;
 namespace KavisWeb.Enitites.DbModels
 {
 
-    
+
 
     public interface IStratejiTipi
     {
@@ -37,19 +37,21 @@ namespace KavisWeb.Enitites.DbModels
     [Table("Plans")]
     public class StratejikPlan : IEntity
     {
-        public int Id { get; set; }        
+        public int Id { get; set; }
 
         public int Baslangic { get; set; }
 
         public int Bitis { get; set; }
 
-        //[ForeignKey("KurumId")]
-        //public virtual Kurum Kurum { get; set; }
+        public virtual Kurum Kurum { get; set; }
 
-        public int KurumId { get; set; }
+        public int? KurumId { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public List<Amac> Amaclar { get; set; }
+
+
+
 
     }
 
@@ -125,6 +127,61 @@ namespace KavisWeb.Enitites.DbModels
         public int SorumluBirimId { get; set; }
 
         public string SorumluBirim { get; set; }
+
+        public string GetHedefDegerler(byte yil)
+        {
+            switch (yil)
+            {
+                case 1: return Yil1;
+                case 2: return Yil2;
+                case 3: return Yil3;
+                case 4: return Yil4;
+                case 5: return Yil5;
+            }
+
+            return "";
+        }
+
+        public void SetHedefDegerler(byte yil,string value)
+        {
+            switch (yil)
+            {
+                case 1: Yil1 = value;break;                
+                case 2: Yil2 = value;break;                
+                case 3: Yil3 = value;break;                
+                case 4: Yil4 = value;break;                
+                case 5: Yil5 = value; break;                
+            }
+            
+        }
+
+        public string GetGerceklesenDegerler(byte yil)
+        {
+            switch (yil)
+            {
+                case 1: return Yil1G;
+                case 2: return Yil2G;
+                case 3: return Yil3G;
+                case 4: return Yil4G;
+                case 5: return Yil5G;
+            }
+
+            return "";
+        }
+
+        public void SetGerceklesenDeger(byte yil, string value)
+        {
+            switch (yil)
+            {
+                case 1: Yil1G = value; break;
+                case 2: Yil2G = value; break;
+                case 3: Yil3G = value; break;
+                case 4: Yil4G = value; break;
+                case 5: Yil5G = value; break;
+            }
+
+        }
+
     }
 
     [Table("Eylemler")]
@@ -170,7 +227,7 @@ namespace KavisWeb.Enitites.DbModels
     }
 
 
-   
+
 
 
 
