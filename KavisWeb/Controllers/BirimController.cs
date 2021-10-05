@@ -33,7 +33,7 @@ namespace KavisWeb.Controllers
             int kurumId = 2;
 
             //Aktif Sp yi nul
-            var aktifSP = this.manager.GetAktifStratejikPlan(id);
+            var aktifSP = this.manager.GetAktifStratejikPlan(kurumId);
 
            
 
@@ -71,7 +71,7 @@ namespace KavisWeb.Controllers
 
             if (birimId > 0)
             {
-                StratejikPlan stratejikPlan = this.manager.GetAktifStratejikPlan();
+                StratejikPlan stratejikPlan = this.manager.GetAktifStratejikPlan(2);
 
 
                 foreach (var amac in stratejikPlan.Amaclar)
