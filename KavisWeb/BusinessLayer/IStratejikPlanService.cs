@@ -34,7 +34,7 @@ namespace KavisWeb.BusinessLayer
         Gosterge GetGosterge(int id);
         void DeleteGosterge(Gosterge gosterge);
         void SaveGosterge(Gosterge gosterge);
-        StratejikPlan GetAktifStratejikPlan();
+        StratejikPlan GetAktifStratejikPlan(int kurumId);
         Eylem GetEylem(int id);
         void DeleteEylem(Eylem eylem);
         void AddEylem(Eylem eylem);

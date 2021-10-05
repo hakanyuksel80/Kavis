@@ -28,7 +28,7 @@ namespace KavisWeb.BusinessLayer
                        select new StratejikPlanListView() { Id = x.Id, Donem = x.Baslangic.ToString() + " " + x.Bitis.ToString(), Kurum = x.Kurum.Adi, Turu = Convert.ToInt32(x.Kurum.Turu) };
 
             return list.ToList();
-            
+
         }
 
 
@@ -173,8 +173,28 @@ namespace KavisWeb.BusinessLayer
         {
             //List<Strateji> liste = new List<Strateji>();
 
-            //return context.Stratejiler.Include("Eylemler").ToList();
-            //return context.Stratejiler.Where(x => x.Eylemler.Where(y => y.Birim. == birim.ToString()).Count() > 0).ToList();
+            //var  stratejiler = context.Stratejiler.Include("Eylemler").ToList();
+            //foreach (var item in stratejiler)
+            //{
+
+            //    if (item.Eylemler != null)
+            //    {
+            //        foreach (var eylem in item.Eylemler)
+            //        {
+            //            if (!String.IsNullOrEmpty(eylem.Birim))
+            //            {
+            //                string[] s = eylem.Birim.Split(',');
+            //                if (s.Contains(birim.ToString()))
+            //                {
+            //                    liste.Add()
+            //                }
+            //            }
+            //        }
+            //    }
+
+            //}
+
+            return context.Stratejiler.Where(x => x.Eylemler.Where(y => !String.IsNullOrEmpty(y.Birim) && y.Birim.Split(',').Contains(birim.ToString())).Count() > 0).ToList();
         }
 
         public List<FaaliyetListView> GetAllFaaliyet()
@@ -219,11 +239,20 @@ namespace KavisWeb.BusinessLayer
             context.Faaliyetler.Remove(faaliyet);
         }
 
-        public StratejikPlan GetAktifStratejikPlan()
+        public StratejikPlan GetAktifStratejikPlan(int kurumId)
         {
-            StratejikPlan plan = context.StratejikPlanlar.First();
+            var kurum = context.Kurumlar.SingleOrDefault(x => x.Id == kurumId);
 
-            return GetPlan(plan.Id);
+            if (kurum != null)
+            {
+               
+                if (kurum.AktifPlan > 0)
+                {
+                    return GetPlan(kurum.AktifPlan);
+                }                
+            }
+
+            return null;
         }
     }
 }

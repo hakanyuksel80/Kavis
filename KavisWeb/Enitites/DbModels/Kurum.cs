@@ -27,5 +27,6 @@ namespace KavisWeb.Enitites.DbModels
 
         public List<Birim> Birimler { get; set; }
 
+        public int AktifPlan { get; set; }
     }
 }
