@@ -11,6 +11,11 @@
 
 <input type="hidden" id="KurumId" value="@(ViewBag.KurumId??"")" />
 
+
+<div class="float-right mb-3"> 
+    <button class="btn btn-sm btn-success btn-birimEkle">Yeni Birim</button>
+</div>
+
 <table class="table table-striped table-bordered">
     <thead>
         <tr>
@@ -87,6 +92,7 @@
 
             New() {
                 this.Clear();
+                $(this.modalId + " #KurumId").val($('#KurumId').val());
                 this.Show();
             }
 
@@ -116,7 +122,12 @@
                 return true;
             }
 
-
+            Delete(id) {
+                let THIS = this;
+                api_delete("/api/Birimler/" + id, function (d) {
+                    location.reload();
+                });
+            }
         }
 
 
@@ -137,11 +148,11 @@
 
             let id = $(this).data("id");
 
-            silmeMesaji("Bu Kurumu silerseniz bu kuruma bağlı tüm birim, stratejik plan kayıtları ve girdileri tamamen silinecektir. \n\r\n\r Silmek istediğinize emin misiniz?", "Dikkat! Silme Onayı").then(function (d) {
+            silmeMesaji("Bu birimi silerseniz bu birime bağlı tüm girdiler de tamamen silinecektir. \n\r\n\r Silmek istediğinize emin misiniz?", "Dikkat! Silme Onayı").then(function (d) {
 
                 if (d) {
 
-                   //.DeleteKurum(id);
+                    birimForm.Delete(id);
 
                 }
 

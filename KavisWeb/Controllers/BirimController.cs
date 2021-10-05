@@ -12,10 +12,7 @@ namespace KavisWeb.Controllers
 {
     public class BirimController : Controller
     {
-
         IStratejikPlanService manager;
-
-        string birim = "";
 
         int birimId = 0;
 
@@ -27,18 +24,21 @@ namespace KavisWeb.Controllers
         }
 
         // GET: Birim
-        public ActionResult Index(int id = 0)
+        public ActionResult Index()
         {
             //Kullanıcını kurumunu bul
             int kurumId = 2;
 
+            //Kullanıcının birimini bul
+
+            //Kurumun SP'sini al
+
             //Aktif Sp yi nul
             var aktifSP = this.manager.GetAktifStratejikPlan(kurumId);
 
-           
 
             //SP 'nin 
-            int birim = id;
+            int birim = 2;
 
             var stratejiler = manager.GetAllStratejiByBirim(birim);
 
@@ -68,12 +68,14 @@ namespace KavisWeb.Controllers
 
             GostergeGirisManager girisManager = new GostergeGirisManager(new EfGostergeGirisDal());
 
-
             if (birimId > 0)
             {
-                StratejikPlan stratejikPlan = this.manager.GetAktifStratejikPlan(2);
+                StratejikPlan stratejikPlan = this.manager.GetAktifStratejikPlan(1);
 
+                if (stratejikPlan != null)
+                {
 
+                
                 foreach (var amac in stratejikPlan.Amaclar)
                 {
                     foreach (var hedef in amac.Hedefler)
@@ -97,7 +99,7 @@ namespace KavisWeb.Controllers
 
                 stratejikPlan.Amaclar = stratejikPlan.Amaclar.Where(x => x.Hedefler.Count() > 0).ToList();
 
-
+                }
                 return View(stratejikPlan);
 
             }

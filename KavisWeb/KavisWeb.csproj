@@ -146,6 +146,7 @@
     <Compile Include="BusinessLayer\IGostergeGirisService.cs" />
     <Compile Include="BusinessLayer\IKurumService.cs" />
     <Compile Include="BusinessLayer\IStratejikPlanService.cs" />
+    <Compile Include="BusinessLayer\KavisHelper.cs" />
     <Compile Include="BusinessLayer\KurumManager.cs" />
     <Compile Include="BusinessLayer\StreatejikPlanManager2.cs" />
     <Compile Include="BusinessLayer\StreatejikPlanManager.cs" />
@@ -180,8 +181,10 @@
     <Compile Include="Enitites\DbModels\PlanItem.cs" />
     <Compile Include="Enitites\DbModels\StrategyItem.cs" />
     <Compile Include="Enitites\Dtos\PerformansDto.cs" />
+    <Compile Include="Enitites\KavisUser.cs" />
     <Compile Include="Enitites\Views\FaaliyetListView.cs" />
     <Compile Include="Enitites\Views\FaaliyetRaporListView.cs" />
+    <Compile Include="Enitites\Views\KurumListView.cs" />
     <Compile Include="Enitites\Views\StratejikPlanListView.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -249,6 +252,10 @@
     <Compile Include="Migrations\202110051206058_addedToKurumAktifPlan.cs" />
     <Compile Include="Migrations\202110051206058_addedToKurumAktifPlan.Designer.cs">
       <DependentUpon>202110051206058_addedToKurumAktifPlan.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202110051838536_kurumAyarlarieklendi.cs" />
+    <Compile Include="Migrations\202110051838536_kurumAyarlarieklendi.Designer.cs">
+      <DependentUpon>202110051838536_kurumAyarlarieklendi.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ViewPerformansGirisModel.cs" />
@@ -2521,6 +2528,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202110051206058_addedToKurumAktifPlan.resx">
       <DependentUpon>202110051206058_addedToKurumAktifPlan.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202110051838536_kurumAyarlarieklendi.resx">
+      <DependentUpon>202110051838536_kurumAyarlarieklendi.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

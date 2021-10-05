@@ -25,13 +25,16 @@ namespace KavisWeb.BusinessLayer
             var plans = context.StratejikPlanlar.ToList();
 
             var list = from x in plans
-                       select new StratejikPlanListView() { Id = x.Id, Donem = x.Baslangic.ToString() + " " + x.Bitis.ToString(), Kurum = "", Turu = 0 };
+                       select new StratejikPlanListView() { Id = x.Id, Donem = x.Baslangic.ToString() + " " + x.Bitis.ToString(), Kurum = x.Kurum.Adi, Turu = x.Kurum.Turu.ToString() };
 
             return list.ToList();
 
         }
 
-
+        public List<StratejikPlan> GetKurumSPList(int kurumId)
+        {
+            return context.StratejikPlanlar.Where(x => x.KurumId == kurumId).ToList();
+        }
 
         public StratejikPlan GetPlan(int id)
         {
@@ -173,8 +176,8 @@ namespace KavisWeb.BusinessLayer
         {
             //List<Strateji> liste = new List<Strateji>();
 
-            //return context.Stratejiler.Include("Eylemler").ToList();
-            return context.Stratejiler.Where(x => x.Eylemler != null && x.Eylemler.Where(y => y.Birim != null && y.Birim == birim.ToString()).Count() > 0).ToList();
+            return context.Stratejiler.Include("Eylemler").ToList();
+            //return context.Stratejiler.Where(x => x.Eylemler != null && x.Eylemler.Where(y => y.Birim != null && y.Birim == birim.ToString()).Count() > 0).ToList();
         }
 
         public List<FaaliyetListView> GetAllFaaliyet(int birim = 0)
@@ -221,9 +224,9 @@ namespace KavisWeb.BusinessLayer
 
         public StratejikPlan GetAktifStratejikPlan(int kurumId)
         {
-            StratejikPlan plan = context.StratejikPlanlar.First();
+            StratejikPlan plan = GetPlan(1);
 
-            return null;
+            return plan;
         }
     }
 }

@@ -1,8 +1,10 @@
 ﻿using KavisWeb.BusinessLayer;
+using KavisWeb.Enitites.Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Http.Results;
 using System.Web.Mvc;
 
 namespace KavisWeb.Controllers
@@ -14,6 +16,8 @@ namespace KavisWeb.Controllers
         public StratejikPlanController()
         {
             _stratejikPlanManager = new StratejikPlanManager2();
+
+            
         }
 
         // GET: StratejikPlan
@@ -31,6 +35,21 @@ namespace KavisWeb.Controllers
         public ActionResult Edit()
         {
             return View();
+        }
+
+        
+        public JsonResult Kurumlar()
+        {
+
+            KurumManager kurumManager = new KurumManager();
+
+            var liste = kurumManager.GetList();
+
+           var t =  from x in liste
+                   select new ListViewItem { Id = x.Id, Adi = x.Adi };
+
+            return Json(t.ToList(), JsonRequestBehavior.AllowGet);
+
         }
     }
 }

@@ -199,6 +199,7 @@ var sp = new StratejikPlan("#accordionSP", SP_Data);
 
 function add_performans_click_event() {
     sp.add_performans(this);
+    $('select.birim-select').select2({ width: "100%" });
 }
 
 function add_strateji_click_event() {
@@ -301,14 +302,7 @@ function birimListe(selectedValue,multiselect = false) {
 
     let html = "";
     selectedValue = selectedValue ?? "";
-    
-    try {
-        selectedValue = selectedValue.split(',');
-    } catch  {
-        console.log(selectedValue);
-        selectedValue = "";
-    }
-    
+    selectedValue = selectedValue.toString().split(',');
 
     for (var i = 0; i < birimler.length; i++) {
         const birim = birimler[i];
@@ -319,6 +313,26 @@ function birimListe(selectedValue,multiselect = false) {
     }
 
     return `<select class="select-mini birim-select" ${multiselect?"multiple":""}><option value="">(BİRİM SEÇİNİZ)</option>${html}</select>`;
+
+}
+
+function loadSelectList(ID, list, selected, addEmpty = false, valueName = "value", textName = "text") {
+
+    let $obj = $(ID);
+    $obj.empty();
+
+    if (addEmpty)
+        $obj.append(`<option value="">(SEÇİNİZ)</option>`);
+
+    for (var i = 0; i < list.length; i++) {
+        const eleman = list[i];
+        console.log(eleman);
+        let isSelected = (Array.isArray(selected) && selected.indexOf(eleman["value"]) > -1) || (!Array.isArray(selected) && eleman["value"] == selected);
+        
+        let $option = $(`<option value="${eleman[valueName]}" ${isSelected ? "selected" : ""}>${eleman[textName]}</option>`);
+        $obj.append($option);
+    }
+
 
 }
 

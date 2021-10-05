@@ -29,11 +29,11 @@
         <div class="form-group row">
             <label class="col-4">Kurum</label>
             <div class="col-6">
-                @*<select class="form-control form-control-sm w-100">
-                    <option>BURSA İL MİLLİ EĞİTİM MÜDÜRLÜĞÜ</option>
-                </select>*@
+                <select name="KurumAdi" id="KurumAdi" class="form-control form-control-sm w-100">
+                    
+                </select>
 
-                <input type="text" name="KurumAdi" id="KurumAdi" class="form-control form-control-sm w-100" />
+                @*<input type="text" name="KurumAdi" id="KurumAdi" class="form-control form-control-sm w-100" />*@
             </div>
         </div>
 
@@ -61,7 +61,7 @@
             </div>
         </div>
 
-        <div class="form-group row">
+        <div class="form-group row d-none">
             <label class="col-4">SP. Türü</label>
             <div class="col-6">
                 <select class="form-control form-control-sm w-100" id="PlanTuru">
@@ -89,133 +89,7 @@
 
 <div class="accordion" id="accordionSP">
 
-    @*@for (int i = 0; i < 3; i++)
-        {
-            var show = i == 0 ? "show" : "";
-            var collapsed = i != 0 ? "collapsed" : "";
-
-
-
-            <div class="card amac">
-                <div class="card-header" id="panelHeaderAmac@i">
-
-                        <div class="">
-                            <button class="btn btn-link text-left btn-title" type="button" data-toggle="collapse" data-target="#collapseAmac_@i" aria-expanded="true" aria-controls="collapseAmac@i" >
-
-                                    AMAÇ : @(i+1). <span class="title">XXXXXXXX</span>
-
-                            </button>
-                        </div>
-                        <div class="input-group title-edit" style="display:none;">
-                            <input type="text" class="form-control form-control-sm" />
-                            <div class="input-group-append">
-                                <button class="btn btn-sm btn-outline-success"><span class="fa fa-check"></span></button>
-                                <button class="btn btn-sm btn-outline-danger"><span class="fa fa-remove"></span></button>
-                            </div>
-                        </div>
-
-                        <div class="float-right toolbar-edit">
-                            <button class="btn btn-sm btn-edit"><span class="fa fa-pencil"></span></button>
-                            <button class="btn btn-sm btn-delete" data-target="amac"><span class="fa fa-trash"></span></button>
-                        </div>
-
-                </div>
-
-                <div id="collapseAmac_@i" class="collapse @show" aria-labelledby="heading@i" data-parent="#accordionSP">
-                    <div class="card-body">
-                        <div>
-                            @for (int j = 1; j < 3; j++)
-                            {
-                                <div class="hedefKarti card">
-                                    <div class="card-header">
-                                        Hedef 1.@j.
-                                        <div class="float-right toolbar">
-                                            <button class="btn btn-sm"><span class="fa fa-pencil"></span></button>
-                                            <button class="btn btn-sm btn-delete" data-target="hedef"><span class="fa fa-trash"></span></button>
-                                        </div>
-                                    </div>
-                                    <div class="card-body">
-
-                                        <h6>PERFORMANS GÖSTERGELERİ</h6>
-
-                                        <table class="table table-bordered table-dar performans-gosterge">
-                                            <thead>
-                                                <tr>
-                                                    <th>No</th>
-                                                    <th width="150">&nbsp;</th>
-
-                                                    <th>Hedef Etkisi</th>
-                                                    <th>Başlangıç</th>
-                                                    <th>2019</th>
-                                                    <th>2020</th>
-                                                    <th>2021</th>
-                                                    <th>2022</th>
-                                                    <th>2023</th>
-                                                    <th>İzleme<br />Sıklığı</th>
-                                                    <th>Rapor<br />Sıklığı</th>
-                                                    <th>Sorumlu Birim</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td>P.G.1.1.1</td>
-                                                    <td contenteditable="true">Performans G.1</td>
-                                                    <td contenteditable="true"></td>
-                                                    <td contenteditable="true"></td>
-                                                    <td contenteditable="true"></td>
-                                                    <td contenteditable="true"></td>
-                                                    <td contenteditable="true"></td>
-                                                    <td contenteditable="true"></td>
-                                                    <td contenteditable="true"></td>
-                                                    <td>
-                                                        <select class="select-mini">
-                                                            <option></option>
-                                                            <option>6 Ay</option>
-                                                            <option>1 Yıl</option>
-                                                        </select>
-                                                    </td>
-                                                    <td>
-                                                        <select class="select-mini">
-                                                            <option></option>
-                                                            <option>6 Ay</option>
-                                                            <option>1 Yıl</option>
-                                                        </select>
-                                                    </td>
-                                                    <td>
-                                                        <select class="select-mini">
-                                                            <option></option>
-                                                            <option>TEMEL EĞİTİM</option>
-                                                            <option>ORTA ÖĞRETİM</option>
-                                                        </select>
-                                                    </td>
-                                                    <td>
-                                                        <button class="btn btn-sm btn-delete" data-target="performans"><span class="fa fa-trash"></span></button>
-                                                    </td>
-                                                </tr>
-
-                                            </tbody>
-                                        </table>
-                                        <div class="text-center"><button class="text-center btn-add btn-add-performans" data-target="performans">Performans Göstergesi Ekle</button></div>
-                                        <br />
-                                        <table class="table table-sm table-bordered">
-                                            <tr>
-                                                <td rowspan="50" width="150" style="vertical-align:middle;">STRATEJİLER</td>
-                                            </tr>
-                                            <tr><td>1.</td><td><button class="btn btn-sm btn-delete" data-target="strateji"><span class="fa fa-trash"></span></button></td></tr>
-
-                                        </table>
-                                        <div class="text-center"><button class="text-center btn-add btn-add-strateji">Strateji Ekle</button></div>
-                                        <br />
-                                    </div>
-                                </div>
-                            }
-                        </div>
-                        <div class="text-center"><button class="text-center btn-add btn-add-hedef">Hedef Ekle</button></div>
-                        <br />
-                    </div>
-                </div>
-            </div>
-        }*@
+    
 
 
 </div>
@@ -255,6 +129,14 @@
 
     <script type="text/javascript">
 
+        function LoadKurumList() {
+
+            api_get("/StratejikPlan/Kurumlar").done(function (d) {
+
+                loadSelectList('#KurumAdi', d, null, false, "Id","Adi")
+            });
+
+        }
 
         class FormEditAmac extends Form {
 
@@ -292,25 +174,30 @@
 
         var id = @(ViewContext.RouteData.Values["id"]??0 );
 
-
+       
 
         $(document).ready(function () {
+
+            LoadKurumList();
 
             a.Get(id).then(function (d) {
 
                 
                 $("#StratejikPlanId").val(d.Id);
-                $("#KurumAdi").val(d.KurumAdi);
+                $("#KurumAdi").val(d.KurumId);
                 $("#DonemBaslangic").val(d.Baslangic);
                 $("#PlanTuru").val(d.KurumTipi);
 
+                //$('select.birim-select').parent().css("width", "50%")
+                $('select.birim-select').select2({ width: "100%" });
 
             });
 
             $('.btn-kaydet').on("click", function () {
 
                 a.Id = id;
-                a.Baslik = a.KurumAdi = $("#KurumAdi").val();
+                a.Baslik = a.Kurum = $("#KurumAdi option:selected").text();
+                a.KurumId = $("#KurumAdi").val();
                 a.Baslangic = $("#DonemBaslangic").val();
                 a.Tur = 0;
                 a.Post();

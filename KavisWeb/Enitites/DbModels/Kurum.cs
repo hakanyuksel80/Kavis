@@ -29,5 +29,16 @@ namespace KavisWeb.Enitites.DbModels
 
         public int? AktifPlanId { get; set; }
 
+        public int AktifYil { get; set; }
+
+        public bool FaaliyetGirisAcik { get; set; }
+
+        public bool FaaliyetDurumGirisAcik { get; set; }
+
+        public bool GostergeGirisAcik { get; set; }
+
+        public string Mesaj { get; set; }
+
+
     }
 }

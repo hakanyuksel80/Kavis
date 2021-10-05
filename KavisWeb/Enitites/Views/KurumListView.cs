@@ -5,15 +5,10 @@ using System.Web;
 
 namespace KavisWeb.Enitites.Views
 {
-    public class StratejikPlanListView
+    public class ListViewItem
     {
         public int Id { get; set; }
 
-        public string Donem { get; set; }
-
-        public string Kurum { get; set; }
-
-        public string Turu { get; set; }
-
+        public string Adi { get; set; }
     }
 }

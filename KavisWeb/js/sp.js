@@ -526,6 +526,7 @@ class StratejikPlanItem extends PlanItem {
 
         data.Id = this.Id;
         data.KurumAdi = this.KurumAdi;
+        data.KurumId = this.KurumId;
         data.Baslangic = this.Baslangic;
         data.Tur = this.Tur;
 
