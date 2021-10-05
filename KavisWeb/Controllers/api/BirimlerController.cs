@@ -1,4 +1,5 @@
-﻿using KavisWeb.BusinessLayer;
+﻿using Core.Utilities.Results;
+using KavisWeb.BusinessLayer;
 using KavisWeb.DataLayer.EF;
 using KavisWeb.Enitites.DbModels;
 using System;
@@ -28,24 +29,37 @@ namespace KavisWeb.Controllers.api
         }
 
         // GET: api/Birimler/5
-        public string Get(int id)
+        public Birim Get(int id)
         {
-            return "value";
+            return birimManager.Get(id);
         }
 
         // POST: api/Birimler
-        public void Post([FromBody]string value)
+        public IResult Post(Birim model)
         {
-        }
+            if (model.Id > 0)
+            {
+                if (birimManager.Update(model))
+                    return new SuccessResult();
 
-        // PUT: api/Birimler/5
-        public void Put(int id, [FromBody]string value)
-        {
+                return new ErrorResult();
+                    
+            } else
+            {
+                if (birimManager.Add(model))
+                    return new SuccessDataResult<Birim>(model);
+                
+                return new ErrorResult();
+            }
         }
 
         // DELETE: api/Birimler/5
-        public void Delete(int id)
+        public IResult Delete(int id)
         {
+            if (birimManager.Delete(id))
+                return new SuccessResult();
+            else
+                return new ErrorResult();
         }
     }
 }

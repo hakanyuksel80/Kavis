@@ -40,19 +40,19 @@ namespace KavisWeb.Controllers.api
             if (model.Id > 0)
             {
                 Kurum kurum = manager.Get(model.Id);
-                //if (kurum != null)
-                //{
-                //    kurum.Adi = model.Adi;
-                //    kurum.KurumKodu = model.KurumKodu;
-                //    kurum.Turu = model.Turu;
-                //    manager.Update
-                //}
+                if (kurum != null)
+                {
+                    kurum.Adi = model.Adi;
+                    kurum.KurumKodu = model.KurumKodu;
+                    kurum.Turu = model.Turu;
 
-                if (!manager.Update(model))
-                    return new ErrorResult();
-                else
-                    return new SuccessResult();
+                    if (!manager.Update(model))
+                        return new ErrorResult();
+                    else
+                        return new SuccessResult();
+                }
 
+                return new ErrorResult();
             }
             else if (manager.Add(model))
             {

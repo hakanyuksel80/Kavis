@@ -20,37 +20,39 @@ namespace KavisWeb.Controllers.api
 
             GostergeGirisManager gostergeGirisManager = new GostergeGirisManager(new EfGostergeGirisDal());
 
-            foreach (var item in model.Items)
-            {
-                var gosterge = manager.GetGosterge(item.GostergeId);
-
-                if (gosterge != null)
+            if (model.Items != null)
+                foreach (var item in model.Items)
                 {
-                    var gostergeGiris = gostergeGirisManager.GetByBirim(model.BirimId, item.GostergeId, (byte)item.Yil);
+                    var gosterge = manager.GetGosterge(item.GostergeId);
 
-                    if (gostergeGiris == null)
+                    if (gosterge != null)
                     {
-                        gostergeGiris = new Enitites.DbModels.GostergeGiris()
+                        var gostergeGiris = gostergeGirisManager.GetByBirim(model.BirimId, item.GostergeId, (byte)item.Yil);
+
+                        if (gostergeGiris == null)
                         {
-                            BirimId = model.BirimId,
-                            GostergeId = item.GostergeId,
-                            Onay = false,
-                            Yil = (byte)item.Yil,
-                            Deger = item.Value,
-                        };
+                            gostergeGiris = new Enitites.DbModels.GostergeGiris()
+                            {
+                                BirimId = model.BirimId,
+                                GostergeId = item.GostergeId,
+                                Onay = false,
+                                Yil = (byte)item.Yil,
+                                Deger = item.Value,
+                            };
 
-                        gostergeGirisManager.Add(gostergeGiris);
+                            gostergeGirisManager.Add(gostergeGiris);
 
-                    } else
-                    {
-                        gostergeGiris.Deger = item.Value;
-                        gostergeGirisManager.Update(gostergeGiris);
-                    }                   
-                    
+                        }
+                        else
+                        {
+                            gostergeGiris.Deger = item.Value;
+                            gostergeGirisManager.Update(gostergeGiris);
+                        }
+
+                    }
+
+                    manager.SaveChanges();
                 }
-
-                manager.SaveChanges();
-            }
 
 
             return new SuccessResult();
@@ -70,7 +72,7 @@ namespace KavisWeb.Controllers.api
 
         public string Value { get; set; }
 
-        public int Yil { get; set; }       
+        public int Yil { get; set; }
 
     }
 }
