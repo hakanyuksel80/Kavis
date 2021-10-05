@@ -4,20 +4,42 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>Kurumlar</h2>
 
 <p>
     <a href="#" class="btn btn-success btn-sm btn-kurumEkle">Yeni Kurum</a>
 </p>
-<table class="table" id="tableKurumlar">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Adi)
-        </th>
-        <th></th>
-    </tr>
+<table class="table table table-striped table-bordered" id="tableKurumlar">
+    <thead>
+        <tr>
+            <th>
+                Kurum Kodu
+            </th>
+            <th>
+                Kurum Adı
+            </th>
+            <th>
+                Kurum Türü
+            </th>
+            <th>
 
+            </th>
+        </tr>
+    </thead>
     <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>@item.KurumKodu</td>
+            <td>@item.Adi</td>
+            <td>@item.Turu  </td>
+            <td>
+                <button class="btn btn-sm btn-success btn-kurumDuzenle" data-id="@item.Id">Düzenle</button> |
+                <button class="btn btn-sm btn-success btn-kurumSil" data-id="@item.Id">Sil</button> |
+                <button class="btn btn-sm btn-success btn-birimler" data-id="@item.Id">Birimler</button>
+            </td>
+        </tr>
+        }
     </tbody>
 
 </table>
@@ -31,10 +53,10 @@
                     Kurum
                 </div>
                 <div class="modal-body">
-                    <input type="hidden" id="KurumId" name="KurumId" />
+                    <input type="hidden" id="KurumId" name="Id" />
                     <div class="form-group">
                         <label>Adı:</label>
-                        <input type="text" name="KurumAdi" id="KurumAdi" class="form-control" />
+                        <input type="text" name="Adi" id="KurumAdi" class="form-control" />
                     </div>
                     <div class="form-group">
                         <label>Kodu:</label>
@@ -42,11 +64,11 @@
                     </div>
                     <div class="form-group">
                         <label>Türü:</label>
-                        <select class="form-control" name="KurumTuru" id="KurumTuru">
+                        <select class="form-control" name="Turu" id="KurumTuru">
                             <option value="">SEÇİNİZ</option>
-                            <option value="">İL</option>
-                            <option value="">İLÇE</option>
-                            <option value="">OKUL</option>
+                            <option value="0">İL</option>
+                            <option value="1">İLÇE</option>
+                            <option value="2">OKUL</option>
                         </select>
                     </div>
 
@@ -69,9 +91,10 @@
         class Kurumlar {
 
             ekle(kurum) {
-                let dugmelerHtml = this.tabloSatirDugmeSablon(true, true);
-                let st = $(this.tabloSatirSablon(eylem, faaliyet, dugmelerHtml)).hide();
+                let dugmelerHtml = this.tabloSatirDugmeSablon(kurum.Id, true, true);
+                let st = $(this.tabloSatirSablon(kurum, dugmelerHtml)).hide();
                 $('#tableKurumlar tbody').append(st);
+                st.show();
             }
 
             guncelle(row, faaliyet) {
@@ -87,25 +110,33 @@
                 satir.hide();
             }
 
-            tabloSatirSablon(kurumAdi = "", dugmelerHtml = "") {
-                return `<tr><td>${kurumAdi}</td><td>&nbsp;</td><td>${dugmelerHtml}</td></tr>`;
+            tabloSatirSablon(d, dugmelerHtml = "") {
+                return `<tr><td>${d.KurumKodu}</td><td>${d.Adi}</td><td>${d.Turu}</td><td>${dugmelerHtml}</td></tr>`;
             }
 
             tabloSatirDugmeSablon(id, duzenle, sil) {
                 let a = "";
-                a += duzenle == true ? `<button class="btn btn-sm btn-success btn-kurumDuzenle" data-id="${id}">Düzenle</button>` : '';
+                a += duzenle == true ? `<button class="btn btn-sm btn-success btn-kurumDuzenle" data-id="${id}">Düzenle</button> | ` : '';
                 a += sil == true ? `<button class="btn btn-sm btn-success btn-kurumSil"  data-id="${id}">Sil</button> ` : '';
                 return a;
             }
 
             LoadList() {
-                api_get("/api/Kurumlar", function (d) {
-                    LoadTable(d);
+                let THIS = this;
+                api_get("/api/Kurum", function (d) {
+                    THIS.LoadTable(d);
                 });
             }
 
             SaveKurum(d) {
-                api_post("/api/Kurumlar", d).done(function () {
+                api_post("/api/Kurum", d).done(function () {
+                });
+            }
+
+            DeleteKurum(id) {
+                let THIS = this;
+                return api_delete("/api/Kurum/" + id, function (d) {
+                    THIS.LoadList();
                 });
             }
 
@@ -113,7 +144,7 @@
                 $('#tableKurumlar tbody').empty();
                 for (var i = 0; i < d.length; i++) {
                     const satir = d[i];
-                    kurumlar.ekle(satir);
+                    this.ekle(satir);
                 }
             }
 
@@ -138,13 +169,14 @@
                 //$(this.modalId + " #KurumAdi").text(kurum.Adi);
                 //$(this.modalId + " #KurumKodu").val(kurum.Kodu);
                 //$(this.modalId + " #KurumTuru").val(kurum.Turu);
-                this.PutValues(kurum);
+                this.Load(kurum);                
                 this.Show();
             }
 
             Load(id) {
                 let THIS = this;
-                api_get("/api/Kurumlar/" + id, function (d) {
+                api_get("/api/Kurum/" + id, function (d) {
+                    console.log(d);
                     THIS.PutValues(d);
                 });
             }
@@ -152,7 +184,9 @@
             Save() {
                 let data = this.GetValues();
 
-                api_post("/api/Kurumlar/", data).done(function () {
+                console.log(data);
+                
+                api_post("/api/Kurum/", data).done(function () {
                     kurumlar.LoadList();
                 });
 
@@ -177,7 +211,24 @@
         }
 
         function onKurumSilClickEvent() {
-            faaliyet.sil(this);
+
+            let id = $(this).data("id");
+
+            silmeMesaji("Bu Kurumu silerseniz bu kuruma bağlı tüm birim, stratejik plan kayıtları ve girdileri tamamen silinecektir. \n\r\n\r Silmek istediğinize emin misiniz?", "Dikkat! Silme Onayı").then(function (d) {
+
+                if (d) {
+                    
+                    kurumlar.DeleteKurum(id);
+
+                }
+
+            });
+
+        }
+
+        function onBirimlerClickEvent() {
+            let id = $(this).data("id");
+            location = "/Birimler/Index/" + id;
         }
 
         $(document).ready(function () {
@@ -185,6 +236,9 @@
             $('.btn-kurumEkle').on("click", onKurumEkleClickEvent);
             $(document).on("click", '.btn-kurumDuzenle', onKurumDuzenleClickEvent);
             $(document).on("click", '.btn-kurumSil', onKurumSilClickEvent);
+            $(document).on("click", '.btn-birimler', onBirimlerClickEvent);
+
+            
 
         });
 

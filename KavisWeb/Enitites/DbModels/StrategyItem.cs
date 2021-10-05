@@ -49,10 +49,7 @@ namespace KavisWeb.Enitites.DbModels
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public List<Amac> Amaclar { get; set; }
-
-
-
-
+        
     }
 
     [Table("Amaclar")]

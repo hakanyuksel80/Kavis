@@ -7,12 +7,16 @@ using System.Web.Mvc;
 
 namespace KavisWeb.Controllers
 {
-    public class KurumController : Controller
+    public class KurumlarController : Controller
     {
         // GET: Kurum
         public ActionResult Index()
-        {         
-                        return View();
+        {
+            KurumManager manager = new KurumManager();
+
+            var kurumlar = manager.GetList();
+            
+            return View(kurumlar);
         }     
 
     }

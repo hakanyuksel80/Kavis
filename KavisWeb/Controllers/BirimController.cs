@@ -33,7 +33,9 @@ namespace KavisWeb.Controllers
             int kurumId = 2;
 
             //Aktif Sp yi nul
-            var aktifSP = this.manager.GetAktifStratejikPlan(kurumId);
+            var aktifSP = this.manager.GetAktifStratejikPlan(id);
+
+           
 
             //SP 'nin 
             int birim = id;

@@ -157,8 +157,9 @@
     <Compile Include="Controllers\api\KurumController.cs" />
     <Compile Include="Controllers\api\StratejikPlanController.cs" />
     <Compile Include="Controllers\BirimController.cs" />
+    <Compile Include="Controllers\BirimlerController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\KurumController.cs" />
+    <Compile Include="Controllers\KurumlarController.cs" />
     <Compile Include="Controllers\PerformansProgramiController.cs" />
     <Compile Include="Controllers\StratejikPlanController.cs" />
     <Compile Include="Controllers\StratejikPlansController.cs" />
@@ -2445,7 +2446,8 @@
     <Content Include="Views\Home\Gostergeler.cshtml" />
     <Content Include="Views\Birim\Gosterge.cshtml" />
     <Content Include="Views\StratejikPlan\Index.cshtml" />
-    <Content Include="Views\Kurum\Index.cshtml" />
+    <Content Include="Views\Kurumlar\Index.cshtml" />
+    <Content Include="Views\Birimler\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="assets\file-uploader\server\node\public\files\" />

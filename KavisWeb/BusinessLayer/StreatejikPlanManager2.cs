@@ -25,7 +25,7 @@ namespace KavisWeb.BusinessLayer
             var plans = context.StratejikPlanlar.ToList();
 
             var list = from x in plans
-                       select new StratejikPlanListView() { Id = x.Id, Donem = x.Baslangic.ToString() + " " + x.Bitis.ToString(), Kurum = x.Kurum.Adi, Turu = Convert.ToInt32(x.Kurum.Turu) };
+                       select new StratejikPlanListView() { Id = x.Id, Donem = x.Baslangic.ToString() + " " + x.Bitis.ToString(), Kurum = "", Turu = 0 };
 
             return list.ToList();
             
@@ -169,15 +169,16 @@ namespace KavisWeb.BusinessLayer
             context.Faaliyetler.Add(faaliyet);
         }
 
-        public List<Strateji> GetAllStratejiByBirim(int birim)
+        public List<Strateji> GetAllStratejiByBirim(int birim = 0)
         {
             //List<Strateji> liste = new List<Strateji>();
 
-            //return context.Stratejiler.Include("Eylemler").ToList();
-            //return context.Stratejiler.Where(x => x.Eylemler.Where(y => y.Birim. == birim.ToString()).Count() > 0).ToList();
+            //var r = context.Stratejiler.Include("Eylemler").ToList();
+            return context.Stratejiler.Where(x => x.Eylemler.Where(y => y.Birim.Split(',').Contains(birim.ToString())).Count() > 0).ToList();
+            
         }
 
-        public List<FaaliyetListView> GetAllFaaliyet()
+        public List<FaaliyetListView> GetAllFaaliyet(int birim = 0)
         {
             var faaliyetler = context.Faaliyetler.OrderBy(x => x.Eylem.Kod).ThenBy(x => x.SiraNo).ToList();
 
@@ -219,7 +220,7 @@ namespace KavisWeb.BusinessLayer
             context.Faaliyetler.Remove(faaliyet);
         }
 
-        public StratejikPlan GetAktifStratejikPlan()
+        public StratejikPlan GetAktifStratejikPlan(int kurumId)
         {
             StratejikPlan plan = context.StratejikPlanlar.First();
 
