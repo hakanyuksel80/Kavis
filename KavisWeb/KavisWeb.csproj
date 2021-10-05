@@ -246,6 +246,10 @@
     <Compile Include="Migrations\202110041122228_AddGostergeGirisleriTable.Designer.cs">
       <DependentUpon>202110041122228_AddGostergeGirisleriTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202110051206058_addedToKurumAktifPlan.cs" />
+    <Compile Include="Migrations\202110051206058_addedToKurumAktifPlan.Designer.cs">
+      <DependentUpon>202110051206058_addedToKurumAktifPlan.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ViewPerformansGirisModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -2514,6 +2518,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202110041122228_AddGostergeGirisleriTable.resx">
       <DependentUpon>202110041122228_AddGostergeGirisleriTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202110051206058_addedToKurumAktifPlan.resx">
+      <DependentUpon>202110051206058_addedToKurumAktifPlan.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

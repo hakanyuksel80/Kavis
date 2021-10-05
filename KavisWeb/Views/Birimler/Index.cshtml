@@ -48,6 +48,7 @@
                 </div>
                 <div class="modal-body">
                     <input type="hidden" id="BirimId" name="Id" />
+                    <input type="hidden" id="KurumId" name="KurumId" />
                     <div class="form-group">
                         <label>Kodu:</label>
                         <input type="text" name="Kodu" id="BirimKodu" class="form-control" />
@@ -71,3 +72,97 @@
         </div>
     </div>
 </div>
+
+
+
+@section scripts {
+
+    <script type="text/javascript">
+
+        class BirimForm extends Form {
+
+            Clear() {
+                super.Clear();
+            }
+
+            New() {
+                this.Clear();
+                this.Show();
+            }
+
+            Edit(birim) {
+              
+                this.Load(birim);
+                this.Show();
+            }
+
+            Load(id) {
+                let THIS = this;
+                api_get("/api/Birimler/" + id, function (d) {
+                    console.log(d);
+                    THIS.PutValues(d);
+                });
+            }
+
+            Save() {
+                let data = this.GetValues();
+
+                console.log(data);
+
+                api_post("/api/Birimler/", data).done(function () {
+                    location.reload();
+                });
+
+                return true;
+            }
+
+
+        }
+
+
+
+        var birimForm = new BirimForm("#BirimEdit");
+
+
+        function onBirimEkleClickEvent() {
+            birimForm.New();
+        }
+
+        function onBirimDuzenleClickEvent() {
+            let id = $(this).data("id");
+            birimForm.Edit(id);
+        }
+
+        function onBirimSilClickEvent() {
+
+            let id = $(this).data("id");
+
+            silmeMesaji("Bu Kurumu silerseniz bu kuruma bağlı tüm birim, stratejik plan kayıtları ve girdileri tamamen silinecektir. \n\r\n\r Silmek istediğinize emin misiniz?", "Dikkat! Silme Onayı").then(function (d) {
+
+                if (d) {
+
+                   //.DeleteKurum(id);
+
+                }
+
+            });
+
+        }
+       
+
+        $(document).ready(function () {
+
+            $('.btn-birimEkle').on("click", onBirimEkleClickEvent);
+            $(document).on("click", '.btn-birimDuzenle', onBirimDuzenleClickEvent);
+            $(document).on("click", '.btn-birimSil', onBirimSilClickEvent);
+            
+
+
+        });
+
+
+
+        </script>
+
+}
+

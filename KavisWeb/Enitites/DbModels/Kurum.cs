@@ -25,8 +25,9 @@ namespace KavisWeb.Enitites.DbModels
 
         public KurumTipi Turu { get; set; }
 
-        public List<Birim> Birimler { get; set; }
+        public List<Birim> Birimler { get; set; }        
 
-        public int AktifPlan { get; set; }
+        public int? AktifPlanId { get; set; }
+
     }
 }
