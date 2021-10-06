@@ -240,8 +240,7 @@
                 api_get("/api/Kurum/" + id, function (d) {
                     console.log(d);
                     THIS.PutValues(d);
-                    $('#uyarilarTextArea').summernote("code",d.Mesaj);
-                                        
+                    $('#uyarilarTextArea').summernote("code",d.Mesaj);                                        
                 });
             }
 

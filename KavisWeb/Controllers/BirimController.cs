@@ -1,5 +1,6 @@
 ﻿using KavisWeb.BusinessLayer;
 using KavisWeb.DataLayer.EF;
+using KavisWeb.Enitites;
 using KavisWeb.Enitites.DbModels;
 using KavisWeb.Models;
 using System;
@@ -26,8 +27,20 @@ namespace KavisWeb.Controllers
         // GET: Birim
         public ActionResult Index()
         {
-            //Kullanıcını kurumunu bul
-            int kurumId = 2;
+
+            KavisUser kavisUser = KavisHelper.GetUser();
+
+           
+
+            if (kavisUser.BirimId > 0)
+            {
+                //Kullanıcını kurumunu bul
+                kavisUser.
+
+
+            }
+
+            
 
             //Kullanıcının birimini bul
 
@@ -36,9 +49,7 @@ namespace KavisWeb.Controllers
             //Aktif Sp yi nul
             var aktifSP = this.manager.GetAktifStratejikPlan(kurumId);
 
-
-            //SP 'nin 
-            int birim = 2;
+            
 
             var stratejiler = manager.GetAllStratejiByBirim(birim);
 
