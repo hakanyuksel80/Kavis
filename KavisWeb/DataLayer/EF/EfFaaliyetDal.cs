@@ -9,13 +9,13 @@ using System.Web;
 
 namespace KavisWeb.DataLayer.EF
 {
-    public class EfBirimDal : EfEntityRepositoryBase<Birim, StrategyDBContext>, IBirimDal
+    public class EfFaaliyetDal : EfEntityRepositoryBase<Faaliyet, StrategyDBContext>, IFaaliyetDal
     {
-        public new Birim Get(Expression<Func<Birim, bool>> filter = null)
+        public new List<Faaliyet> GetAll(Expression<Func<Faaliyet, bool>> filter = null)
         {
             using (StrategyDBContext context = new StrategyDBContext())
             {
-                return context.Set<Birim>().Include("Kurum").SingleOrDefault(filter);
+                return filter == null ? context.Set<Faaliyet>().Include("Eylem").ToList() : context.Set<Faaliyet>().Include("Eylem").Where(filter).ToList();
             }
         }
     }

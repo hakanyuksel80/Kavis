@@ -16,9 +16,9 @@ namespace KavisWeb.BusinessLayer
 
                 Ad = "Hakan YÜKSEL",
 
-                Type = KavisUserType.Admin,
+                Type = KavisUserType.Birim,
 
-                BirimId = 1,
+                BirimId = 2,
             };
 
         }

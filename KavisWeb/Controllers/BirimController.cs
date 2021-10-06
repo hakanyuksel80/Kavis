@@ -30,40 +30,71 @@ namespace KavisWeb.Controllers
 
             KavisUser kavisUser = KavisHelper.GetUser();
 
-           
 
-            if (kavisUser.BirimId > 0)
+            if (kavisUser.Type == KavisUserType.Birim)
             {
-                //Kullanıcını kurumunu bul
-                kavisUser.
+                if (kavisUser.BirimId > 0)
+                {
+                    //Kullanıcını kurumunu bul
 
+                    //Kullanıcının birimini bul
 
+                    //Kurumun SP'sini al
+                    BirimManager birimManager = new BirimManager(new EfBirimDal());
+
+                    var birim = birimManager.Get(kavisUser.BirimId);
+
+                    if (birim != null && birim.Kurum != null)
+                    {
+                        if (birim.Kurum.AktifPlanId > 0)
+                        {
+                            StratejikPlanManager2 stratejikPlanManager = new StratejikPlanManager2();
+                            if (birim.KurumId != null)
+                            {
+                                var plan = stratejikPlanManager.GetAktifStratejikPlan(birim.KurumId??0);
+
+                                if (plan != null)
+                                {
+                                    var stratejiler = manager.GetAllStratejiByBirim(birim.Id);
+
+                                    var faaliyetler = manager.GetAllFaaliyetByBirim(birim.Id);
+                                    
+                                    ViewPerformansGirisModel model = new ViewPerformansGirisModel()
+                                    {
+                                        Stratejiler = stratejiler,
+                                        Faaliyetler = faaliyetler,
+                                    };
+
+                                    ViewBag.seciliBirimId = birim.Id;
+
+                                    return View(model);
+                                }
+                                else
+                                    ViewBag.Hata = "Kurumunuzun stratejik planı bulunamadı";
+
+                            }
+                            
+                        }
+                        else
+                            ViewBag.Hata = "Kurumunuzun stratejik planı seçilmedi";
+                    }
+                    else
+                    {
+                        ViewBag.Hata = "Kurumunuzun kaydı bulunamadı!.";
+                    }
+
+                }
+                else
+                {
+                    ViewBag.Hata = "Biriminizin kaydı bulunamadı!.";
+                }
             }
 
-            
-
-            //Kullanıcının birimini bul
-
-            //Kurumun SP'sini al
-
-            //Aktif Sp yi nul
-            var aktifSP = this.manager.GetAktifStratejikPlan(kurumId);
-
-            
-
-            var stratejiler = manager.GetAllStratejiByBirim(birim);
-
-            var faaliyetler = manager.GetAllFaaliyetByBirim(birim);
 
             BirimListesiYukle();
 
-            ViewPerformansGirisModel model = new ViewPerformansGirisModel()
-            {
-                Stratejiler = stratejiler,
-                Faaliyetler = faaliyetler,
-            };
+            return View();
 
-            return View(model);
         }
 
         public ActionResult Gosterge(int id = 0)
@@ -86,29 +117,29 @@ namespace KavisWeb.Controllers
                 if (stratejikPlan != null)
                 {
 
-                
-                foreach (var amac in stratejikPlan.Amaclar)
-                {
-                    foreach (var hedef in amac.Hedefler)
+
+                    foreach (var amac in stratejikPlan.Amaclar)
                     {
-                        hedef.Gostergeler = hedef.Gostergeler.Where(x => x.SorumluBirimId == id).ToList();
-
-                        foreach (var aGosterge in hedef.Gostergeler)
+                        foreach (var hedef in amac.Hedefler)
                         {
-                            // Burada birimin girdiği değerler varsa onu gösterelerim. Yoksa boş girelim, girilen değeri göremesin
-                            var giris = girisManager.GetByBirim(birimId, aGosterge.Id, aktifYil);
-                            if (giris != null)
-                                aGosterge.SetGerceklesenDeger(giris.Yil, giris.Deger);
-                            else
-                                aGosterge.SetGerceklesenDeger(aktifYil, "");
+                            hedef.Gostergeler = hedef.Gostergeler.Where(x => x.SorumluBirimId == id).ToList();
 
+                            foreach (var aGosterge in hedef.Gostergeler)
+                            {
+                                // Burada birimin girdiği değerler varsa onu gösterelerim. Yoksa boş girelim, girilen değeri göremesin
+                                var giris = girisManager.GetByBirim(birimId, aGosterge.Id, aktifYil);
+                                if (giris != null)
+                                    aGosterge.SetGerceklesenDeger(giris.Yil, giris.Deger);
+                                else
+                                    aGosterge.SetGerceklesenDeger(aktifYil, "");
+
+                            }
                         }
+
+                        amac.Hedefler = amac.Hedefler.Where(x => x.Gostergeler.Count() > 0).ToList();
                     }
 
-                    amac.Hedefler = amac.Hedefler.Where(x => x.Gostergeler.Count() > 0).ToList();
-                }
-
-                stratejikPlan.Amaclar = stratejikPlan.Amaclar.Where(x => x.Hedefler.Count() > 0).ToList();
+                    stratejikPlan.Amaclar = stratejikPlan.Amaclar.Where(x => x.Hedefler.Count() > 0).ToList();
 
                 }
                 return View(stratejikPlan);

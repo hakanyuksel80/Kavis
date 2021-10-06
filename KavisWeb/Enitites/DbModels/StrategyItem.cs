@@ -49,7 +49,7 @@ namespace KavisWeb.Enitites.DbModels
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public List<Amac> Amaclar { get; set; }
-        
+
     }
 
     [Table("Amaclar")]
@@ -139,17 +139,17 @@ namespace KavisWeb.Enitites.DbModels
             return "";
         }
 
-        public void SetHedefDegerler(byte yil,string value)
+        public void SetHedefDegerler(byte yil, string value)
         {
             switch (yil)
             {
-                case 1: Yil1 = value;break;                
-                case 2: Yil2 = value;break;                
-                case 3: Yil3 = value;break;                
-                case 4: Yil4 = value;break;                
-                case 5: Yil5 = value; break;                
+                case 1: Yil1 = value; break;
+                case 2: Yil2 = value; break;
+                case 3: Yil3 = value; break;
+                case 4: Yil4 = value; break;
+                case 5: Yil5 = value; break;
             }
-            
+
         }
 
         public string GetGerceklesenDegerler(byte yil)
@@ -190,6 +190,9 @@ namespace KavisWeb.Enitites.DbModels
 
         [JsonIgnore]
         public Strateji Strateji { get; set; }
+
+        [NotMapped]
+        public string KodVeBaslik { get { return this.Kod + " " + this.Baslik; } }
     }
 
     [Table("Faaliyetler")]
@@ -203,9 +206,9 @@ namespace KavisWeb.Enitites.DbModels
 
         public byte Yil { get; set; }
 
-        public DateTime Baslama { get; set; }
+        public DateTime? Baslama { get; set; }
 
-        public DateTime Bitis { get; set; }
+        public DateTime? Bitis { get; set; }
 
         public string Gerceklesme { get; set; }
 

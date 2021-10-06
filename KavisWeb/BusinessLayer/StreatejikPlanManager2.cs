@@ -174,10 +174,31 @@ namespace KavisWeb.BusinessLayer
 
         public List<Strateji> GetAllStratejiByBirim(int birim = 0)
         {
-            //List<Strateji> liste = new List<Strateji>();
+            List<Strateji> liste = new List<Strateji>();
 
-            return context.Stratejiler.Include("Eylemler").ToList();
-            //return context.Stratejiler.Where(x => x.Eylemler != null && x.Eylemler.Where(y => y.Birim != null && y.Birim == birim.ToString()).Count() > 0).ToList();
+            var stratejiler = context.Stratejiler.Include("Eylemler").ToList();
+
+            foreach (var strateji in stratejiler)
+            {
+                if (strateji.Eylemler != null)
+                {
+                    foreach (var eylem in strateji.Eylemler)
+                    {
+                        if (!String.IsNullOrEmpty(eylem.Birim))
+                        {
+                            string[] birims = eylem.Birim.Split(',');
+
+                            if (birims.Contains(birim.ToString()))
+                            {
+                                liste.Add(strateji);
+                                break;
+                            }
+                        }                        
+                    }
+                }
+            }
+
+            return liste;
         }
 
         public List<FaaliyetListView> GetAllFaaliyet(int birim = 0)
@@ -204,7 +225,7 @@ namespace KavisWeb.BusinessLayer
             var faaliyetler = context.Faaliyetler.OrderBy(x => x.Eylem.Kod).ThenBy(x => x.SiraNo).ToList();
 
             return (from x in faaliyetler
-                    select new FaaliyetRaporListView() { Id = x.Id, EylemAdi = x.Eylem.Kod + " " + x.Eylem.Baslik, FaaliyetAdi = x.Baslik, Birim = x.BirimAdi, Gerceklesme = x.Gerceklesme, Durum = x.Durum, Sonuc = x.Sonuc, Tarih = x.Baslama.ToShortDateString() + " " + x.Bitis.ToShortDateString() }).ToList();
+                    select new FaaliyetRaporListView() { Id = x.Id, EylemAdi = x.Eylem.Kod + " " + x.Eylem.Baslik, FaaliyetAdi = x.Baslik, Birim = x.BirimAdi, Gerceklesme = x.Gerceklesme, Durum = x.Durum, Sonuc = x.Sonuc, Tarih = x.Baslama + " " + x.Bitis }).ToList();
         }
 
         public void DeleteEylem(Eylem eylem)

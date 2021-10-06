@@ -141,8 +141,10 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="BusinessLayer\BirimManager.cs" />
+    <Compile Include="BusinessLayer\FaaliyetManager.cs" />
     <Compile Include="BusinessLayer\GostergeGirisManager.cs" />
     <Compile Include="BusinessLayer\IBirimService.cs" />
+    <Compile Include="BusinessLayer\IFaaliyetService.cs" />
     <Compile Include="BusinessLayer\IGostergeGirisService.cs" />
     <Compile Include="BusinessLayer\IKurumService.cs" />
     <Compile Include="BusinessLayer\IStratejikPlanService.cs" />
@@ -155,6 +157,7 @@
     <Compile Include="Controllers\api\BirimlerController.cs" />
     <Compile Include="Controllers\api\DenemeController.cs" />
     <Compile Include="Controllers\api\EylemlerController.cs" />
+    <Compile Include="Controllers\api\FaaliyetController.cs" />
     <Compile Include="Controllers\api\KurumController.cs" />
     <Compile Include="Controllers\api\StratejikPlanController.cs" />
     <Compile Include="Controllers\BirimController.cs" />
@@ -165,10 +168,12 @@
     <Compile Include="Controllers\StratejikPlanController.cs" />
     <Compile Include="Controllers\StratejikPlansController.cs" />
     <Compile Include="DataLayer\Abstract\IBirimDal.cs" />
+    <Compile Include="DataLayer\Abstract\IFaaliyetDal.cs" />
     <Compile Include="DataLayer\Abstract\IGostergeGirisDal.cs" />
     <Compile Include="DataLayer\Abstract\IKurumDal.cs" />
     <Compile Include="DataLayer\Abstract\IStratejikPlanDal.cs" />
     <Compile Include="DataLayer\EF\EfBirimDal.cs" />
+    <Compile Include="DataLayer\EF\EfFaaliyetDal.cs" />
     <Compile Include="DataLayer\EF\EfGostergeGiris.cs" />
     <Compile Include="DataLayer\EF\EfKurumDal.cs" />
     <Compile Include="DataLayer\EF\EfStratejikPlanDal.cs" />
@@ -256,6 +261,10 @@
     <Compile Include="Migrations\202110051838536_kurumAyarlarieklendi.cs" />
     <Compile Include="Migrations\202110051838536_kurumAyarlarieklendi.Designer.cs">
       <DependentUpon>202110051838536_kurumAyarlarieklendi.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202110061956137_datetimeNull.cs" />
+    <Compile Include="Migrations\202110061956137_datetimeNull.Designer.cs">
+      <DependentUpon>202110061956137_datetimeNull.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ViewPerformansGirisModel.cs" />
@@ -2531,6 +2540,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202110051838536_kurumAyarlarieklendi.resx">
       <DependentUpon>202110051838536_kurumAyarlarieklendi.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202110061956137_datetimeNull.resx">
+      <DependentUpon>202110061956137_datetimeNull.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

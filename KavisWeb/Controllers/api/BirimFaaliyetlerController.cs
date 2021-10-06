@@ -1,4 +1,6 @@
-﻿using KavisWeb.Enitites.DbModels;
+﻿using KavisWeb.BusinessLayer;
+using KavisWeb.DataLayer.EF;
+using KavisWeb.Enitites.DbModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,23 +13,20 @@ namespace KavisWeb.Controllers.api
     public class BirimFaaliyetlerController : ApiController
     {
         // GET: api/BirimFaaliyetler
-        public BirimFaaliyetlerViewModel Get()
+        public BirimFaaliyetlerViewModel Get(int id)
         {
-            return new BirimFaaliyetlerViewModel()
-            {
-                Faaliyetler = new List<FaaliyetItem>()
-                {
-                    new FaaliyetItem { Id = 1, EylemId = 1, EylemAdi = "EYLEM ADİ 1" },
-                    new FaaliyetItem { Id = 2, EylemId = 2, EylemAdi = "EYLEM ADİ 1" },
-                    new FaaliyetItem { Id = 3, EylemId = 3, EylemAdi = "EYLEM ADİ 1" },
+            var model = new BirimFaaliyetlerViewModel();
 
-                },
-                 Stratejiler = new List<ParentPlanItem>()
-                 {
+            FaaliyetManager manager = new FaaliyetManager(new EfFaaliyetDal());
 
-                     new ParentPlanItem { Id = 1, Baslik="", }
-                 }
-            };
+            var faaliyetler = manager.GetAll(id);
+
+            model.Faaliyetler = (from x in faaliyetler
+                                 select new FaaliyetItem { Id = x.Id, Durum = x.Durum, EylemAdi = x.Eylem.KodVeBaslik, EylemId = x.EylemId, FaaliyetAdi = x.Baslik, Gerceklestirilenler = x.Gerceklesme, Sonuc = x.Sonuc }).ToList();
+
+
+            return model;
+
         }
 
         // POST: api/BirimFaaliyetler
