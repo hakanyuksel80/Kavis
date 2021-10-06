@@ -45,6 +45,11 @@ namespace KavisWeb.Controllers.api
                     kurum.Adi = model.Adi;
                     kurum.KurumKodu = model.KurumKodu;
                     kurum.Turu = model.Turu;
+                    kurum.AktifYil = model.AktifYil;
+                    kurum.FaaliyetDurumGirisAcik = model.FaaliyetDurumGirisAcik;
+                    kurum.FaaliyetGirisAcik = model.FaaliyetGirisAcik;
+                    kurum.GostergeGirisAcik = model.GostergeGirisAcik;
+                    kurum.Mesaj = model.Mesaj;
 
                     if (!manager.Update(model))
                         return new ErrorResult();

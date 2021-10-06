@@ -41,7 +41,14 @@
 
     PutValues(data) {
         for (const [key, value] of Object.entries(data)) {
-            $(`${this.modalId} [name=${key}]`).val(value);
+            let $input = $(`${this.modalId} [name=${key}]`);
+            
+            if ($input.prop("tagName") == "INPUT" && $input[0].type == "checkbox") {
+               
+                $input[0].checked = value;
+            }                
+            else
+                $input.val(value);
         }
     }
 
@@ -50,7 +57,10 @@
         let $inputs = $(`${this.modalId}`).find(`input,select,textarea`);
 
         $inputs.each(function (t, v) {
-            data[v.name] = v.value;
+            if (v.type == "checkbox")
+                data[v.name] = v.checked;
+            else
+                data[v.name] = v.value;
         });
 
         return data;

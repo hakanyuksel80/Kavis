@@ -82,9 +82,7 @@
                             </div>
 
                         </div>
-                        <div class="col">
-
-                           
+                        <div class="col">                           
                             <div class="form-group">
                                 <label>Aktif Stratejik Plan Yılı:</label>
                                 <select class="form-control" name="AktifPlanId" id="AktifPlanId">
@@ -116,10 +114,8 @@
 
                             <div class="form-group">
                                 <label>Uyarılar</label>
-
-                                <textarea class="form-control" id="uyarilarTextArea"></textarea>
+                                <textarea class="form-control" id="uyarilarTextArea" name="Mesaj"></textarea>
                                 <span class="small">Giriş ekranında gözükecek uyarı bilgileri burada girilir.</span>
-
                             </div>
                         </div>
                     </div>
@@ -244,13 +240,13 @@
                 api_get("/api/Kurum/" + id, function (d) {
                     console.log(d);
                     THIS.PutValues(d);
+                    $('#uyarilarTextArea').summernote("code",d.Mesaj);
+                                        
                 });
             }
 
             Save() {
                 let data = this.GetValues();
-
-                console.log(data);
 
                 api_post("/api/Kurum/", data).done(function () {
                     kurumlar.LoadList();
