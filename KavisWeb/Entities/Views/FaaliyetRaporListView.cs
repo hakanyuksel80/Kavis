@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace KavisWeb.Enitites.Views
+namespace KavisWeb.Entities.Views
 {
     public class FaaliyetRaporListView
     {

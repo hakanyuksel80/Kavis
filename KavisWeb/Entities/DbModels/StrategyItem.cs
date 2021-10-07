@@ -7,7 +7,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web;
 
-namespace KavisWeb.Enitites.DbModels
+namespace KavisWeb.Entities.DbModels
 {
 
 
@@ -224,15 +224,8 @@ namespace KavisWeb.Enitites.DbModels
 
         public bool Onay2 { get; set; }
 
+       
+
     }
-
-
-
-
-
-
-
-
-
 
 }

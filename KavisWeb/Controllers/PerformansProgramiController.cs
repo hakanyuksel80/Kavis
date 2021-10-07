@@ -1,5 +1,5 @@
 ﻿using KavisWeb.BusinessLayer;
-using KavisWeb.Enitites.Views;
+using KavisWeb.Entities.Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;

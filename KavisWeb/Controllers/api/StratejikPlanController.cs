@@ -2,7 +2,8 @@
 using Core.Utilities.Results;
 using KavisWeb.BusinessLayer;
 using KavisWeb.DataLayer;
-using KavisWeb.Enitites.DbModels;
+using KavisWeb.Entities.DbModels;
+using KavisWeb.Entities.DbModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,7 +24,7 @@ namespace KavisWeb.Controllers.api
         }
 
         // GET: api/StratejikPlan
-        public List<KavisWeb.Enitites.Views.StratejikPlanListView> Get()
+        public List<KavisWeb.Entities.Views.StratejikPlanListView> Get()
         {
             return stratejikPlanManager.GetViewList();
         }

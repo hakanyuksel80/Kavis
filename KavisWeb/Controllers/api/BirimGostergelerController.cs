@@ -31,7 +31,7 @@ namespace KavisWeb.Controllers.api
 
                         if (gostergeGiris == null)
                         {
-                            gostergeGiris = new Enitites.DbModels.GostergeGiris()
+                            gostergeGiris = new Entities.DbModels.GostergeGiris()
                             {
                                 BirimId = model.BirimId,
                                 GostergeId = item.GostergeId,

@@ -1,10 +1,6 @@
-﻿using KavisWeb.Enitites.DbModels;
-using KavisWeb.Enitites.Views;
-using System;
+﻿using KavisWeb.Entities.DbModels;
+using KavisWeb.Entities.Views;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace KavisWeb.BusinessLayer
 {

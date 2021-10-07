@@ -1,4 +1,4 @@
-﻿using KavisWeb.Enitites;
+﻿using KavisWeb.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +10,19 @@ namespace KavisWeb.BusinessLayer
     {
         public static KavisUser GetUser()
         {
+            // Ev de
+            //return new KavisUser
+            //{
+            //    KurumId = 1,
+
+            //    Ad = "Hakan YÜKSEL",
+
+            //    Type = KavisUserType.Birim,
+
+            //    BirimId = 2,
+            //};
+
+            // ÖDM
             return new KavisUser
             {
                 KurumId = 2,
@@ -18,7 +31,7 @@ namespace KavisWeb.BusinessLayer
 
                 Type = KavisUserType.Birim,
 
-                BirimId = 2,
+                BirimId = 55,
             };
 
         }

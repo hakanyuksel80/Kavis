@@ -1,6 +1,6 @@
 namespace KavisWeb.Migrations
 {
-    using KavisWeb.Enitites.DbModels;
+    using KavisWeb.Entities.DbModels;
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;

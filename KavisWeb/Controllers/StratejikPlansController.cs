@@ -8,7 +8,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using KavisWeb.DataLayer;
-using KavisWeb.Enitites.DbModels;
+using KavisWeb.Entities.DbModels;
 
 namespace KavisWeb.Controllers
 {

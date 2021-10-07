@@ -1,11 +1,11 @@
-﻿@model  KavisWeb.Enitites.DbModels.StratejikPlan
+﻿@model  KavisWeb.Entities.Views.ViewGostergeGirisModel
 
 @{
     ViewBag.Title = "BirimGosterge";
 
     List<SelectListItem> birimListe = ViewBag.BirimSelectList as List<SelectListItem>;
 
-    int aktifYil = ViewBag.AktifYil;
+    int aktifYil = ViewBag.AktifYil ?? 0;
 
 }
 <style type="text/css">
@@ -20,91 +20,101 @@
     }
 </style>
 
-<div class="row mt-4 mb-4">
-    <div class="col">
-        <div class="form-group">
-            <label for="id">Birim</label>
-            @Html.DropDownList("id", birimListe, "SEÇİNİZ", new { @class="form-control" })
-        </div>
 
+@if (ViewBag.BirimListeGoster != null)
+{
+    <div class="row mt-4 mb-4">
+        <div class="col">
+            <div class="form-group">
+                <label for="id">Birim</label>
+                @Html.DropDownList("id", birimListe, "SEÇİNİZ", new { @class = "form-control" })
+            </div>
+
+        </div>
     </div>
-</div>
+}
 
 <h4>Sorumlu Olduğunuz Stratejik Plan Öğeleri</h4>
 <br />
-
-<div class="sp">
-    @if (Model.Amaclar != null)
-        {
-            foreach (var amac in Model.Amaclar)
-            {
-    <div class="amac"><strong>AMAÇ</strong> @amac.SiraNo @amac.Baslik</div>
-                foreach (var hedef in amac.Hedefler)
-                {
-    <div class="hedef"><strong>HEDEF</strong> @hedef.SiraNo @hedef.Baslik </div>
-    <table class="table table-bordered table-dar table-sm table-striped table-info ">
-        <thead>
-            <tr>
-                <td colspan="20"><h4 class="text-center">GÖSTERGELER</h4></td>
-            </tr>
-            <tr>
-                <th width="45%" rowspan="2">GÖSTERGE ADI</th>
-                <th rowspan="2">Hedef Etkisi</th>
-                <th rowspan="2">Başlangıç</th>
-                <th colspan="2">2019</th>
-                <th colspan="2">2020</th>
-                <th colspan="2">2021</th>
-                <th colspan="2">2022</th>
-                <th colspan="2">2023</th>
-                <th rowspan="2">İzleme<br>Sıklığı</th>
-                <th rowspan="2">Rapor<br>Sıklığı</th>
-            </tr>
-            <tr>
-                <th style="height:2px;">P</th>
-                <th>G</th>
-                <th>P</th>
-                <th>G</th>
-                <th>P</th>
-                <th>G</th>
-                <th>P</th>
-                <th>G</th>
-                <th>P</th>
-                <th>G</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var gosterge in hedef.Gostergeler)
-                                    {
-
-            <tr>
-                <td>@gosterge.Kod @gosterge.Baslik</td>
-                <td>@gosterge.HedefeEtkisi</td>
-                <td>@gosterge.Baslangic</td>
-                <td>@gosterge.Yil1</td>
-                <td @(aktifYil == 1 ? "class=aktifYil data-id=" + gosterge.Id : "")>@gosterge.Yil1G</td>
-                <td>@gosterge.Yil2</td>
-                <td @(aktifYil == 2 ? "class=aktifYil data-id=" + gosterge.Id : "")>@gosterge.Yil2G</td>
-                <td @gosterge.Yil3></td>
-                <td @(aktifYil == 3 ? "class=aktifYil data-id=" + gosterge.Id : "")>@gosterge.Yil3G</td>
-                <td>@gosterge.Yil4</td>
-                <td @(aktifYil == 4 ? "class=aktifYil data-id=" + gosterge.Id : "")>@gosterge.Yil4G</td>
-                <td>@gosterge.Yil5</td>
-                <td @(aktifYil == 5 ? "class=aktifYil data-id=" + gosterge.Id : "")>@gosterge.Yil5G</td>
-                <td>@gosterge.Izleme</td>
-                <td>@gosterge.Rapor</td>
-            </tr>
-
-                                    }
-        </tbody>
-    </table>
-
-foreach (var strateji in hedef.Stratejiler)
+@if (!String.IsNullOrEmpty(ViewBag.Hata))
 {
-        <div class="strateji">@strateji.SiraNo @strateji.Baslik</div>
+    <div class="alert alert-danger">
+        <p><span class="fa fa-error"></span>@ViewBag.Hata</p>
+    </div>
 }
+<br>
+<div class="sp">
+    @if (Model.Plan != null && Model.Plan.Amaclar != null)
+    {
+        foreach (var amac in Model.Plan.Amaclar)
+        {
+            <div class="amac"><strong>AMAÇ</strong> @amac.SiraNo @amac.Baslik</div>
+            foreach (var hedef in amac.Hedefler)
+            {
+                <div class="hedef"><strong>HEDEF</strong> @hedef.SiraNo @hedef.Baslik </div>
+                <table class="table table-bordered table-dar table-sm table-striped table-info ">
+                    <thead>
+                        <tr>
+                            <td colspan="20"><h4 class="text-center">GÖSTERGELER</h4></td>
+                        </tr>
+                        <tr>
+                            <th width="45%" rowspan="2">GÖSTERGE ADI</th>
+                            <th rowspan="2">Hedef Etkisi</th>
+                            <th rowspan="2">Başlangıç</th>
+                            <th colspan="2">2019</th>
+                            <th colspan="2">2020</th>
+                            <th colspan="2">2021</th>
+                            <th colspan="2">2022</th>
+                            <th colspan="2">2023</th>
+                            <th rowspan="2">İzleme<br>Sıklığı</th>
+                            <th rowspan="2">Rapor<br>Sıklığı</th>
+                        </tr>
+                        <tr>
+                            <th style="height:2px;">P</th>
+                            <th>G</th>
+                            <th>P</th>
+                            <th>G</th>
+                            <th>P</th>
+                            <th>G</th>
+                            <th>P</th>
+                            <th>G</th>
+                            <th>P</th>
+                            <th>G</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var gosterge in hedef.Gostergeler)
+                        {
+
+                            <tr>
+                                <td>@gosterge.Kod @gosterge.Baslik</td>
+                                <td>@gosterge.HedefeEtkisi</td>
+                                <td>@gosterge.Baslangic</td>
+                                <td>@gosterge.Yil1</td>
+                                <td @(aktifYil == 1 ? "class=aktifYil data-id=" + gosterge.Id : "")>@gosterge.Yil1G</td>
+                                <td>@gosterge.Yil2</td>
+                                <td @(aktifYil == 2 ? "class=aktifYil data-id=" + gosterge.Id : "")>@gosterge.Yil2G</td>
+                                <td @gosterge.Yil3></td>
+                                <td @(aktifYil == 3 ? "class=aktifYil data-id=" + gosterge.Id : "")>@gosterge.Yil3G</td>
+                                <td>@gosterge.Yil4</td>
+                                <td @(aktifYil == 4 ? "class=aktifYil data-id=" + gosterge.Id : "")>@gosterge.Yil4G</td>
+                                <td>@gosterge.Yil5</td>
+                                <td @(aktifYil == 5 ? "class=aktifYil data-id=" + gosterge.Id : "")>@gosterge.Yil5G</td>
+                                <td>@gosterge.Izleme</td>
+                                <td>@gosterge.Rapor</td>
+                            </tr>
+
+                        }
+                    </tbody>
+                </table>
+
+                foreach (var strateji in hedef.Stratejiler)
+                {
+                    <div class="strateji">@strateji.SiraNo @strateji.Baslik</div>
                 }
             }
         }
+    }
 
 </div>
 
