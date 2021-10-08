@@ -158,6 +158,7 @@
     <Compile Include="Controllers\api\DenemeController.cs" />
     <Compile Include="Controllers\api\EylemlerController.cs" />
     <Compile Include="Controllers\api\FaaliyetController.cs" />
+    <Compile Include="Controllers\api\FaaliyetDurumController.cs" />
     <Compile Include="Controllers\api\KurumController.cs" />
     <Compile Include="Controllers\api\StratejikPlanController.cs" />
     <Compile Include="Controllers\BirimController.cs" />
@@ -187,6 +188,7 @@
     <Compile Include="Entities\DbModels\StrategyItem.cs" />
     <Compile Include="Entities\Dtos\PerformansDto.cs" />
     <Compile Include="Entities\KavisUser.cs" />
+    <Compile Include="Entities\Views\FaaliyetDurumView.cs" />
     <Compile Include="Entities\Views\FaaliyetListView.cs" />
     <Compile Include="Entities\Views\FaaliyetRaporListView.cs" />
     <Compile Include="Entities\Views\KurumListView.cs" />

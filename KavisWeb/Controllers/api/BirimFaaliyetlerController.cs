@@ -1,6 +1,7 @@
 ﻿using KavisWeb.BusinessLayer;
 using KavisWeb.DataLayer.EF;
 using KavisWeb.Entities.DbModels;
+using KavisWeb.Entities.Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,7 +23,7 @@ namespace KavisWeb.Controllers.api
             var faaliyetler = manager.GetAll(id);
 
             model.Faaliyetler = (from x in faaliyetler
-                                 select new FaaliyetItem { Id = x.Id, Durum = x.Durum, EylemAdi = x.Eylem.KodVeBaslik, EylemId = x.EylemId, FaaliyetAdi = x.Baslik, Gerceklestirilenler = x.Gerceklesme, Sonuc = x.Sonuc }).ToList();
+                                 select new FaaliyetListView { Id = x.Id, Durum = x.Durum, EylemAdi = x.Eylem.KodVeBaslik, EylemId = x.EylemId, FaaliyetAdi = x.Baslik, Gerceklesme = x.Gerceklesme, Sonuc = x.Sonuc, Baslama = x.Baslama, Bitis = x.Bitis, Birim = x.BirimAdi }).ToList();
 
 
             return model;
@@ -47,24 +48,8 @@ namespace KavisWeb.Controllers.api
     {
         public List<ParentPlanItem> Stratejiler { get; set; }
 
-        public List<FaaliyetItem> Faaliyetler { get; set; }
+        public List<FaaliyetListView> Faaliyetler { get; set; }
 
     }
 
-    public class FaaliyetItem
-    {
-        public int Id { get; set; }
-
-        public int EylemId { get; set; }
-
-        public string EylemAdi { get; set; }
-
-        public string FaaliyetAdi { get; set; }
-
-        public string Gerceklestirilenler { get; set; }
-
-        public string Sonuc { get; set; }
-
-        public string Durum { get; set; }
-    }
 }

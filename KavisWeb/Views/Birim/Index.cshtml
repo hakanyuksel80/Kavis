@@ -13,6 +13,7 @@
     .sp div {
         border: solid 1px black;
         margin-bottom: 10px;
+        padding: 10px;
     }
 </style>
 
@@ -75,7 +76,7 @@
     </div>
     <div class="tab-pane fade in p-2" id="faaliyetler">
         <br />
-        <table class="table table-sm table-bordered" id="tableFaliyetler">
+        <table class="table table-sm table-bordered table-striped" id="tableFaliyetler">
             <thead>
                 <tr>
                     <th>Eylem Adı</th>
@@ -95,29 +96,30 @@
                 {
                     foreach (var item in Model.Faaliyetler)
                     {
-                <tr>
-                    <td>@item.EylemAdi</td>
-                    <td>@item.FaaliyetAdi</td>
-                    @if (!Model.Birim.Kurum.FaaliyetGirisAcik)
-                    {
-                        <td>@item.Tarihler</td>
-                        <td>@item.Gerceklesme</td>
-                        <td>@item.Sonuc</td>
-                    }
-                    <td>
-                        <div style="width:200px">
-                            @if (Model.Birim.Kurum.FaaliyetGirisAcik)
+                        <tr>
+                            <td>@item.EylemAdi</td>
+                            <td>@item.FaaliyetAdi</td>
+                            @if (!Model.Birim.Kurum.FaaliyetGirisAcik)
                             {
-                                <button class="btn btn-sm btn-success btn-faaliyetDuzenle" data-id="@item.Id">Düzenle</button>
-                                <button class="btn btn-sm btn-success btn-faaliyetSil" data-id="@item.Id">Sil</button>
+                                <td>@item.Tarihler</td>
+                                <td>@item.Gerceklesme</td>
+                                <td>@item.Sonuc</td>
+                                <td>@item.Durum</td>
                             }
-                            @if (Model.Birim.Kurum.FaaliyetDurumGirisAcik)
-                            {
-                                <button class="btn btn-sm btn-success btn-faaliyetDurum" data-id="@item.Id" data-target="#faaliyetDurum" data-toggle="modal">Durum Gir</button>
-                            }
-                        </div>
-                    </td>
-                </tr>
+                            <td>
+                                <div style="width:200px">
+                                    @if (Model.Birim.Kurum.FaaliyetGirisAcik)
+                                    {
+                                        <button class="btn btn-sm btn-success btn-faaliyetDuzenle" data-id="@item.Id">Düzenle</button>
+                                        <button class="btn btn-sm btn-success btn-faaliyetSil" data-id="@item.Id">Sil</button>
+                                    }
+                                    @if (Model.Birim.Kurum.FaaliyetDurumGirisAcik)
+                                    {
+                                        <button class="btn btn-sm btn-success btn-faaliyetDurum" data-id="@item.Id">Durum Gir</button>
+                                    }
+                                </div>
+                            </td>
+                        </tr>
                     }
                 }
             </tbody>
@@ -134,7 +136,7 @@
 <div class="modal" id="faaliyetEkle">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form action="/Home/Birim" method="post">
+            <form action="" method="post">
                 @*<div class="modal-header">
                         Faaliyet Ekle
                     </div>*@
@@ -164,43 +166,47 @@
             @*<div class="modal-header">
                     Faaliyet Ekle
                 </div>*@
-            <div class="modal-body">
-                <div class="sp">
-                    <div>Eylem: <span class="eylem">............................................</span></div>
-                    <div>Faaliyet</div>
-                </div>
-                <div class="form-group">
-                    <label>Faaliyet Kapsamında Gerçekleştirilenler:</label>
-                    <textarea rows="4" class="form-control w-100" style="width:100%;max-width:none;"></textarea>
-                </div>
-                <div class="form-group">
-                    <label>Başlama Tarihi:</label>
-                    <input class="form-control w-100" type="date" />
-                </div>
-                <div class="form-group">
-                    <label>Bitiş Tarihi:</label>
-                    <input class="form-control w-100" type="date" />
-                </div>
-                <div class="form-group">
-                    <label>Çıktı ve Sonuç:</label>
-                    <textarea rows="4" class="form-control w-100" style="width:100%;max-width:none;"></textarea>
-                </div>
+            <form action="" method="post">
+                <div class="modal-body">
+                    <input type="hidden" id="FaaliyetId" name="Id" />
 
-                <div class="form-group">
-                    <label>Durum:</label>
-                    <select class="form-control" style="width:100%;max-width:none;">
-                        <option></option>
-                        <option>Devam Ediyor</option>
-                        <option>Tamamlandı</option>
-                        <option>İptal Edildi</option>
-                    </select>
-                </div>
+                    <div class="sp">
+                        <div><label>Eylem:</label><span class="eylem">............................................</span></div>
+                        <div><label>Faaliyet:</label><span class="faaliyet"></span></div>
+                    </div>
+                    <div class="form-group">
+                        <label>Faaliyet Kapsamında Gerçekleştirilenler:</label>
+                        <textarea name="Gerceklesme" rows="4" class="form-control w-100" style="width:100%;max-width:none;"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Başlama Tarihi:</label>
+                        <input name="Baslama" class="form-control w-100" type="date" />
+                    </div>
+                    <div class="form-group">
+                        <label>Bitiş Tarihi:</label>
+                        <input name="Bitis" class="form-control w-100" type="date" />
+                    </div>
+                    <div class="form-group">
+                        <label>Çıktı ve Sonuç:</label>
+                        <textarea name="Sonuc" rows="4" class="form-control w-100" style="width:100%;max-width:none;"></textarea>
+                    </div>
 
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-primary">Kaydet</button>
-                <button class="btn btn-secondary" data-dismiss="modal">İptal</button>
-            </div>
+                    <div class="form-group">
+                        <label>Durum:</label>
+                        <select name="Durum" class="form-control" style="width:100%;max-width:none;">
+                            <option></option>
+                            <option>Devam Ediyor</option>
+                            <option>Tamamlandı</option>
+                            <option>İptal Edildi</option>
+                        </select>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" type="submit">Kaydet</button>
+                    <button class="btn btn-secondary" data-dismiss="modal">İptal</button>
+                </div>
+            </form>
         </div>
 
     </div>
@@ -211,7 +217,13 @@
 
     <script type="text/javascript">
 
+        var states = [@(Model.Birim.Kurum.FaaliyetGirisAcik?"true":"false"),@(Model.Birim.Kurum.FaaliyetDurumGirisAcik ? "true" : "false")];
+
         class Faaliyetler {
+
+            constructor() {
+                super("#faaliyetEkle");
+            }
 
             //ekle(eylem, faaliyet) {
             //    let dugmelerHtml = this.tabloSatirDugmeSablon(true, true, true);
@@ -220,21 +232,25 @@
             //    showTab("faaliyetler");
             //}
 
-            guncelle(row, faaliyet) {
-                let satir = $('#faaliyetEkle')[0].row;
-                $($(row).children()[1]).text(faaliyet);
-                console.log(faaliyet);
-                this.SaveFaaliyet(faaliyet);
-            }
+            //guncelle(row, faaliyet) {
+            //    let satir = $('#faaliyetEkle')[0].row;
+            //    $($(row).children()[1]).text(faaliyet);
+            //    console.log(faaliyet);
+            //    this.SaveFaaliyet(faaliyet);
+            //}
 
-            sil(button) {
-                let satir = $(button).parents("tr");
-                console.log(satir);
-                satir.hide();
-            }
+            //sil(button) {
+            //    let satir = $(button).parents("tr");
+            //    console.log(satir);
+            //    satir.hide();
+            //}
 
-            tabloSatirSablon(faaliyet, dugmelerHtml = "") {
-                return `<tr><td>${faaliyet.EylemAdi}</td><td>${faaliyet.FaaliyetAdi}</td><td>${dugmelerHtml}</td></tr>`;
+            tabloSatirSablon(faaliyet, dugmelerHtml = "", durum) {
+                let satir = `<tr><td>${faaliyet.EylemAdi}</td><td>${faaliyet.FaaliyetAdi}</td>`;
+                if (durum)
+                    satir += `<td>${faaliyet.Tarihler}</td><td>${faaliyet.Gerceklesme??""}</td><td>${faaliyet.Sonuc??""}</td><td>${faaliyet.Durum??""}</td>`;
+                    satir += `<td>${dugmelerHtml}</td></tr>`;
+                return satir;
             }
 
 
@@ -244,7 +260,7 @@
                 let a = "";
                 a += duzenle == true ? `<button class="btn btn-sm btn-success btn-faaliyetDuzenle" data-id="${id}">Düzenle</button> | ` : '';
                 a += sil == true ? `<button class="btn btn-sm btn-success btn-faaliyetSil" data-id="${id}">Sil</button> | ` : '';
-                a += durumGir == true ? `<button class="btn btn-sm btn-success btn-faaliyetDurum" data-target="#faaliyetDurum" data-toggle="modal" data-id="${id}">Durum Gir</button>` : '';
+                a += durumGir == true ? `<button class="btn btn-sm btn-success btn-faaliyetDurum" data-id="${id}">Durum Gir</button>` : '';
                 return a;
 
             }
@@ -260,29 +276,19 @@
             LoadFaaliyetler() {
                 let THIS = this;
                 let id = $('#seciliBirimId').val();
-                api_get("/api/BirimFaaliyetler/" + id, function (d) {
+                api_get("/api/BirimFaaliyetler/" + id, function (d) {                    
                     THIS.LoadFaaliyetTable(d.Faaliyetler);
                 });
             }
-
-            SaveFaaliyet(d) {
-                api_post("/api/BirimFaaliyetler", d).done(function () {
-                });
-            }
+            
 
             Delete(id) {
                 let THIS = this;
-
                 api_delete("/api/Faaliyet/" + id, function (d) {
-
                     if (d.Success) {
-
                         successMessage("Silindi");
                         THIS.LoadFaaliyetler();
-
                     }
-
-
                 });
             }
 
@@ -291,8 +297,8 @@
                 for (var i = 0; i < faaliyetler.length; i++) {
                     const item = faaliyetler[i];
                     console.log(item);
-                    let dugmelerHtml = this.tabloSatirDugmeSablon(true, true, true, item.Id);
-                    let st = $(this.tabloSatirSablon(item, dugmelerHtml));
+                    let dugmelerHtml = this.tabloSatirDugmeSablon(states[0], states[0], states[1], item.Id);
+                    let st = $(this.tabloSatirSablon(item, dugmelerHtml, !states[0]));
                     $('#tableFaliyetler tbody').append(st);
                 }
 
@@ -319,8 +325,6 @@
 
                 let THIS = this;
 
-
-
                 api_get("/api/Faaliyet/" + id, function (d) {
                     //$(THIS.modalId + " #id").val(id);
                     $(THIS.modalId + " .eylemAdi").text(eylemAdi);
@@ -332,6 +336,7 @@
             }
 
             Save() {
+
                 let data = this.GetValues();
                 let eylem = $("#faaliyetEkle .eylemAdi").text();
 
@@ -350,8 +355,50 @@
         }
 
 
+        class FaaliyetDurumForm extends Form {
 
-        var faaliyetForm = new FaaliyetForm("#faaliyetEkle");
+            constructor() {
+                super("#faaliyetDurum");
+            }
+
+            Edit(id, EylemAdi) {
+                let THIS = this;
+
+                api_get("/api/FaaliyetDurum/" + id, function (d) {
+                    console.log(d);
+                    d.Baslama = d.Baslama != null ? d.Baslama.substr(0, 10) : "";
+                    d.Bitis = d.Bitis != null ? d.Bitis.substr(0, 10) : "";
+                    THIS.PutValues(d);
+                    $(THIS.modalId + " .eylem").text(d.EylemAdi);
+                    $(THIS.modalId + " .faaliyet").text(d.FaaliyetAdi);
+
+                    THIS.Show();
+                });
+
+            }
+
+            Save() {
+
+                let data = this.GetValues();
+                console.log(data);
+
+                api_post("/api/FaaliyetDurum", data).done(function (d) {
+
+                    if (d.Success) {
+                        faaliyet.LoadFaaliyetler();
+                    }
+                });
+
+                return true;
+            }
+
+
+        }
+
+
+        var faaliyetForm = new FaaliyetForm();
+
+        var faaliyetDurumForm = new FaaliyetDurumForm();
 
         var faaliyet = new Faaliyetler();
 
@@ -375,6 +422,7 @@
 
             let id = $(this).data("id");
 
+
             silmeMesaji("Silmek istediğinize emin misiniz?").then(function (d) {
 
                 if (d) {
@@ -385,6 +433,11 @@
 
         }
 
+        function onFaaliyetDurumClickEvent() {
+            let id = $(this).data("id");
+            faaliyetDurumForm.Edit(id);
+        }
+
 
 
         $(document).ready(function () {
@@ -392,6 +445,7 @@
             $('.btn-faaliyetEkle').on("click", onFaaliyetEkleClickEvent);
             $(document).on("click", '.btn-faaliyetDuzenle', onFaaliyetDuzenleClickEvent);
             $(document).on("click", '.btn-faaliyetSil', onFaaliyetSilClickEvent);
+            $(document).on("click", '.btn-faaliyetDurum', onFaaliyetDurumClickEvent);
 
             $('#id').change(function () {
                 let birimId = $(this).val();

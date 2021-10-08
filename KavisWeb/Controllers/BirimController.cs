@@ -13,7 +13,7 @@ namespace KavisWeb.Controllers
 {
     public class BirimController : Controller
     {
-        IStratejikPlanService manager;
+        StratejikPlanManager2 manager;
 
         int birimId = 0;
 

@@ -39,8 +39,13 @@ namespace KavisWeb.Controllers.api
                     return new SuccessDataResult<Faaliyet>(model);
             }
             else
-                if (manager.Update(model))
-                return new SuccessDataResult<Faaliyet>(model);
+            {
+                var faaliyet = manager.Get(model.Id);
+                faaliyet.Baslik = model.Baslik;
+                if (manager.Update(faaliyet))
+                    return new SuccessDataResult<Faaliyet>(model);
+            }
+                
 
             return new ErrorResult("Kayıt yapılamadı");
         }

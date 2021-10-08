@@ -11,6 +11,14 @@ namespace KavisWeb.DataLayer.EF
 {
     public class EfFaaliyetDal : EfEntityRepositoryBase<Faaliyet, StrategyDBContext>, IFaaliyetDal
     {
+        public new Faaliyet Get(Expression<Func<Faaliyet, bool>> filter = null)
+        {
+            using (StrategyDBContext context = new StrategyDBContext())
+            {
+                return context.Set<Faaliyet>().Include("Eylem").SingleOrDefault(filter);
+            }
+        }
+
         public new List<Faaliyet> GetAll(Expression<Func<Faaliyet, bool>> filter = null)
         {
             using (StrategyDBContext context = new StrategyDBContext())

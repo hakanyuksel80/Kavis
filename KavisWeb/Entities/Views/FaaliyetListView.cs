@@ -13,13 +13,13 @@ namespace KavisWeb.Entities.Views
 
         public string FaaliyetAdi { get; set; }
 
-        public string Birim { get; set; }        
+        public string Birim { get; set; }
 
-        public DateTime? Baslama { get;  set; }
+        public DateTime? Baslama { get; set; }
 
-        public DateTime? Bitis { get;  set; }
+        public DateTime? Bitis { get; set; }
 
-        
+
         public string Tarihler
         {
             get
@@ -28,12 +28,12 @@ namespace KavisWeb.Entities.Views
 
                 if (this.Baslama != null)
                 {
-                    a = Baslama.Value.ToShortDateString();
+                    a = this.Baslama.Value.ToShortDateString();
                 }
-
+                a += "-";
                 if (this.Bitis != null)
                 {
-                    a += " - " + Bitis.Value.ToShortDateString();
+                    a += this.Bitis.Value.ToShortDateString();
                 }
 
                 return a;
@@ -42,6 +42,10 @@ namespace KavisWeb.Entities.Views
         }
 
         public string Gerceklesme { get; set; }
-        public string Sonuc { get; internal set; }
+
+        public string Sonuc { get; set; }
+
+        public string Durum { get; set; }
+        public int EylemId { get; internal set; }
     }
 }

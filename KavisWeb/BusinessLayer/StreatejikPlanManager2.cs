@@ -205,7 +205,7 @@ namespace KavisWeb.BusinessLayer
             var faaliyetler = context.Faaliyetler.Include("Eylem").OrderBy(x => x.Eylem.Kod).ThenBy(x => x.SiraNo).ToList();
 
             return (from x in faaliyetler
-                    select new FaaliyetListView() { Id = x.Id, EylemAdi = x.Eylem.Kod + " " + x.Eylem.Baslik, FaaliyetAdi = x.Baslik, Birim = x.BirimAdi }).ToList();
+                    select new FaaliyetListView() { Id = x.Id, EylemAdi = x.Eylem.Kod + " " + x.Eylem.Baslik, FaaliyetAdi = x.Baslik, Birim = x.BirimAdi, Durum = x.Durum }).ToList();
         }
 
 
@@ -215,7 +215,7 @@ namespace KavisWeb.BusinessLayer
             var faaliyetler = context.Faaliyetler.Include("Eylem").Where(x => x.Birim == birim);
 
             return (from x in faaliyetler
-                    select new FaaliyetListView() { Id = x.Id, EylemAdi = x.Eylem.Kod + " " + x.Eylem.Baslik, FaaliyetAdi = x.Baslik, Birim = x.BirimAdi, Baslama = x.Baslama, Bitis = x.Bitis, Gerceklesme = x.Gerceklesme, Sonuc = x.Sonuc }).ToList();
+                    select new FaaliyetListView() { Id = x.Id, EylemAdi = x.Eylem.Kod + " " + x.Eylem.Baslik, FaaliyetAdi = x.Baslik, Birim = x.BirimAdi, Baslama = x.Baslama, Bitis = x.Bitis, Gerceklesme = x.Gerceklesme, Sonuc = x.Sonuc, Durum = x.Durum }).ToList();
         }
 
 
