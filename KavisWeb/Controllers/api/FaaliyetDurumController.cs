@@ -22,11 +22,11 @@ namespace KavisWeb.Controllers.api
             return new FaaliyetDurumView()
             {
                 Id = faaliyet.Id,
+                FaaliyetAdi = faaliyet.Baslik,
                 Baslama = faaliyet.Baslama,
                 Bitis = faaliyet.Bitis,
                 Durum = faaliyet.Durum,
-                EylemAdi = faaliyet.Eylem.Baslik,
-                FaaliyetAdi = faaliyet.Baslik,
+                EylemAdi = faaliyet.Eylem.Baslik,                
                 Gerceklesme = faaliyet.Gerceklesme,
                 Sonuc = faaliyet.Sonuc,
             };

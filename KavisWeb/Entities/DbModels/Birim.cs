@@ -1,4 +1,5 @@
 ﻿using Core.Entities;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -20,6 +21,7 @@ namespace KavisWeb.Entities.DbModels
 
         public int? KurumId { get; set; }
 
+        [JsonIgnore]
         public Kurum Kurum { get; set; }
 
 

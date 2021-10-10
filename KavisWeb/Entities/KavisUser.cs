@@ -18,5 +18,6 @@ namespace KavisWeb.Entities
 
         public int BirimId { get; set; }
 
+        public string BirimAdi { get; set; }
     }
 }

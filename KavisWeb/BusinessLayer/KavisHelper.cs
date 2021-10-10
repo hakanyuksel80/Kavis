@@ -11,16 +11,18 @@ namespace KavisWeb.BusinessLayer
         public static KavisUser GetUser()
         {
             // Ev de
-            //return new KavisUser
-            //{
-            //    KurumId = 1,
+            return new KavisUser
+            {
+                KurumId = 1,
 
-            //    Ad = "Hakan YÜKSEL",
+                Ad = "Hakan YÜKSEL",
 
-            //    Type = KavisUserType.Birim,
+                Type = KavisUserType.Birim,
 
-            //    BirimId = 2,
-            //};
+                BirimId = 2,
+
+                BirimAdi = "TEMEL EĞİTİM",
+            };
 
             // ÖDM
             return new KavisUser
@@ -32,6 +34,8 @@ namespace KavisWeb.BusinessLayer
                 Type = KavisUserType.Birim,
 
                 BirimId = 55,
+
+                BirimAdi = "TEMEL EĞİTİM",
             };
 
         }

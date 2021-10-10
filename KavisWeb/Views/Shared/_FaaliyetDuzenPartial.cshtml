@@ -1,0 +1,26 @@
+﻿<div class="modal" id="faaliyetEkle">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="" method="post">
+                @*<div class="modal-header">
+                        Faaliyet Ekle
+                    </div>*@
+                <div class="modal-body">
+                    <div class="row"><div class="col"><strong>Eylem: </strong><span class="eylemAdi"></span></div></div>
+                    <input type="hidden" id="FaaliyetId" name="Id" />
+                    <input type="hidden" id="EylemId" name="EylemId" />
+                    <input type="hidden" id="BirimId" name="Birim" />
+                    <div class="form-group">
+                        <h5>Faaliyet Adı:</h5>
+                        <textarea id="faaliyetAdi" name="Baslik" rows="5" class="form-control w-100" style="width:100%;max-width:none;"></textarea>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" type="submit">Kaydet</button>
+                    <button class="btn btn-secondary" data-dismiss="modal">İptal</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

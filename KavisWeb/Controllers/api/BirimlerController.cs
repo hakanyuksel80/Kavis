@@ -31,7 +31,8 @@ namespace KavisWeb.Controllers.api
         // GET: api/Birimler/5
         public Birim Get(int id)
         {
-            return birimManager.Get(id);
+            var birim = birimManager.Get(id);
+            return birim;
         }
 
         // POST: api/Birimler

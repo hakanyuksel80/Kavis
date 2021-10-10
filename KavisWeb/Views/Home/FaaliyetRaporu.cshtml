@@ -1,4 +1,4 @@
-﻿@model List<KavisWeb.Entities.Views.FaaliyetRaporListView>
+﻿@model List<KavisWeb.Entities.Views.FaaliyetListView>
 
 @{
     ViewBag.Title = "FaaliyetRaporu";
@@ -73,24 +73,41 @@
                         <td>@item.EylemAdi</td>
                         <td>@item.FaaliyetAdi</td>
                         <td>
-                            @item.Tarih
+                            @item.Tarihler
                         </td>
                         <td>@item.Gerceklesme</td>
                         <td>@item.Sonuc</td>
                         <td>@item.Durum</td>
                         <td>@item.Birim</td>
                         <td>
-                            <div class="" style="width:200px;">
-                                <button class="btn btn-sm btn-success" data-id="@item.Id">Sil</button>                                
-                                <button class="btn btn-sm btn-success" data-id="@item.Id" data-target="#faaliyetDurum" data-toggle="modal">Degistir</button>
+                            <div class="" style="">
+                                @*<button class="btn btn-sm btn-success" data-id="@item.Id">Sil</button>*@
+                                <button class="btn btn-sm btn-success btn-faaliyetDurum" data-id="@item.Id">Degistir</button>
                             </div>
                         </td>
                     </tr>
                 }
 
-              
+
             </tbody>
         </table>
 
     </div>
 </div>
+
+@Html.Partial("_FaaliyetDurumDuzenPartial")
+
+@section scripts {
+
+    <script src="~/js/faaliyet.js"></script>
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+
+            $(document).on("click", '.btn-faaliyetDurum', onFaaliyetDurumClickEvent);
+
+        });
+
+
+    </script>
+}

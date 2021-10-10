@@ -190,9 +190,9 @@
     <Compile Include="Entities\KavisUser.cs" />
     <Compile Include="Entities\Views\FaaliyetDurumView.cs" />
     <Compile Include="Entities\Views\FaaliyetListView.cs" />
-    <Compile Include="Entities\Views\FaaliyetRaporListView.cs" />
     <Compile Include="Entities\Views\KurumListView.cs" />
     <Compile Include="Entities\Views\StratejikPlanListView.cs" />
+    <Compile Include="Entities\Views\UserMenuViewModel.cs" />
     <Compile Include="Entities\Views\ViewGostergeGirisModel.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -2054,6 +2054,7 @@
     <Content Include="js\api.js" />
     <Content Include="js\datas.js" />
     <Content Include="js\eylemler.js" />
+    <Content Include="js\faaliyet.js" />
     <Content Include="js\form.js" />
     <Content Include="js\script.js" />
     <Content Include="js\sp.js" />
@@ -2448,7 +2449,6 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Scripts\umd\popper.min.js.map" />
     <Content Include="Scripts\umd\popper.js.map" />
@@ -2460,7 +2460,6 @@
     <Content Include="Scripts\popper.js.map" />
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
-    <Content Include="Views\Home\Ayarlar.cshtml" />
     <Content Include="Views\Home\FaaliyetRaporu.cshtml" />
     <Content Include="Views\PerformansProgrami\Index.cshtml" />
     <Content Include="Views\StratejikPlan\Edit.cshtml" />
@@ -2471,6 +2470,9 @@
     <Content Include="Views\StratejikPlan\Index.cshtml" />
     <Content Include="Views\Kurumlar\Index.cshtml" />
     <Content Include="Views\Birimler\Index.cshtml" />
+    <Content Include="Views\Home\UserMenu.cshtml" />
+    <Content Include="Views\Shared\_FaaliyetDurumDuzenPartial.cshtml" />
+    <Content Include="Views\Shared\_FaaliyetDuzenPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="assets\file-uploader\server\node\public\files\" />

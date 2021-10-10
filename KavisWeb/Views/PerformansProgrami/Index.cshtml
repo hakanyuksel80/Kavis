@@ -61,7 +61,7 @@
                     <th>Faaliyet Adı</th>
                     <th>Sorumlu Birim</th>
                     <th>&nbsp;</th>
-             
+
                 </tr>
             </thead>
             <tbody>
@@ -74,14 +74,34 @@
                             @item.Birim
                         </td>
                         <td>
+                            <button class="btn btn-sm btn-success btn-faaliyetDuzenle" data-id="@item.Id">Düzenle</button>
                             <button class="btn btn-sm btn-success" data-id="@item.Id">Sil</button>
-                            <button class="btn btn-sm btn-success" data-id="@item.Id" data-target="#faaliyetEkle" data-toggle="modal">Düzenle</button>
-                            <button class="btn btn-sm btn-success" data-id="@item.Id" data-target="#faaliyetDurum" data-toggle="modal">Durum Gir</button>
+                            <button class="btn btn-sm btn-success btn-faaliyetDurum" data-id="@item.Id">Durum Gir</button>
                         </td>
                     </tr>
-                }             
+                }
             </tbody>
         </table>
 
     </div>
 </div>
+
+@Html.Partial("_FaaliyetDuzenPartial")
+
+@Html.Partial("_FaaliyetDurumDuzenPartial")
+
+@section scripts {
+
+    <script src="~/js/faaliyet.js"></script>
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+
+            $(document).on("click", '.btn-faaliyetDurum', onFaaliyetDurumClickEvent);
+            $(document).on("click", '.btn-faaliyetDuzenle', onFaaliyetDuzenleClickEvent);
+
+        });
+
+
+    </script>
+}

@@ -42,6 +42,7 @@ namespace KavisWeb.Controllers.api
             {
                 var faaliyet = manager.Get(model.Id);
                 faaliyet.Baslik = model.Baslik;
+                
                 if (manager.Update(faaliyet))
                     return new SuccessDataResult<Faaliyet>(model);
             }

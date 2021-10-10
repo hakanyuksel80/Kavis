@@ -7,6 +7,12 @@
 
     int aktifYil = ViewBag.AktifYil ?? 0;
 
+    if (Model.Birim != null && Model.Birim.Kurum != null && !Model.Birim.Kurum.GostergeGirisAcik)
+    {
+        aktifYil = 0;
+    }
+
+
 }
 <style type="text/css">
 
@@ -42,6 +48,15 @@
         <p><span class="fa fa-error"></span>@ViewBag.Hata</p>
     </div>
 }
+
+
+@if (Model.Birim != null && Model.Birim.Kurum != null && !Model.Birim.Kurum.GostergeGirisAcik)
+{
+    <div class="alert alert-danger">
+        Girişler kapalı
+    </div>
+}
+
 <br>
 <div class="sp">
     @if (Model.Plan != null && Model.Plan.Amaclar != null)

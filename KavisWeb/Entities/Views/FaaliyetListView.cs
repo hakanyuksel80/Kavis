@@ -46,6 +46,7 @@ namespace KavisWeb.Entities.Views
         public string Sonuc { get; set; }
 
         public string Durum { get; set; }
+
         public int EylemId { get; internal set; }
     }
 }

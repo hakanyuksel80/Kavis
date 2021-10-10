@@ -16,41 +16,15 @@ namespace KavisWeb.Controllers
             return View();
         }
 
-        public ActionResult Ayarlar()
-        {
-
-            EfBirimDal birimDal = new EfBirimDal();
-
-            var birimler = birimDal.GetAll();
-
-            ViewBag.Birimler = birimler;
-
-            ViewBag.Message = "Your application description page.";
-
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
-        }
-
-
         public ActionResult FaaliyetRaporu()
         {
 
             StratejikPlanManager2 manager = new StratejikPlanManager2();
 
-            List<FaaliyetRaporListView> model = manager.GetFaaliyetRapor();
+            List<FaaliyetListView> model = manager.GetFaaliyetRapor();
 
             return View(model);
         }    
-
-        
-
-      
 
         public ActionResult BirimGosterge()
         {
@@ -65,6 +39,12 @@ namespace KavisWeb.Controllers
         public ActionResult Gostergeler()
         {
             return View();
+        }
+
+        public PartialViewResult UserMenu()
+        {
+            var kavisUser = KavisHelper.GetUser();
+            return PartialView(kavisUser);
         }
 
     }
