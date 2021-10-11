@@ -27,7 +27,7 @@
 </style>
 
 
-@if (ViewBag.BirimListeGoster != null)
+@if (ViewBag.BirimListesiGoster != null && ViewBag.BirimListesiGoster)
 {
     <div class="row mt-4 mb-4">
         <div class="col">
@@ -176,7 +176,6 @@
 
             $('#id').change(function () {
                 let birimId = $(this).val();
-
                 window.location = "/Birim/Gosterge/" + birimId;
             });
 

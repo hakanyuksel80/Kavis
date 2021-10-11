@@ -13,5 +13,13 @@ namespace KavisWeb.Entities.Views
         public List<FaaliyetListView> Faaliyetler { get; set; }
 
         public Birim Birim { get; set; }
+
+        public ViewPerformansGirisModel()
+        {
+            Stratejiler = new List<Strateji>();
+            Faaliyetler = new List<FaaliyetListView>();
+
+            Birim = new Birim() { Kurum = new Kurum() };
+        }
     }
 }
