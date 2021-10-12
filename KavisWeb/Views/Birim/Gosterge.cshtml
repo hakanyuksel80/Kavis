@@ -33,11 +33,17 @@
         <div class="col">
             <div class="form-group">
                 <label for="id">Birim</label>
+                @*//Kurum girişi yapıldıysa seçili birim id'sini burada görelim*@
                 @Html.DropDownList("id", birimListe, "SEÇİNİZ", new { @class = "form-control" })
             </div>
 
         </div>
     </div>
+}
+else
+{
+    //Birim elemanı girdiyse birimin id'si burada
+    <input type="hidden" value="@Model.Birim.Id" name="id" id="id" />
 }
 
 <h4>Sorumlu Olduğunuz Stratejik Plan Öğeleri</h4>
@@ -134,15 +140,18 @@
 </div>
 
 
+@if (Model.Plan != null)
+{
+    <button class="btn btn-primary" id="btn-birim-gosterge-save"> Kaydet</button>
+}
 
-<button class="btn btn-primary" id="btn-birim-gosterge-save"> Kaydet</button>
 
 @section scripts {
 
 
     <script type="text/javascript">
 
-        var aktifYil = @ViewBag.AktifYil;
+        var aktifYil = @(ViewBag.AktifYil??0);
 
         $(function () {
 

@@ -15,17 +15,68 @@ namespace KavisWeb.Controllers
     {
         StratejikPlanManager2 manager;
 
-        int birimId = 0;
-
-        byte aktifYil = 2;
+        
 
         public BirimController()
         {
             this.manager = new StratejikPlanManager2();
         }
 
-        // GET: Birim
-        public ActionResult Index()
+
+        public ViewPerformansGirisModel BirimFaaliyetYukle(int birimId)
+        {
+            BirimManager birimManager = new BirimManager(new EfBirimDal());
+
+            var birim = birimManager.Get(birimId);
+
+            if (birim != null && birim.Kurum != null)
+            {
+                if (birim.Kurum.AktifPlanId > 0)
+                {
+                    StratejikPlanManager2 stratejikPlanManager = new StratejikPlanManager2();
+
+                    if (birim.KurumId != null)
+                    {
+                        var plan = stratejikPlanManager.GetAktifStratejikPlan(birim.KurumId ?? 0);
+
+                        if (plan != null)
+                        {
+                            var stratejiler = manager.GetAllStratejiByBirim(birim.Id);
+
+                            var faaliyetler = manager.GetAllFaaliyetByBirim(birim.Id);
+
+                            ViewPerformansGirisModel model = new ViewPerformansGirisModel()
+                            {
+                                Stratejiler = stratejiler,
+                                Faaliyetler = faaliyetler,
+                                Birim = birim,
+                            };
+
+                            //ViewBag.seciliBirimId = birim.Id;
+
+                            //ViewBag.AktifYil = birim.Kurum.AktifYil;
+                            return model;
+                        }
+                        else
+                            ViewBag.Hata = "Kurumunuzun stratejik planı bulunamadı";
+
+                    }
+
+                }
+                else
+                    ViewBag.Hata = "Kurumunuzun stratejik planı seçilmedi";
+            }
+            else
+            {
+                ViewBag.Hata = "Kurumunuzun kaydı bulunamadı!.";
+            }
+
+            //Boş döndür
+            return new ViewPerformansGirisModel();
+        }
+
+        // GET: Birim Faaliyet Listesi
+        public ActionResult Index(int id = 0)
         {
 
             KavisUser kavisUser = KavisHelper.GetUser();
@@ -39,55 +90,10 @@ namespace KavisWeb.Controllers
                     //Kullanıcının birimini bul
 
                     //Kurumun SP'sini al
-                    BirimManager birimManager = new BirimManager(new EfBirimDal());
 
-                    var birim = birimManager.Get(kavisUser.BirimId);
+                    var model = BirimFaaliyetYukle(kavisUser.BirimId);
 
-                    if (birim != null && birim.Kurum != null)
-                    {
-                        if (birim.Kurum.AktifPlanId > 0)
-                        {
-                            StratejikPlanManager2 stratejikPlanManager = new StratejikPlanManager2();
-
-                            if (birim.KurumId != null)
-                            {
-                                var plan = stratejikPlanManager.GetAktifStratejikPlan(birim.KurumId ?? 0);
-
-                                if (plan != null)
-                                {
-                                    var stratejiler = manager.GetAllStratejiByBirim(birim.Id);
-
-                                    var faaliyetler = manager.GetAllFaaliyetByBirim(birim.Id);
-
-                                    ViewPerformansGirisModel model = new ViewPerformansGirisModel()
-                                    {
-                                        Stratejiler = stratejiler,
-                                        Faaliyetler = faaliyetler,
-                                        Birim = birim,
-                                    };
-
-
-                                    //ViewBag.seciliBirimId = birim.Id;
-
-                                    //ViewBag.AktifYil = birim.Kurum.AktifYil;
-
-
-
-                                    return View(model);
-                                }
-                                else
-                                    ViewBag.Hata = "Kurumunuzun stratejik planı bulunamadı";
-
-                            }
-
-                        }
-                        else
-                            ViewBag.Hata = "Kurumunuzun stratejik planı seçilmedi";
-                    }
-                    else
-                    {
-                        ViewBag.Hata = "Kurumunuzun kaydı bulunamadı!.";
-                    }
+                    return View(model);                    
 
                 }
                 else
@@ -103,6 +109,13 @@ namespace KavisWeb.Controllers
 
                 ViewBag.BirimListesiGoster = true;
 
+                if (id > 0)
+                {
+                    var model = BirimFaaliyetYukle(kavisUser.BirimId);
+
+                    return View(model);
+                }                
+
             }
 
 
@@ -113,8 +126,8 @@ namespace KavisWeb.Controllers
         }
 
 
-
-        private ViewGostergeGirisModel GostergeBirimYukle(int birimId)
+        //Seçili birime aktif stratjik plan ve yılına göre atanmış göstergeleri ve girdiği gerçekleşme değerleri gösterilir 
+        private ViewGostergeGirisModel BirimGostergeYukle(int birimId)
         {
             BirimManager birimManager = new BirimManager(new EfBirimDal());
 
@@ -144,11 +157,11 @@ namespace KavisWeb.Controllers
                                 foreach (var aGosterge in hedef.Gostergeler)
                                 {
                                     // Burada birimin girdiği değerler varsa onu gösterelerim. Yoksa boş girelim, girilen değeri göremesin
-                                    var giris = girisManager.GetByBirim(birimId, aGosterge.Id, aktifYil);
+                                    var giris = girisManager.GetByBirim(birimId, aGosterge.Id, (byte)birim.Kurum.AktifYil);
                                     if (giris != null)
                                         aGosterge.SetGerceklesenDeger(giris.Yil, giris.Deger);
                                     else
-                                        aGosterge.SetGerceklesenDeger(aktifYil, "");
+                                        aGosterge.SetGerceklesenDeger((byte)birim.Kurum.AktifYil, "");
                                 }
                             }
 
@@ -165,7 +178,8 @@ namespace KavisWeb.Controllers
                         Birim = birim,
                     };
 
-                    return View(model);
+                    return model;
+                    
 
 
                 }
@@ -174,6 +188,8 @@ namespace KavisWeb.Controllers
             {
                 ViewBag.Hata = "Biriminizin kaydı bulunamadı!.";
             }
+
+            return new ViewGostergeGirisModel();
         }
 
         public ActionResult Gosterge(int id = 0)
@@ -182,10 +198,13 @@ namespace KavisWeb.Controllers
 
             if (kavisUser.Type == KavisUserType.Birim)
             {
+                ViewBag.BirimListesiGoster = false;
+
                 if (kavisUser.BirimId > 0)
                 {
+                    var model = BirimGostergeYukle(kavisUser.BirimId);
 
-
+                    return View(model);
                 }
                 else
                 {
@@ -196,18 +215,16 @@ namespace KavisWeb.Controllers
             {
                 // Kurum aktif sp'sine göre birim seçerek girebilir
 
-                if (id > 0)
-                {
-                    BirimManager birimManager = new BirimManager(new EfBirimDal());
-
-                    var birim = birimManager.Get(id);
-
-
-                }
+                ViewBag.BirimListesiGoster = true;
 
                 BirimListesiYukle();
 
-                ViewBag.BirimListesiGoster = true;
+                if (id > 0)
+                {
+                    var model = BirimGostergeYukle(id);
+
+                    return View(model);
+                }               
 
             }
 
