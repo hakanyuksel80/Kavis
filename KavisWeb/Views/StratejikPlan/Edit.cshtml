@@ -127,49 +127,16 @@
 
 @section scripts {
 
+    <script src="~/js/spedit.js"></script>
     <script type="text/javascript">
 
         function LoadKurumList() {
-
             api_get("/StratejikPlan/Kurumlar").done(function (d) {
-
                 loadSelectList('#KurumAdi', d, null, false, "Id","Adi")
             });
-
         }
 
-        class FormEditAmac extends Form {
-
-
-            Save() {
-                let d = formEditAmac.GetValues();
-                console.log(d);
-
-                if (d.Id == "" || d.Id == undefined && d.Id == "0")
-                    sp.add_amac(d.Id, d.Baslik);
-                else {
-                    sp.update_amac(d.Index, d.Baslik);
-                }
-                this.Close();
-            }
-
-            Edit(btn) {
-                let index = $($(btn).parents(".card")[0]).index();
-
-                let id = $($(btn).parents(".card")[0]).data("id");
-                let baslik = $($(btn).parents(".card")[0]).find(".amac-title").text();
-
-                let d = { Id: id, Baslik: baslik, Index: index };
-                console.log(d);
-                this.PutValues(d);
-                this.Show();
-
-            }
-
-        }
-
-
-        var formEditAmac = new FormEditAmac("#amacDuzenle");
+       
 
 
         var id = @(ViewContext.RouteData.Values["id"]??0 );
@@ -181,7 +148,6 @@
             LoadKurumList();
 
             a.Get(id).then(function (d) {
-
                 
                 $("#StratejikPlanId").val(d.Id);
                 $("#KurumAdi").val(d.KurumId);
@@ -194,14 +160,12 @@
             });
 
             $('.btn-kaydet').on("click", function () {
-
                 a.Id = id;
                 a.Baslik = a.Kurum = $("#KurumAdi option:selected").text();
                 a.KurumId = $("#KurumAdi").val();
                 a.Baslangic = $("#DonemBaslangic").val();
                 a.Tur = 0;
                 a.Post();
-
             });
         });
 

@@ -51,81 +51,7 @@ namespace KavisWeb.Controllers.api
 
             return true;
         }
-
-        // POST: api/StratejikPlan      
-        private IResult Post222([FromBody] StratejikPlan model)
-        {
-            try
-            {
-                StrategyDBContext context = new StrategyDBContext();
-
-                if (model.Amaclar != null)
-                    foreach (var amac in model.Amaclar)
-                    {
-
-                        if (amac.Hedefler != null)
-                        {
-                            int i = 0;
-                            while (i < amac.Hedefler.Count())
-                            {
-                                var hedef = amac.Hedefler[i];
-
-
-                                if (hedef.Gostergeler != null)
-                                {
-                                    var j = 0;
-
-                                    while (j < hedef.Gostergeler.Count())
-                                    {
-                                        var gosterge = hedef.Gostergeler[j];
-                                        if (linkToContext(context, gosterge)) j++;
-                                    }
-                                }
-
-                                if (hedef.Stratejiler != null)
-                                {
-                                    var j = 0;
-
-                                    while (j < hedef.Stratejiler.Count())
-                                    {
-                                        var strateji = hedef.Stratejiler[j];
-                                        if (linkToContext(context, strateji)) j++;
-                                    }
-                                }
-
-                                if (linkToContext(context, hedef)) i++;
-                            }
-                        }
-
-                        linkToContext(context, amac);
-                        amac.StratejikPlan = model;
-                        amac.StratejikPlanId = model.Id;
-
-                    }
-
-
-                if (model.Id <= 0)
-                    context.Entry<StratejikPlan>(model).State = System.Data.Entity.EntityState.Added;
-                else
-                    context.Entry<StratejikPlan>(model).State = System.Data.Entity.EntityState.Modified;
-
-                int affectedRecords = context.SaveChanges();
-                if (affectedRecords > 0)
-                    return new SuccessResult();
-                else
-                    return new ErrorResult("Kayıt edilemedi.");
-
-            }
-            catch (Exception ex)
-            {
-                string mesaj = ex.Message;
-                ErrorResult hata = new ErrorResult("Hata Oluştu:" + mesaj);
-
-                return hata;
-
-            }
-        }
-
+               
         public IResult Post([FromBody] StratejikPlan model)
         {
 
@@ -173,6 +99,7 @@ namespace KavisWeb.Controllers.api
             if (amaclar == null) return;
 
             int siraNo = 0;
+
             foreach (var model in amaclar)
             {
                 Amac amac = null;
@@ -300,8 +227,8 @@ namespace KavisWeb.Controllers.api
                 gosterge.Yil5 = model.Yil5;
                 gosterge.Izleme = model.Izleme;
                 gosterge.Rapor = model.Rapor;
-                gosterge.SorumluBirimId = model.SorumluBirimId;
-                gosterge.SorumluBirim = model.SorumluBirim;
+                gosterge.SorumluBirimId = model.SorumluBirimId??"";
+                gosterge.SorumluBirim = model.SorumluBirim??"";
 
 
                 manager.SaveGosterge(gosterge);

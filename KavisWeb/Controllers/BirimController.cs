@@ -152,7 +152,9 @@ namespace KavisWeb.Controllers
                         {
                             foreach (var hedef in amac.Hedefler)
                             {
-                                hedef.Gostergeler = hedef.Gostergeler.Where(x => x.SorumluBirimId == birim.Id).ToList();
+                                
+                                hedef.Gostergeler = hedef.Gostergeler.Where(x =>x.SorumluBirimId != null && x.SorumluBirimId.Split(',').ToList().Contains(birim.Id.ToString())).ToList();
+                                //hedef.Gostergeler = hedef.Gostergeler.Where(x => x.SorumluBirimId.Split(',').ToList().Contains(birim.Id.ToString())).ToList();
 
                                 foreach (var aGosterge in hedef.Gostergeler)
                                 {

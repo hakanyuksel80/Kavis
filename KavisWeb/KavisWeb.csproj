@@ -269,6 +269,10 @@
     <Compile Include="Migrations\202110061956137_datetimeNull.Designer.cs">
       <DependentUpon>202110061956137_datetimeNull.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202110120924216_GostergeBirimIdString.cs" />
+    <Compile Include="Migrations\202110120924216_GostergeBirimIdString.Designer.cs">
+      <DependentUpon>202110120924216_GostergeBirimIdString.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Entities\Views\ViewPerformansGirisModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -2058,6 +2062,7 @@
     <Content Include="js\form.js" />
     <Content Include="js\script.js" />
     <Content Include="js\sp.js" />
+    <Content Include="js\spedit.js" />
     <Content Include="js\templates.js" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
@@ -2549,6 +2554,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202110061956137_datetimeNull.resx">
       <DependentUpon>202110061956137_datetimeNull.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202110120924216_GostergeBirimIdString.resx">
+      <DependentUpon>202110120924216_GostergeBirimIdString.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

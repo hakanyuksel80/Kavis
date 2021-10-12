@@ -1,4 +1,4 @@
-﻿
+﻿@model  KavisWeb.Entities.DbModels.StratejikPlan
 @{
     ViewBag.Title = "Gostergeler";
 }
@@ -9,7 +9,7 @@
 <table class="table table-bordered table-dar table-sm">
     <thead>
         <tr>
-            <th width="150" rowspan="2">&nbsp;</th>
+            <th rowspan="2">&nbsp;</th>
             <th rowspan="2">Sorumlu Birim</th>
             <th rowspan="2">Hedef Etkisi</th>
             <th rowspan="2">Başlangıç</th>
@@ -23,7 +23,7 @@
         </tr>
         <tr>
             <th style="height:2px;">P</th>
-            
+
             <th>G</th>
             <th>P</th>
             <th>G</th>
@@ -36,45 +36,42 @@
         </tr>
     </thead>
     <tbody>
-        <tr>
-            <td colspan="20" style="padding:0 10px">HEDEF 1.1</td>
-        </tr>
-        <tr>
-            <td>Performans G.1</td>
-            <td>Özel Eğitim</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td>Performans G.2</td>
-            <td>Temel Eğitim 1</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
+
+        @foreach (var amac in Model.Amaclar)
+        {
+            foreach (var hedef in amac.Hedefler)
+            {
+                <tr>
+                    <td class="hedef" colspan="20" style="padding:0 10px">HEDEF @hedef.Kod - @hedef.Baslik </td>
+                </tr>
+
+                foreach (var gosterge in hedef.Gostergeler)
+                {
+                    <tr class="performans-gosterge">
+                        <td>Performans G.@gosterge.Kod @gosterge.Baslik</td>
+                        <td>@gosterge.SorumluBirim</td>
+                        <td>@gosterge.HedefeEtkisi</td>
+                        <td>@gosterge.Baslangic</td>
+                        <td></td>
+                        <td>@gosterge.Yil1G</td>
+                        <td></td>
+                        <td>@gosterge.Yil2G</td>
+                        <td></td>
+                        <td>@gosterge.Yil3G</td>
+                        <td></td>
+                        <td>@gosterge.Yil4G</td>
+                        <td></td>
+                        <td>@gosterge.Yil5G</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                }
+
+            }
+        }
+
+       
+   
     </tbody>
 </table>
 

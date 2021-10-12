@@ -27,69 +27,6 @@ namespace KavisWeb.Controllers
             return View(model);
         }
 
-        private ViewGostergeGirisModel BirimGostergeYukle(int birimId)
-        {
-            BirimManager birimManager = new BirimManager(new EfBirimDal());
-
-            var birim = birimManager.Get(birimId);
-
-            if (birim != null && birim.Kurum != null)
-            {
-                if (birim.Kurum.AktifPlanId > 0)
-                {
-
-
-
-                    GostergeGirisManager girisManager = new GostergeGirisManager(new EfGostergeGirisDal());
-
-
-
-                    if (stratejikPlan != null)
-                    {
-                        foreach (var amac in stratejikPlan.Amaclar)
-                        {
-                            foreach (var hedef in amac.Hedefler)
-                            {
-                                hedef.Gostergeler = hedef.Gostergeler.Where(x => x.SorumluBirimId == birim.Id).ToList();
-
-                                foreach (var aGosterge in hedef.Gostergeler)
-                                {
-                                    // Burada birimin girdiği değerler varsa onu gösterelerim. Yoksa boş girelim, girilen değeri göremesin
-                                    var giris = girisManager.GetByBirim(birimId, aGosterge.Id, (byte)birim.Kurum.AktifYil);
-                                    if (giris != null)
-                                        aGosterge.SetGerceklesenDeger(giris.Yil, giris.Deger);
-                                    else
-                                        aGosterge.SetGerceklesenDeger((byte)birim.Kurum.AktifYil, "");
-                                }
-                            }
-
-                            amac.Hedefler = amac.Hedefler.Where(x => x.Gostergeler.Count() > 0).ToList();
-                        }
-
-                        stratejikPlan.Amaclar = stratejikPlan.Amaclar.Where(x => x.Hedefler.Count() > 0).ToList();
-
-                    }
-
-
-
-                    return model;
-
-
-
-                }
-            }
-            else
-            {
-                ViewBag.Hata = "Biriminizin kaydı bulunamadı!.";
-            }
-
-            return new ViewGostergeGirisModel();
-        }
-
-
-
-
-
 
         public ActionResult Gostergeler()
         {
@@ -97,7 +34,7 @@ namespace KavisWeb.Controllers
 
             StratejikPlanManager2 manager = new StratejikPlanManager2();
 
-
+            BirimManager birimManager = new BirimManager(new EfBirimDal());
 
             if (kavisUser.Type == Entities.KavisUserType.Kurum)
             {
@@ -118,20 +55,49 @@ namespace KavisWeb.Controllers
 
                                 foreach (var aGosterge in eskiGostergeList)
                                 {
-                                    string[] birimIds = aGosterge.SorumluBirim.Split(',');
-
-                                    foreach (var aBirimId in birimIds)
+                                    if (!string.IsNullOrEmpty(aGosterge.SorumluBirimId))
                                     {
-                                        
-                                        for (byte i = 1; i <= 5; i++)
+                                        string[] birimIds = aGosterge.SorumluBirimId.Split(',');
+
+                                        foreach (var aBirimId in birimIds)
                                         {
-                                            var giris = girisManager.GetByBirim(aBirimId, aGosterge.Id, i);
-                                            if (giris != null)
-                                                aGosterge.SetGerceklesenDeger(giris.Yil, giris.Deger);
-                                            else
-                                                aGosterge.SetGerceklesenDeger((byte)birim.Kurum.AktifYil, "");
+
+                                            var birim = birimManager.Get(Convert.ToInt32(aBirimId));
+
+                                            Gosterge gos = new Gosterge()
+                                            {
+                                                Baslangic = aGosterge.Baslangic,
+                                                Baslik = aGosterge.Baslik,
+                                                HedefeEtkisi = aGosterge.HedefeEtkisi,
+                                                Id = aGosterge.Id,
+                                                Izleme = aGosterge.Izleme,
+                                                Kod = aGosterge.Kod,
+                                                Rapor = aGosterge.Rapor,
+                                                SiraNo = aGosterge.SiraNo,
+                                                SorumluBirim = birim.Baslik,
+                                                Yil1 = aGosterge.Yil1,
+                                                Yil1G = "",// aGosterge.Yil2,
+                                                Yil2 = aGosterge.Yil2,
+                                                Yil2G = "",//aGosterge.Yil2G,
+                                                Yil3 = aGosterge.Yil3,
+                                                Yil3G = aGosterge.Yil3G,
+                                                Yil4 = aGosterge.Yil4,
+                                                Yil4G = "",//aGosterge.Yil4G,
+                                                Yil5 = aGosterge.Yil5,
+                                                Yil5G = "",//aGosterge.Yil5G,
+                                                
+                                            };
+
+                                            for (byte i = 1; i <= 5; i++)
+                                            {
+                                                var giris = girisManager.GetByBirim(Convert.ToInt32(aBirimId), aGosterge.Id, i);
+                                                if (giris != null)
+                                                    gos.SetGerceklesenDeger(giris.Yil, giris.Deger);
+                                                
+                                            }                                            
+
+                                            hedef.Gostergeler.Add(gos);
                                         }
-                                       
                                     }
 
                                     // Burada birimin girdiği değerler varsa onu gösterelerim. Yoksa boş girelim, girilen değeri göremesin
@@ -144,6 +110,7 @@ namespace KavisWeb.Controllers
 
                         stratejikPlan.Amaclar = stratejikPlan.Amaclar.Where(x => x.Hedefler.Count() > 0).ToList();
 
+                        return View(stratejikPlan);
                     }
 
                 }

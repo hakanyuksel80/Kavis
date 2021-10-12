@@ -121,7 +121,7 @@ namespace KavisWeb.Entities.DbModels
 
         public string Rapor { get; set; }
 
-        public int SorumluBirimId { get; set; }
+        public string SorumluBirimId { get; set; }
 
         public string SorumluBirim { get; set; }
 

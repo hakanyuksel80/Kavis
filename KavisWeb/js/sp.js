@@ -1,5 +1,14 @@
-﻿
+﻿/*
+ * Stratejik Plan düzenlenirken Stratejik Plan öğelerinin görsellerini yönetmek 
+ * (öğeleri tarayıcı hafızasında oluşturmak, öğeleri çizmek-html yapılarını oluşturmak, girilen verileri toplamak ) 
+ * için kullanılan sınıf yapıları
+ * 
+ */
 
+
+/* 
+ * Tüm öğelerin ana davranışını taşıyan ata sınıf 
+ */
 class PlanItem {
 
     constructor(id, title, siraNo, items = [], state = "") {
@@ -14,22 +23,24 @@ class PlanItem {
         this.State = state;
     }
 
-    Id = 0;
+    Id = 0;//Veritabanı kayıt no
 
-    Order = 0;
+    Order = 0;//Sıralama yapılırsa öğeler çizilirken buna göre çizilkece
 
     No = "";
 
-    Title = "";
+    Title = ""; // Başlık
 
-    State = "";
+    State = "";//deleted, added, modified özelliklerini tutabilir
 
-    Items = [];
+    Items = [];//Alt öğeleri tutuyor. Amaçların altındaki hedefler gibi
 
+    //Alt öğe listesine yeni eleman ekler
     Add(item) {
         this.Items.push(item);
     }
 
+    //Alt öğe elemanını silinmiş gösterir
     Remove(item) {
         //this.Items.pop(item);
         item.deleted = true;
@@ -38,6 +49,7 @@ class PlanItem {
     GetItem(index) {
         return this.Items[index];
     }
+
 
     Draw(container) {
 
@@ -76,9 +88,6 @@ class AmacPlanItem extends PlanItem {
 
         //$(element).parent().prev().append($obj);
         //$(container).append($obj);
-
-
-
         //$obj1.slideDown();
 
         this.obj = $obj;
@@ -188,8 +197,6 @@ class HedefPlanItem extends PlanItem {
         let $obj = $(this.hedef_karti(this.Id, this.SiraNo, this.Title, state));
 
         let $str = $($obj.find(".stratejiler")[0]);
-
-
 
         let $gos = $obj.find(".gostergeler");
 
@@ -432,8 +439,6 @@ class GostergePlanItem extends PlanItem {
 
     Collect() {
 
-
-
         let id = this.obj.data("id");
         let no = this.obj.find(".gosterge-order").text();
         let state = this.obj.data("state");
@@ -449,8 +454,9 @@ class GostergePlanItem extends PlanItem {
         let izlemeSikligi = $(fields[9]).find("select").val();
         let raporSikligi = $(fields[10]).find("select").val();
         let birim = $(fields[11]).find("select").val();
+        birim = Array.isArray(birim) ? birim.join(',') : birim;
         let birimAdi = $(fields[11]).find("select option:selected").text();
-
+        console.log({ birim: birim });
         //let birimAdi = $(fields[11]).find("select").val();
 
         let d = { Id: id, Baslik: text, Kod: no, Baslangic: baslangic, HedefeEtkisi: hedefeEtkisi, Yil1: yil1, Yil2: yil2, Yil3: yil3, Yil4: yil4, Yil5: yil5, Izleme: izlemeSikligi, Rapor: raporSikligi, SorumluBirimId: birim,SorumluBirim : birimAdi, State: state };
