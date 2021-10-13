@@ -2470,7 +2470,6 @@
     <Content Include="Views\Shared\_FaaliyetDuzenPartial.cshtml" />
     <Content Include="Views\KavisModul03\Index.cshtml" />
     <Content Include="Views\Shared\_LayoutBirim.cshtml" />
-    <Content Include="Views\Shared\_MainLayout.cshtml" />
     <Content Include="Views\Shared\_LayoutKurum.cshtml" />
     <Content Include="Views\KavisModul02\Index.cshtml" />
     <Content Include="Views\Shared\_PartialPageBanner.cshtml" />
@@ -2491,7 +2490,6 @@
     <Folder Include="assets\jquery-file-upload\server\node\tmp\" />
     <Folder Include="assets\jquery-file-upload\server\php\files\thumbnail\" />
     <Folder Include="Models\" />
-    <Folder Include="Views\KavisBase\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
