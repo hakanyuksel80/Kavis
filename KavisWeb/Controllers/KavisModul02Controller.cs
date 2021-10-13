@@ -77,7 +77,7 @@ namespace KavisWeb.Controllers
         }
 
 
-       
+
 
         // GET: StratejikPlan
         public ActionResult StratejikPlanlar()
@@ -190,7 +190,7 @@ namespace KavisWeb.Controllers
 
         }
 
-        public ActionResult Gostergeler()
+        public ActionResult Gostergeler(int birimId = 0)
         {
             var kavisUser = KavisHelper.GetUser();
 
@@ -203,6 +203,8 @@ namespace KavisWeb.Controllers
                 if (kavisUser.KurumId > 0)
                 {
                     StratejikPlan stratejikPlan = manager.GetAktifStratejikPlan(kavisUser.KurumId);
+
+                    KavisHelper.BirimListesiYukle(this, kavisUser.KurumId);
 
                     if (stratejikPlan != null)
                     {
@@ -223,8 +225,8 @@ namespace KavisWeb.Controllers
 
                                         foreach (var aBirimId in birimIds)
                                         {
-
-                                            var birim = birimManager.Get(Convert.ToInt32(aBirimId));
+                                            if (birimId > 0 && aBirimId != birimId.ToString()) continue;
+                                                var birim = birimManager.Get(Convert.ToInt32(aBirimId));
 
                                             Gosterge gos = new Gosterge()
                                             {

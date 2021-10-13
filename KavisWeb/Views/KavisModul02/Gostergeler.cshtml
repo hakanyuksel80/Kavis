@@ -3,10 +3,34 @@
     ViewBag.Title = "Göstergeler";
 
     Layout = "~/Views/Shared/_LayoutKurum.cshtml";
+
+    List<SelectListItem> yilListesi = ViewBag.YilListesi;
+
+    List<SelectListItem> birimListe = ViewBag.BirimSelectList;
 }
 
 <h2>Gösterge Tablosu</h2>
 
+
+@using (Html.BeginForm())
+{
+    <div class="row mt-4">  
+
+
+        <div class="col-4">
+            <div class="form-group row">
+                <label class="col-3">Birimler</label>
+                <div class="col-6">
+                    @Html.DropDownList("birimId", birimListe, "SEÇİNİZ", new { @class = "form-control form-control-sm" })
+                </div>
+            </div>
+        </div>
+        <div class="col-4">
+            <button type="submit" class="btn btn-primary"> Ara</button>
+        </div>
+    </div>
+
+}
 
 <table class="table table-bordered table-dar table-sm">
     <thead>
@@ -72,8 +96,8 @@
             }
         }
 
-       
-   
+
+
     </tbody>
 </table>
 
