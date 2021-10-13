@@ -8,7 +8,7 @@ class Eylemler_Templates {
 
     birim_select(value) {
 
-        return birimListe(value,true);
+        return birimListe(value, true);
 
     }
 
@@ -84,10 +84,10 @@ class StratejiListItem extends PlanItem {
 
 class EylemItem extends PlanItem {
 
-    
+
     Draw(state) {
         let template = new Eylemler_Templates();
-       
+
         return template.eylem(this.Id, this.Title, this.No, this.Birim, this.State);
     }
 
@@ -124,9 +124,9 @@ class Eylemler extends PlanItem {
 
 
 
-    Get() {
+    Get(id) {
         let THIS = this;
-        return api_get("/api/Eylemler/1").done(function (d) {
+        return api_get(base_url("api/Eylemler/" + id)).done(function (d) {
             console.log(d);
             THIS.Build(d);
             THIS.Draw();
@@ -197,8 +197,9 @@ function on_btnDeleteEylem_click_event() {
 function on_btnAddEylem_click_event() {
     let container = $($(this).parents('.stratejiContainer')[0]).find('.eylemler');
     let c = container.find(".eylem").length;
-    container.append(etemp.eylem("", "", c + 1, "", ""));
-
+    let $tm = $(etemp.eylem("", "", c + 1, "", ""));
+    container.append($tm);
+    $tm.find(".birim-select").select2();
 };
 
 
@@ -210,14 +211,14 @@ function on_btnSaveEylemler_click_event() {
 var e = new Eylemler();
 
 
+
+
 $(document).ready(function () {
 
-
-
-    e.Get().then(function () {
+    e.Get(spid).then(function () {
 
         $('select').parent().css("width", "50%")
-        $('select.birim-select').select2({width:"100%"});
+        $('select.birim-select').select2({ width: "100%" });
 
     });
 
@@ -226,9 +227,6 @@ $(document).ready(function () {
     $(document).on('click', '.btn-delete-eylem', on_btnDeleteEylem_click_event);
 
     $(document).on('click', '.btn-kaydet-eylemler', on_btnSaveEylemler_click_event);
-
-  
-
 
 });
 

@@ -26,7 +26,8 @@ namespace KavisWeb.Controllers.api
         // GET: api/StratejikPlan
         public List<KavisWeb.Entities.Views.StratejikPlanListView> Get()
         {
-            return stratejikPlanManager.GetViewList();
+            
+            return stratejikPlanManager.GetViewListByUser(KavisHelper.GetUser());
         }
 
         // GET: api/StratejikPlan/5

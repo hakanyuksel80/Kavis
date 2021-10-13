@@ -11,9 +11,15 @@ using System.Web.Mvc;
 
 namespace KavisWeb.Controllers
 {
-    public class KavisModul02Controller : Controller
+    public class KavisModul02Controller : KavisBaseController
     {
         private StratejikPlanManager2 _stratejikPlanManager;
+
+        public KavisModul02Controller()
+        {
+            _stratejikPlanManager = new StratejikPlanManager2();
+        }
+
 
         // GET: KavisModul02
         public ActionResult Index()
@@ -26,18 +32,21 @@ namespace KavisWeb.Controllers
         {
             KavisUser kavisUser = KavisHelper.GetUser();
 
-            if (kavisUser.KurumId > 0)
-            {
-                KurumManager manager = new KurumManager();
+            ViewBag.KavisUser = kavisUser;
 
-                var kurum = manager.Get(kavisUser.KurumId);
+            return View();
 
-                var kurumlar = new List<Kurum> { kurum };
+        }
 
-                return View(kurumlar);
-            }
+        public JsonResult KurumStratejikPlanlar(int id)
+        {
 
-            return HttpNotFound();
+            StratejikPlanManager2 manager = new StratejikPlanManager2();
+
+            var liste = from x in manager.GetKurumSPList(id)
+                        select new ListViewItem { Id = x.Id, Adi = x.Baslangic + "-" + x.Bitis };
+
+            return Json(liste, JsonRequestBehavior.AllowGet);
 
         }
 
@@ -68,24 +77,17 @@ namespace KavisWeb.Controllers
         }
 
 
-        public KavisModul02Controller()
-        {
-            _stratejikPlanManager = new StratejikPlanManager2();
-        }
+       
 
         // GET: StratejikPlan
         public ActionResult StratejikPlanlar()
         {
             KavisUser kavisUser = KavisHelper.GetUser();
 
-            if (kavisUser.KurumId > 0)
-            {
-                var list = _stratejikPlanManager.GetViewListByKurum(kavisUser.KurumId);
+            var list = _stratejikPlanManager.GetViewListByUser(kavisUser);
 
-                return View(list);
-            }
+            return View(list);
 
-            return View();
         }
 
         public ActionResult Eylemler()
@@ -93,14 +95,13 @@ namespace KavisWeb.Controllers
             return View();
         }
 
-        public ActionResult StratejikPlanEdit(int id)
+        public ActionResult StratejikPlanEdit(int id = 0)
         {
             KavisUser kavisUser = KavisHelper.GetUser();
 
-            if (kavisUser.KurumId > 0)
-            {
+            ViewBag.KavisUser = kavisUser;
 
-            }
+            ViewBag.KurumAdi = kavisUser.KurumId;
 
             return View();
         }

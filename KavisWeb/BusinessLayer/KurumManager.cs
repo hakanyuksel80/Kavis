@@ -1,5 +1,6 @@
 ﻿using KavisWeb.DataLayer.Abstract;
 using KavisWeb.DataLayer.EF;
+using KavisWeb.Entities;
 using KavisWeb.Entities.DbModels;
 using System;
 using System.Collections.Generic;
@@ -19,6 +20,20 @@ namespace KavisWeb.BusinessLayer
         public List<Kurum> GetList()
         {
             return _dal.GetAll();
+        }
+
+        public List<Kurum> GetListByUser(KavisUser kavisUser)
+        {
+            if (kavisUser.Type == KavisUserType.Admin)
+            {
+                return GetList();
+            }
+            else if (kavisUser.Type == KavisUserType.Kurum)
+            {
+                return _dal.GetAll(x=>x.Id == kavisUser.KurumId);
+            }
+
+            return new List<Kurum>();
         }
 
         public Kurum Get(int id)
@@ -42,7 +57,21 @@ namespace KavisWeb.BusinessLayer
             if (kurum != null)
                 return _dal.Delete(kurum);
 
-            return false;              
+            return false;
+        }
+
+        public List<Kurum> GetList(KavisUser kavisUser)
+        {
+            if (kavisUser.Type == KavisUserType.Kurum)
+            {
+                return _dal.GetAll(x => x.Id == kavisUser.KurumId);
+            }
+            else if (kavisUser.Type == KavisUserType.Admin)
+            {
+                return _dal.GetAll();
+            }
+
+            return new List<Kurum>();
         }
     }
 }

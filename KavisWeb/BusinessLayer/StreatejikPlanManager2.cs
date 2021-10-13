@@ -6,10 +6,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using KavisWeb.Entities.Views;
+using KavisWeb.Entities;
 
 namespace KavisWeb.BusinessLayer
 {
-    public class StratejikPlanManager2 
+    public class StratejikPlanManager2
     {
 
         StrategyDBContext context = new StrategyDBContext();
@@ -30,14 +31,43 @@ namespace KavisWeb.BusinessLayer
 
         }
 
-        public List<StratejikPlanListView> GetViewListByKurum(int kurumId)
+        //public List<StratejikPlanListView> GetViewListByKurum(int kurumId)
+        //{
+        //    var plans = context.StratejikPlanlar.Where(x => x.KurumId == kurumId).ToList();
+
+        //    var list = from x in plans
+        //               select new StratejikPlanListView() { Id = x.Id, Donem = x.Baslangic.ToString() + " " + x.Bitis.ToString(), Kurum = x.Kurum.Adi, Turu = x.Kurum.Turu.ToString() };
+
+        //    return list.ToList();
+
+        //}
+
+        public List<StratejikPlanListView> GetViewListByUser(KavisUser user)
         {
-            var plans = context.StratejikPlanlar.Where(x=>x.KurumId == kurumId).ToList();
+            if (user.Type == KavisUserType.Admin)
+            {
+                var plans = context.StratejikPlanlar.ToList();
 
-            var list = from x in plans
-                       select new StratejikPlanListView() { Id = x.Id, Donem = x.Baslangic.ToString() + " " + x.Bitis.ToString(), Kurum = x.Kurum.Adi, Turu = x.Kurum.Turu.ToString() };
+                var list = from x in plans
+                           select new StratejikPlanListView() { Id = x.Id, Donem = x.Baslangic.ToString() + " " + x.Bitis.ToString(), Kurum = x.Kurum.Adi, Turu = x.Kurum.Turu.ToString() };
 
-            return list.ToList();
+                return list.ToList();
+            }
+            else if (user.Type == KavisUserType.Kurum)
+            {
+                if (user.KurumId > 0)
+                {
+                    var plans = context.StratejikPlanlar.Where(x => x.KurumId == user.KurumId).ToList();
+
+                    var list = from x in plans
+                               select new StratejikPlanListView() { Id = x.Id, Donem = x.Baslangic.ToString() + " " + x.Bitis.ToString(), Kurum = x.Kurum.Adi, Turu = x.Kurum.Turu.ToString() };
+
+                    return list.ToList();
+                }                
+            }
+
+            return new List<StratejikPlanListView>();
+
 
         }
 
@@ -213,24 +243,28 @@ namespace KavisWeb.BusinessLayer
 
         public List<FaaliyetListView> GetAllFaaliyet(int yil = 0)
         {
-            var faaliyetler = context.Faaliyetler.Include("Eylem").Select(x=>x).ToList();
+            var faaliyetler = context.Faaliyetler.Include("Eylem").Select(x => x).ToList();
 
             if (yil > 0)
             {
-                faaliyetler = faaliyetler.Where(x => x.Yil == yil).ToList() ;
+                faaliyetler = faaliyetler.Where(x => x.Yil == yil).ToList();
             }
 
             faaliyetler = faaliyetler.OrderBy(x => x.Eylem.Kod).ThenBy(x => x.SiraNo).ToList();
 
             return (from x in faaliyetler
                     join y in context.Birimler on x.Birim equals y.Id
-                    select new FaaliyetListView() { Id = x.Id, 
-                        EylemAdi = x.Eylem.Kod + " " + x.Eylem.Baslik, 
-                        FaaliyetAdi = x.Baslik, 
-                        Birim = y.Baslik, Durum = x.Durum }).ToList();
+                    select new FaaliyetListView()
+                    {
+                        Id = x.Id,
+                        EylemAdi = x.Eylem.Kod + " " + x.Eylem.Baslik,
+                        FaaliyetAdi = x.Baslik,
+                        Birim = y.Baslik,
+                        Durum = x.Durum
+                    }).ToList();
         }
 
-       
+
 
 
 

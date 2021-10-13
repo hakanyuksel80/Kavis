@@ -1,23 +1,16 @@
-﻿
-@using KavisWeb.Entities
+﻿@model IEnumerable<KavisWeb.Entities.DbModels.Kurum>
 
 @{
     ViewBag.Title = "Index";
 
-    Layout = "~/Views/Shared/_LayoutKurum.cshtml";
-
-    bool isAdmin = ViewBag.KavisUser != null && ViewBag.KavisUser.Type == KavisUserType.Admin;
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 
 <h2>Kurum Bilgileri</h2>
 
-@if (isAdmin)
-{
-    <p>
-        <a href="#" class="btn btn-success btn-sm btn-kurumEkle">Yeni Kurum</a>
-    </p>
-}
-
+@*<p>
+    <a href="#" class="btn btn-success btn-sm btn-kurumEkle">Yeni Kurum</a>
+</p>*@
 <table class="table table table-striped table-bordered" id="tableKurumlar">
     <thead>
         <tr>
@@ -36,8 +29,22 @@
         </tr>
     </thead>
     <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.KurumKodu</td>
+                <td>@item.Adi</td>
+                <td>@item.Turu  </td>
+                <td>
+                    <button class="btn btn-sm btn-success btn-kurumDuzenle" data-id="@item.Id">Düzenle</button> |
+                    @*<button class="btn btn-sm btn-success btn-kurumSil" data-id="@item.Id">Sil</button> |*@
 
+                    <button class="btn btn-sm btn-success btn-birimler" data-id="@item.Id">Birimler</button>
+                </td>
+            </tr>
+        }
     </tbody>
+
 </table>
 
 
@@ -77,7 +84,7 @@
                             </div>
 
                         </div>
-                        <div class="col">
+                        <div class="col">                           
                             <div class="form-group">
                                 <label>Aktif Stratejik Plan Yılı:</label>
                                 <select class="form-control" name="AktifYil" id="AktifYil">
@@ -135,7 +142,7 @@
         class Kurumlar {
 
             ekle(kurum) {
-                let dugmelerHtml = this.tabloSatirDugmeSablon(kurum.Id, true, @(isAdmin.ToString().ToLower()));
+                let dugmelerHtml = this.tabloSatirDugmeSablon(kurum.Id, true, true);
                 let st = $(this.tabloSatirSablon(kurum, dugmelerHtml)).hide();
                 $('#tableKurumlar tbody').append(st);
                 st.show();
@@ -178,23 +185,20 @@
 
             LoadList() {
                 let THIS = this;
-                api_get(base_url("api/Kurum"), function (d) {
+                api_get("/api/Kurum", function (d) {
                     THIS.LoadTable(d);
                 });
             }
 
             SaveKurum(d) {
-                api_post(base_url("api/Kurum"), d).done(function () {
+                api_post("/api/Kurum", d).done(function () {
                 });
             }
 
             DeleteKurum(id) {
                 let THIS = this;
-                return api_delete(base_url("api/Kurum/" + id), function (d) {
-                    if (d.Success) {
-                        THIS.LoadList();
-                    } else
-                        errorMessage(d.Message);
+                return api_delete("/api/Kurum/" + id, function (d) {
+                    THIS.LoadList();
                 });
             }
 
@@ -238,7 +242,7 @@
                 api_get("/api/Kurum/" + id, function (d) {
                     console.log(d);
                     THIS.PutValues(d);
-                    $('#uyarilarTextArea').summernote("code", d.Mesaj);
+                    $('#uyarilarTextArea').summernote("code",d.Mesaj);                                        
                 });
             }
 
@@ -254,8 +258,8 @@
 
             LoadSPList(id) {
                 let THIS = this;
-                api_get(base_url("KavisModul02/KurumStratejikPlanlar/" + id), function (d) {
-
+                api_get("/Kurumlar/StratejikPlanlar/" + id, function (d) {
+                    
                     loadSelectList("#AktifPlanId", d, null, true, "Id", "Adi");
                 });
 
@@ -279,10 +283,13 @@
         }
 
         function onKurumSilClickEvent() {
+
             let id = $(this).data("id");
+
             silmeMesaji("Bu Kurumu silerseniz bu kuruma bağlı tüm birim, stratejik plan kayıtları ve girdileri tamamen silinecektir. \n\r\n\r Silmek istediğinize emin misiniz?", "Dikkat! Silme Onayı").then(function (d) {
 
                 if (d) {
+
                     kurumlar.DeleteKurum(id);
 
                 }
@@ -293,16 +300,18 @@
 
         function onBirimlerClickEvent() {
             let id = $(this).data("id");
-            location = base_url("KavisModul02/Birimler");
+            location =  base_url("KavisModul02/Birimler");
         }
 
         $(document).ready(function () {
-            kurumlar.LoadList();
 
             $('.btn-kurumEkle').on("click", onKurumEkleClickEvent);
             $(document).on("click", '.btn-kurumDuzenle', onKurumDuzenleClickEvent);
             $(document).on("click", '.btn-kurumSil', onKurumSilClickEvent);
             $(document).on("click", '.btn-birimler', onBirimlerClickEvent);
+
+
+
         });
 
 

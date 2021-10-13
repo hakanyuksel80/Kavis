@@ -11,7 +11,7 @@ using System.Web.Mvc;
 
 namespace KavisWeb.Controllers
 {
-    public class KavisModul03Controller : Controller
+    public class KavisModul03Controller : KavisBaseController
     {
         StratejikPlanManager2 manager;
 

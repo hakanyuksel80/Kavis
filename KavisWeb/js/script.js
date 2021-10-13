@@ -1,22 +1,4 @@
-﻿function on_delete_sp_click_event(button) {
-
-    let id = $(button).data("id");
-
-    alert("ddddd");
-
-
-    silmeMesaji("Stratejik Planı silmek istediğinize emin misiniz? Bu kayda bağlı tüm kayıtlar silinecektir.").then(function (d) {
-
-        if (d) {
-            a.Delete(id).done(function (d) {
-                $(button).parents("tr").hide(500, function () { $(this).remove(); });
-            });
-        }
-
-    });
-
-
-}
+﻿
 
 
 
@@ -59,10 +41,8 @@ function loadSelectList(ID, list, selected, addEmpty = false, valueName = "value
         $obj.append(`<option value="">(SEÇİNİZ)</option>`);
 
     for (var i = 0; i < list.length; i++) {
-        const eleman = list[i];
-        console.log(eleman);
-        let isSelected = (Array.isArray(selected) && selected.indexOf(eleman["value"]) > -1) || (!Array.isArray(selected) && eleman["value"] == selected);
-        
+        const eleman = list[i]; 
+        let isSelected = (Array.isArray(selected) && selected.indexOf(eleman["value"]) > -1) || (!Array.isArray(selected) && eleman[valueName] == selected);
         let $option = $(`<option value="${eleman[valueName]}" ${isSelected ? "selected" : ""}>${eleman[textName]}</option>`);
         $obj.append($option);
     }
@@ -76,6 +56,6 @@ function showTab(tab) {
 
 function base_url(l = "") {
 
-    return "\\"+l;
+    return "/"+l;
 
 }

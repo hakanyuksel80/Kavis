@@ -17,7 +17,7 @@ namespace KavisWeb.Controllers.api
         {
             KurumManager manager = new KurumManager();
 
-            var liste = manager.GetList();
+            var liste = manager.GetListByUser(KavisHelper.GetUser());
 
             return liste;
         }
@@ -71,12 +71,20 @@ namespace KavisWeb.Controllers.api
         // DELETE: api/Kurum/5
         public IResult Delete(int id)
         {
+            var user = KavisHelper.GetUser();
 
             KurumManager manager = new KurumManager();
-            if (manager.Delete(id))
-                return new SuccessResult();
-            else
-                return new ErrorResult();
+
+            if (user.Type == Entities.KavisUserType.Admin)
+            {
+                if (manager.Delete(id))
+                    return new SuccessResult();
+                else
+                    return new ErrorResult();
+            }
+
+            return new ErrorResult("Bu yetkiye sahip değilsiniz");            
+          
         }
     }
 }

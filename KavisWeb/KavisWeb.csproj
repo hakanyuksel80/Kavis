@@ -161,14 +161,9 @@
     <Compile Include="Controllers\api\FaaliyetDurumController.cs" />
     <Compile Include="Controllers\api\KurumController.cs" />
     <Compile Include="Controllers\api\StratejikPlanController.cs" />
-    <Compile Include="Controllers\BirimlerController.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\Abstract\KavisBaseController.cs" />
     <Compile Include="Controllers\KavisModul02Controller.cs" />
     <Compile Include="Controllers\KavisModul03Controller.cs" />
-    <Compile Include="Controllers\KurumlarController.cs" />
-    <Compile Include="Controllers\PerformansProgramiController.cs" />
-    <Compile Include="Controllers\StratejikPlanController.cs" />
-    <Compile Include="Controllers\StratejikPlansController.cs" />
     <Compile Include="DataLayer\Abstract\IBirimDal.cs" />
     <Compile Include="DataLayer\Abstract\IFaaliyetDal.cs" />
     <Compile Include="DataLayer\Abstract\IGostergeGirisDal.cs" />
@@ -2454,7 +2449,6 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Scripts\umd\popper.min.js.map" />
     <Content Include="Scripts\umd\popper.js.map" />
@@ -2467,16 +2461,11 @@
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\KavisModul02\FaaliyetRaporu.cshtml" />
-    <Content Include="Views\PerformansProgrami\Index.cshtml" />
-    <Content Include="Views\StratejikPlan\Edit.cshtml" />
-    <Content Include="Views\StratejikPlan\Eylemler.cshtml" />
     <Content Include="Views\KavisModul03\Faaliyetler.cshtml" />
     <Content Include="Views\KavisModul02\Gostergeler.cshtml" />
     <Content Include="Views\KavisModul03\Gostergeler.cshtml" />
-    <Content Include="Views\StratejikPlan\Index.cshtml" />
     <Content Include="Views\KavisModul02\Kurumlar.cshtml" />
-    <Content Include="Views\Birimler\Index.cshtml" />
-    <Content Include="Views\Home\UserMenu.cshtml" />
+    <Content Include="Views\Shared\UserMenu.cshtml" />
     <Content Include="Views\Shared\_FaaliyetDurumDuzenPartial.cshtml" />
     <Content Include="Views\Shared\_FaaliyetDuzenPartial.cshtml" />
     <Content Include="Views\KavisModul03\Index.cshtml" />
@@ -2490,6 +2479,10 @@
     <Content Include="Views\KavisModul02\StratejikPlanEdit.cshtml" />
     <Content Include="Views\KavisModul02\Eylemler.cshtml" />
     <Content Include="Views\KavisModul02\PerformansProgrami.cshtml" />
+    <Content Include="Views\Shared\_LayoutAdmin.cshtml" />
+    <Content Include="Views\KavisModul01\Kurumlar.cshtml" />
+    <Content Include="Views\KavisModul01\Index.cshtml" />
+    <Content Include="Views\KavisModul01\StratejikPlanlar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="assets\file-uploader\server\node\public\files\" />
@@ -2498,9 +2491,7 @@
     <Folder Include="assets\jquery-file-upload\server\node\tmp\" />
     <Folder Include="assets\jquery-file-upload\server\php\files\thumbnail\" />
     <Folder Include="Models\" />
-    <Folder Include="Views\BirimPerformans\" />
-    <Folder Include="Views\Kurumlar\" />
-    <Folder Include="Views\StratejikPlans\" />
+    <Folder Include="Views\KavisBase\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

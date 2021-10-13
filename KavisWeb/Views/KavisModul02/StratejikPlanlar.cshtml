@@ -61,7 +61,27 @@
 
     <script type="text/javascript">
 
-       
+        function on_delete_sp_click_event(button) {
+
+            let id = $(button).data("id");         
+
+            silmeMesaji("Stratejik Planı silmek istediğinize emin misiniz? Bu kayda bağlı tüm kayıtlar silinecektir. Bu işlem geri alınamaz").then(function (d) {
+
+                if (d) {
+                    a.Delete(id).done(function (d) {
+                        $(button).parents("tr").hide(500, function () { $(this).remove(); });
+                    });
+                }
+            });
+
+        }
+
+        $(document).ready(function () {
+
+            $(document).on("click", ".btn-delete", on_delete_sp_click_event);
+
+           
+        });
 
     </script>
 
