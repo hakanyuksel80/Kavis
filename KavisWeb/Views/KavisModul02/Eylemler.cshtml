@@ -1,0 +1,56 @@
+﻿
+@{
+    ViewBag.Title = "Eylemler";
+
+    Layout = "~/Views/Shared/_LayoutKurum.cshtml";
+}
+
+<h2>Eylemler</h2>
+
+
+<style type="text/css">
+</style>
+
+<div class="row mb-4 mt-4">
+    <div class="col">
+        <div class="float-right">
+            <button class="btn btn-success btn-kaydet-eylemler"> <span class="fa fa-save"></span> KAYDET</button>
+            <a href="~/KavisModul02/StratejikPlanlar" class="btn btn-danger"> <span class="fa fa-remove"></span> İPTAL</a>
+        </div>
+
+    </div>
+
+</div>
+<div class="accordion" id="stratejiListContainer">
+    @*<div class="stratejiContainer">
+            <div class="boxed strateji">
+                Strateji 1.1.2 <button class="float-right btn-add-eylem btn btn-sm btn-primary" title="Eylem Ekle">+</button>
+            </div>
+            <div class="eylemler">
+                <div class="boxed eylem">
+                    Eylem 1.1.2.1
+                    <input type="text" class="" />
+                    <div class="float-right d-flex">
+                        <div>
+                            <select class="select-mini">
+                                <option>birim seçiniz</option>
+                            </select>
+                        </div>
+                       <div><button class="btn btn-sm btn-delete-eylem btn-outline-danger"><span class="fa fa-trash"></span></button></div>
+
+                    </div>
+                </div>
+            </div>
+
+
+        </div>*@
+
+</div>
+
+@section scripts {
+
+
+    <script src="~/js/eylemler.js"></script>
+
+
+}

@@ -3,6 +3,8 @@
 @{
     ViewBag.Title = "BirimGosterge";
 
+    Layout = "~/Views/Shared/_LayoutBirim.cshtml";
+
     List<SelectListItem> birimListe = ViewBag.BirimSelectList as List<SelectListItem>;
 
     int aktifYil = ViewBag.AktifYil ?? 0;
@@ -157,8 +159,6 @@ else
 
             $('td.aktifYil').attr("contenteditable", "true").css("background-color", "#fef2ae");
 
-
-
             $('#btn-birim-gosterge-save').on("click", function () {
 
                 let data = [];
@@ -182,15 +182,10 @@ else
 
             });
 
-
             $('#id').change(function () {
                 let birimId = $(this).val();
-                window.location = "/Birim/Gosterge/" + birimId;
+                window.location = base_url("KavisModul03/Gostergeler/" + birimId);
             });
-
-
-
-
 
         });
 

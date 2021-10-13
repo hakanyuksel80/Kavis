@@ -2,13 +2,15 @@
 
 @{
     ViewBag.Title = "Index";
+
+    Layout = "~/Views/Shared/_LayoutKurum.cshtml";
 }
 
-<h2>Kurumlar</h2>
+<h2>Kurum Bilgileri</h2>
 
-<p>
+@*<p>
     <a href="#" class="btn btn-success btn-sm btn-kurumEkle">Yeni Kurum</a>
-</p>
+</p>*@
 <table class="table table table-striped table-bordered" id="tableKurumlar">
     <thead>
         <tr>
@@ -35,7 +37,7 @@
                 <td>@item.Turu  </td>
                 <td>
                     <button class="btn btn-sm btn-success btn-kurumDuzenle" data-id="@item.Id">Düzenle</button> |
-                    <button class="btn btn-sm btn-success btn-kurumSil" data-id="@item.Id">Sil</button> |
+                    @*<button class="btn btn-sm btn-success btn-kurumSil" data-id="@item.Id">Sil</button> |*@
 
                     <button class="btn btn-sm btn-success btn-birimler" data-id="@item.Id">Birimler</button>
                 </td>
@@ -298,7 +300,7 @@
 
         function onBirimlerClickEvent() {
             let id = $(this).data("id");
-            location = "/Birimler/Index/" + id;
+            location =  base_url("KavisModul02/Birimler");
         }
 
         $(document).ready(function () {

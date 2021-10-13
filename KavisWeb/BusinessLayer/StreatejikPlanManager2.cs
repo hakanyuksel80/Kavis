@@ -9,7 +9,7 @@ using KavisWeb.Entities.Views;
 
 namespace KavisWeb.BusinessLayer
 {
-    public class StratejikPlanManager2 : IStratejikPlanService
+    public class StratejikPlanManager2 
     {
 
         StrategyDBContext context = new StrategyDBContext();
@@ -22,6 +22,17 @@ namespace KavisWeb.BusinessLayer
         public List<StratejikPlanListView> GetViewList()
         {
             var plans = context.StratejikPlanlar.ToList();
+
+            var list = from x in plans
+                       select new StratejikPlanListView() { Id = x.Id, Donem = x.Baslangic.ToString() + " " + x.Bitis.ToString(), Kurum = x.Kurum.Adi, Turu = x.Kurum.Turu.ToString() };
+
+            return list.ToList();
+
+        }
+
+        public List<StratejikPlanListView> GetViewListByKurum(int kurumId)
+        {
+            var plans = context.StratejikPlanlar.Where(x=>x.KurumId == kurumId).ToList();
 
             var list = from x in plans
                        select new StratejikPlanListView() { Id = x.Id, Donem = x.Baslangic.ToString() + " " + x.Bitis.ToString(), Kurum = x.Kurum.Adi, Turu = x.Kurum.Turu.ToString() };
@@ -200,35 +211,46 @@ namespace KavisWeb.BusinessLayer
             return liste;
         }
 
-        public List<FaaliyetListView> GetAllFaaliyet(int birim = 0)
+        public List<FaaliyetListView> GetAllFaaliyet(int yil = 0)
         {
-            var faaliyetler = context.Faaliyetler.Include("Eylem").OrderBy(x => x.Eylem.Kod).ThenBy(x => x.SiraNo).ToList();
+            var faaliyetler = context.Faaliyetler.Include("Eylem").Select(x=>x).ToList();
 
-           
+            if (yil > 0)
+            {
+                faaliyetler = faaliyetler.Where(x => x.Yil == yil).ToList() ;
+            }
+
+            faaliyetler = faaliyetler.OrderBy(x => x.Eylem.Kod).ThenBy(x => x.SiraNo).ToList();
 
             return (from x in faaliyetler
                     join y in context.Birimler on x.Birim equals y.Id
-                    select new FaaliyetListView() { Id = x.Id, EylemAdi = x.Eylem.Kod + " " + x.Eylem.Baslik, FaaliyetAdi = x.Baslik, Birim = y.Baslik, Durum = x.Durum }).ToList();
+                    select new FaaliyetListView() { Id = x.Id, 
+                        EylemAdi = x.Eylem.Kod + " " + x.Eylem.Baslik, 
+                        FaaliyetAdi = x.Baslik, 
+                        Birim = y.Baslik, Durum = x.Durum }).ToList();
         }
 
+       
 
 
-        public List<FaaliyetListView> GetAllFaaliyetByBirim(int birim)
+
+        public List<FaaliyetListView> GetAllFaaliyetByBirim(int birim, int yil)
         {
-            var faaliyetler = context.Faaliyetler.Include("Eylem").Where(x => x.Birim == birim);
+            var faaliyetler = context.Faaliyetler.Include("Eylem").Where(x => x.Birim == birim && x.Yil == yil);
 
             return (from x in faaliyetler
-                    select new FaaliyetListView() { Id = x.Id, EylemAdi = x.Eylem.Kod + " " + x.Eylem.Baslik, FaaliyetAdi = x.Baslik, Birim = x.BirimAdi, Baslama = x.Baslama, Bitis = x.Bitis, Gerceklesme = x.Gerceklesme, Sonuc = x.Sonuc, Durum = x.Durum }).ToList();
+                    join y in context.Birimler on x.Birim equals y.Id
+                    select new FaaliyetListView() { Id = x.Id, EylemAdi = x.Eylem.Kod + " " + x.Eylem.Baslik, FaaliyetAdi = x.Baslik, Birim = y.Baslik, Baslama = x.Baslama, Bitis = x.Bitis, Gerceklesme = x.Gerceklesme, Sonuc = x.Sonuc, Durum = x.Durum }).ToList();
         }
 
 
-        public List<FaaliyetListView> GetFaaliyetRapor()
-        {
-            var faaliyetler = context.Faaliyetler.Include("Eylem").OrderBy(x => x.Eylem.Kod).ThenBy(x => x.SiraNo).ToList();
+        //public List<FaaliyetListView> GetFaaliyetRapor()
+        //{
+        //    var faaliyetler = context.Faaliyetler.Include("Eylem").OrderBy(x => x.Eylem.Kod).ThenBy(x => x.SiraNo).ToList();
 
-            return (from x in faaliyetler
-                    select new FaaliyetListView() { Id = x.Id, EylemAdi = x.Eylem.Kod + " " + x.Eylem.Baslik, FaaliyetAdi = x.Baslik, Birim = x.BirimAdi, Gerceklesme = x.Gerceklesme, Durum = x.Durum, Sonuc = x.Sonuc, Baslama = x.Baslama, Bitis = x.Bitis }).ToList();
-        }
+        //    return (from x in faaliyetler
+        //            select new FaaliyetListView() { Id = x.Id, EylemAdi = x.Eylem.Kod + " " + x.Eylem.Baslik, FaaliyetAdi = x.Baslik, Birim = x.BirimAdi, Gerceklesme = x.Gerceklesme, Durum = x.Durum, Sonuc = x.Sonuc, Baslama = x.Baslama, Bitis = x.Bitis }).ToList();
+        //}
 
         public void DeleteEylem(Eylem eylem)
         {

@@ -1,0 +1,181 @@
+﻿@model IEnumerable<KavisWeb.Entities.DbModels.Birim>
+
+@{
+    ViewBag.Title = "Birimler";
+
+    Layout = "~/Views/Shared/_LayoutKurum.cshtml";
+}
+
+<h2>Birimler</h2>
+
+<strong>Kurum:</strong> @(ViewBag.KurumAdi ??  "")
+<br />
+
+<input type="hidden" id="KurumId" value="@(ViewBag.KurumId??"")" />
+
+
+<div class="float-right mb-3"> 
+    <button class="btn btn-sm btn-success btn-birimEkle">Yeni Birim</button>
+</div>
+
+<table class="table table-striped table-bordered">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Kodu</th>
+            <th>Birim Adı</th>
+            <th>Burbis No</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Id</td>
+                <td>@item.Kodu</td>
+                <td>@item.Baslik</td>
+                <td>@item.BurbisId</td>
+                <td>
+                    <button class="btn btn-sm btn-success btn-birimDuzenle" data-id="@item.Id">Düzenle</button> |
+                    <button class="btn btn-sm btn-success btn-birimSil" data-id="@item.Id">Sil</button>
+
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+<div class="modal" id="BirimEdit">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="" method="post">
+                <div class="modal-header">
+                    Birim
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="BirimId" name="Id" />
+                    <input type="hidden" id="KurumId" name="KurumId" />
+                    <div class="form-group">
+                        <label>Kodu:</label>
+                        <input type="text" name="Kodu" id="BirimKodu" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label>Adı:</label>
+                        <input type="text" name="Baslik" id="BirimBaslik" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label>Burbis No:</label>
+                        <input type="text" name="BurbisId" id="BirimBurbisId" class="form-control" />
+                    </div>
+
+
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" type="submit">Kaydet</button>
+                    <button class="btn btn-secondary" data-dismiss="modal">İptal</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+@section scripts {
+
+    <script type="text/javascript">
+
+        class BirimForm extends Form {
+
+            Clear() {
+                super.Clear();
+            }
+
+            New() {
+                this.Clear();
+                $(this.modalId + " #KurumId").val($('#KurumId').val());
+                this.Show();
+            }
+
+            Edit(birim) {
+              
+                this.Load(birim);
+                this.Show();
+            }
+
+            Load(id) {
+                let THIS = this;
+                api_get("/api/Birimler/" + id, function (d) {
+                    console.log(d);
+                    THIS.PutValues(d);
+                });
+            }
+
+            Save() {
+                let data = this.GetValues();
+
+                console.log(data);
+
+                api_post("/api/Birimler/", data).done(function () {
+                    location.reload();
+                });
+
+                return true;
+            }
+
+            Delete(id) {
+                let THIS = this;
+                api_delete("/api/Birimler/" + id, function (d) {
+                    location.reload();
+                });
+            }
+        }
+
+
+
+        var birimForm = new BirimForm("#BirimEdit");
+
+
+        function onBirimEkleClickEvent() {
+            birimForm.New();
+        }
+
+        function onBirimDuzenleClickEvent() {
+            let id = $(this).data("id");
+            birimForm.Edit(id);
+        }
+
+        function onBirimSilClickEvent() {
+
+            let id = $(this).data("id");
+
+            silmeMesaji("Bu birimi silerseniz bu birime bağlı tüm girdiler de tamamen silinecektir. \n\r\n\r Silmek istediğinize emin misiniz?", "Dikkat! Silme Onayı").then(function (d) {
+
+                if (d) {
+
+                    birimForm.Delete(id);
+
+                }
+
+            });
+
+        }
+       
+
+        $(document).ready(function () {
+
+            $('.btn-birimEkle').on("click", onBirimEkleClickEvent);
+            $(document).on("click", '.btn-birimDuzenle', onBirimDuzenleClickEvent);
+            $(document).on("click", '.btn-birimSil', onBirimSilClickEvent);
+            
+
+
+        });
+
+
+
+        </script>
+
+}
+

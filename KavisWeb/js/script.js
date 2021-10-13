@@ -72,3 +72,10 @@ function loadSelectList(ID, list, selected, addEmpty = false, valueName = "value
 function showTab(tab) {
     return $('.nav-tabs a[href="#' + tab + '"]').tab('show',true);
 }
+
+
+function base_url(l = "") {
+
+    return "\\"+l;
+
+}

@@ -11,7 +11,7 @@ namespace KavisWeb.Controllers
 {
     public class StratejikPlanController : Controller
     {
-        private IStratejikPlanService _stratejikPlanManager;
+        private StratejikPlanManager2 _stratejikPlanManager;
 
         public StratejikPlanController()
         {
@@ -36,7 +36,7 @@ namespace KavisWeb.Controllers
         }
 
         
-        public JsonResult Kurumlar()
+        public JsonResult KurumlarListe()
         {
 
             KurumManager kurumManager = new KurumManager();

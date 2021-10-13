@@ -1,0 +1,68 @@
+﻿@model List<KavisWeb.Entities.Views.StratejikPlanListView>
+
+@{
+    ViewBag.Title = "Stratejik Planlar";
+
+    Layout = "~/Views/Shared/_LayoutKurum.cshtml";
+}
+
+
+
+<div class="mt-5">
+    <div class="row">
+        <div class="col">
+            <h4>Stratejik Planlar</h4>
+            <div class="mb-2 float-right">
+               
+                @Html.ActionLink("Yeni","StratejikPlanEdit",null,new {@class = "btn btn-success" })
+            </div>
+            <table class="table table-bordered table-striped table-sm">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Dönem</th>
+                        <th>Kurum</th>
+                        <th>Türü</th>
+                        <th>İşlem</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        int i = 0;
+                    }
+
+                    
+                   @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@(++i)</td>
+                            <td>@item.Donem</td>
+                            <td>@item.Kurum</td>
+                            <td>@item.Turu</td>
+                            <td style="width:210px">
+                                <a href="~/KavisModul02/StratejikPlanEdit/@item.Id" class="btn btn-sm btn-primary"><span class="fa"></span> Değiştir</a>
+                                <button type="button" class="btn btn-sm btn-primary btn-delete" data-target="sp" data-id="@item.Id"><span class="fa"></span> Sil</button>
+                                <a href="~/KavisModul02/Eylemler/@item.Id" class="btn btn-sm btn-primary"><span class="fa"></span> Eylemler</a>
+                            </td>
+
+                        </tr>
+                    }                   
+
+                </tbody>
+                
+            </table>
+        </div>
+    </div>
+
+</div>
+
+@section scripts {
+
+
+    <script type="text/javascript">
+
+       
+
+    </script>
+
+} 

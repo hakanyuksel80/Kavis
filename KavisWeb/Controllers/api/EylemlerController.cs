@@ -12,8 +12,8 @@ namespace KavisWeb.Controllers.api
 {
     public class EylemlerController : ApiController
     {
-        
-        IStratejikPlanService stratejikPlanManager = null;
+
+        StratejikPlanManager2 stratejikPlanManager = null;
 
         
         public EylemlerController()

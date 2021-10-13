@@ -26,7 +26,7 @@
     <link href="~/Content/css/select2.min.css" rel="stylesheet" />
 </head>
 <body>
-    <div class="container-sm mt-0 card" id="main-container">
+    <div class="container-fluid mt-0 card" id="main-container">
         <div class="card-body">
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
                 <a class="navbar-brand" href="#">STRATEJİK PLAN İZLEME</a>
@@ -37,7 +37,7 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item active">
-                            <a class="nav-link" href="/Home">Ana Sayfa <span class="sr-only">(current)</span></a>
+                            <a class="nav-link" href="~/KavisModul02/">Ana Sayfa <span class="sr-only">(current)</span></a>
                         </li>
 
                         <li class="nav-item dropdown">
@@ -45,63 +45,41 @@
                                 Yönetim
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="/Kurumlar">Kurumlar</a>
-                                @*<a class="dropdown-item" href="/Birimler">Birimler</a>*@
-                                <a class="dropdown-item" href="/StratejikPlan">Stratejik Planlar</a>
+
+                                @Html.ActionLink("Kurum Bilgileri", "Kurumlar", null, new { @class = "dropdown-item" })
+                                @Html.ActionLink("Stratejik Planlar", "StratejikPlanlar", null, new { @class = "dropdown-item" })
+
                                 <div class="dropdown-divider"></div>
-
-
-                                <a class="dropdown-item" href="/PerformansProgrami">İl Performans Programı</a>
-
-
-                                <a class="dropdown-item" href="/Home/FaaliyetRaporu">İl Faaliyet Raporu</a>
-
-                                <a class="dropdown-item" href="/Home/Gostergeler">Gösterge Tablosu</a>
-
+                                @Html.ActionLink("Performans Programı", "PerformansProgrami", null, new { @class = "dropdown-item" })
+                                @Html.ActionLink("Faaliyet Raporu", "FaaliyetRaporu", null, new { @class = "dropdown-item" })
+                                @Html.ActionLink("Gösterge Tablosu", "Gostergeler", null, new { @class = "dropdown-item" })
+                             
                             </div>
                         </li>
                         @*<li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Dropdown
-            </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="#">Action</a>
-                <a class="dropdown-item" href="#">Another action</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#">Something else here</a>
-            </div>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link disabled" href="#">Disabled</a>
-        </li>*@
-                        @*<li class="nav-item">
-            <a class="nav-link" href="/Home/Birim">Birim Giriş Ekranı</a>
-        </li>*@
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Birim Giriş
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="/Birim/Gosterge">Performans Göstergeleriniz</a>
-                                <a class="dropdown-item" href="/Birim">Faaliyetleriniz</a>
-                                @*<div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#">Something else here</a>*@
-                            </div>
-                        </li>
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Birim Giriş
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="/Birim/Gosterge">Performans Göstergeleriniz</a>
+                                    <a class="dropdown-item" href="/Birim">Faaliyetleriniz</a>
+
+                                </div>
+                            </li>*@
 
 
-                       
+
                     </ul>
 
-                   
-                        @Html.Action("UserMenu", "Home")
+
+                    @Html.Action("UserMenu", "Home")
                     </ul>
                 </div>
 
             </nav>
 
 
-            <div class="container body-content pt-2">
+            <div class="container-fluid body-content pt-2">
                 @RenderBody()
                 <hr />
                 <footer>

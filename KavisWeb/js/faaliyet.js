@@ -15,6 +15,7 @@ class FaaliyetForm extends Form {
         $(this.modalId + " #EylemId").val(eylemId);
         $(this.modalId + " .eylemAdi").text(eylemAdi);
         $(this.modalId + " #BirimId").val($('#seciliBirimId').val());
+        $(this.modalId + " #Yil").val(aktifYil);
         this.Show();
     }
 

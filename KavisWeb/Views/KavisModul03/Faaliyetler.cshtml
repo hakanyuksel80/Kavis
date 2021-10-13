@@ -3,6 +3,8 @@
 @{
     ViewBag.Title = "Birim";
 
+    Layout = "~/Views/Shared/_LayoutBirim.cshtml";
+
     List<SelectListItem> birimListe = ViewBag.BirimSelectList as List<SelectListItem>;
 
 }
@@ -144,6 +146,8 @@
 
         var states = [@(Model.Birim.Kurum.FaaliyetGirisAcik?"true":"false"),@(Model.Birim.Kurum.FaaliyetDurumGirisAcik ? "true" : "false")];
 
+        var aktifYil = @(ViewBag.AktifYil??0);
+
         class Faaliyetler {
 
             //ekle(eylem, faaliyet) {
@@ -248,7 +252,7 @@
 
             $('#id').change(function () {
                 let birimId = $(this).val();
-                window.location = "/Birim/Index/" + birimId;
+                window.location = base_url("KavisModul03/Faaliyetler/" + birimId);
             });
 
         });
