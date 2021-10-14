@@ -147,28 +147,28 @@
 
         $(document).ready(function () {
 
-    LoadKurumList();
+            LoadKurumList();
 
-    a.Get(id).then(function (d) {
+            a.Get(id).then(function (d) {
 
-                $("#StratejikPlanId").val(d.Id);
-                $("#KurumAdi").val(d.KurumId);
-                $("#DonemBaslangic").val(d.Baslangic);
-                $("#PlanTuru").val(d.KurumTipi);
+                    $("#StratejikPlanId").val(d.Id);
+                    $("#KurumAdi").val(d.KurumId);
+                    $("#DonemBaslangic").val(d.Baslangic);
+                    $("#PlanTuru").val(d.KurumTipi);
 
-                //$('select.birim-select').parent().css("width", "50%")
-                $('select.birim-select').select2({ width: "100%" });
+                    //$('select.birim-select').parent().css("width", "50%")
+                    $('select.birim-select').select2({ width: "100%" });
 
-        });
+            });
 
             $('.btn-kaydet').on("click", function () {
-            a.Id = id;
-            a.Baslik = a.Kurum = $("#KurumAdi option:selected").text();
-            a.KurumId = $("#KurumAdi").val();
-            a.Baslangic = $("#DonemBaslangic").val();
-            a.Tur = 0;
-            a.Post();
-        });
+                a.Id = id;
+                a.Baslik = a.Kurum = $("#KurumAdi option:selected").text();
+                a.KurumId = $("#KurumAdi").val();
+                a.Baslangic = $("#DonemBaslangic").val();
+                a.Tur = 0;
+                a.Post();
+            });
         });
 
     </script>

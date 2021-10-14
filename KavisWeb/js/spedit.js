@@ -242,11 +242,6 @@ function on_btnDelete_click_event() {
 
 function on_btnEdit_click_event() {
 
-    //let $a = $(this).parent().hide().prev();
-    //let $b = $a.show().prev().hide();
-
-    //$a.find("input").val($b.find('.title').text());
-
     let target = $(this).data("target");
     switch (target) {
         case "amac": formEditAmac.Edit(this); break;
