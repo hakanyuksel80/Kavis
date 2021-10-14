@@ -1,199 +1,293 @@
-﻿using KavisWeb.DataLayer.Abstract;
+﻿using KavisWeb.DataLayer;
+using KavisWeb.DataLayer.Abstract;
 using KavisWeb.DataLayer.EF;
 using KavisWeb.Entities.DbModels;
-using KavisWeb.Entities.Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
+using KavisWeb.Entities.Views;
+using KavisWeb.Entities;
 
 namespace KavisWeb.BusinessLayer
 {
-    public class StratejikPlanManager 
+    public class StratejikPlanManager
     {
-        public static StratejikPlanItem SP_Data = new StratejikPlanItem()
-        {
-            Id = 1,
-            SiraNo = 1,
-            Baslik = "BURSA İL MİLLİ EĞİTİM MÜDÜRLÜĞÜ 2019-2024 Stratejik Planı",
-            DonemBaslangici = 2019,
-            SPTuru = "İL",
-            Amaclar = new List<AmacItem>()
-                {
-                    new AmacItem { Id = 1, Baslik = "AMACIM 1", SiraNo = 1 ,
-                        Hedefler = new List<HedefItem>() {
-                        new HedefItem() {Id = 3, Baslik = "HEDEFİM 1.1", SiraNo = 1,
-                            Gostergeler = new List<GostergeItem>() {
-                         new GostergeItem() {
-                             Id = 4 , SiraNo = 1, Baslangic = "12", HedefeEtkisi = "50", Baslik = "Postttt", Yil1 = "3" , Yil2 = "4", Yil3 = "5", Yil4 = "6", Yil5 ="9",
-                         }
-                            },
-                            Stratejiler = new List<PlanItem>() {
 
-                                 new PlanItem() { Baslik = "Ebesi", SiraNo = 1, Id = 5 },
-
-                            }
-
-                        },
-                    } },
-                    new AmacItem { Id = 2, Baslik = "AMACIM 2", SiraNo = 2},
-
-                }
-        };
-
-        private IStratejikPlanDal _planDal;
-
-        private IStrategyItemDal<Amac> _AmacDal;
-
-        private IStrategyItemDal<Hedef> _HedefDal;
-
-        private IStrategyItemDal<Gosterge> _GostergeDal;
-
-        private IStrategyItemDal<Strateji> _StratejiDal;
+        StrategyDBContext context = new StrategyDBContext();
 
         public StratejikPlanManager()
         {
-            _planDal = new EfStratejikPlanDal();
 
-            _AmacDal = new EfAmacDal();
+        }
 
-            _HedefDal = new EfHedefDal();
-
-            _GostergeDal = new EfGostergeDal();
-
-            _StratejiDal = new EfStratejiDal();
+        public List<StratejikPlan> GetListByKurum(int kurumId)
+        {
+            return context.StratejikPlanlar.Where(x => x.KurumId == kurumId).ToList();
         }
 
         public List<StratejikPlanListView> GetViewList()
         {
-            var plans = _planDal.GetAll();
+            var plans = context.StratejikPlanlar.ToList();
 
-            //var list = from x in plans
-            //           select new StratejikPlanListView() { Id = x.Id, Donem = x.Baslangic.ToString() + " " + x.Bitis.ToString(), Kurum = x.Kurum.Adi, Turu = Convert.ToInt32(x.Kurum.Turu) };
+            var list = from x in plans
+                       select new StratejikPlanListView() { Id = x.Id, Donem = x.Baslangic.ToString() + " " + x.Bitis.ToString(), Kurum = x.Kurum.Adi, Turu = x.Kurum.Turu.ToString() };
 
-            return null;// list.ToList();
+            return list.ToList();
+
         }
-             
+
+        public List<StratejikPlanListView> GetViewListByKurum(int kurumId)
+        {
+            var plans = GetListByKurum(kurumId);
+
+            var list = from x in plans
+                       select new StratejikPlanListView() { Id = x.Id, Donem = x.Baslangic.ToString() + " " + x.Bitis.ToString(), Kurum = x.Kurum.Adi, Turu = x.Kurum.Turu.ToString() };
+
+            return list.ToList();
+
+        }
+
+        public List<StratejikPlanListView> GetViewListByUser(KavisUser user)
+        {
+            if (user.Type == KavisUserType.Admin)
+            {
+                var plans = context.StratejikPlanlar.ToList();
+
+                var list = from x in plans
+                           select new StratejikPlanListView() { Id = x.Id, Donem = x.Baslangic.ToString() + " " + x.Bitis.ToString(), Kurum = x.Kurum.Adi, Turu = x.Kurum.Turu.ToString() };
+
+                return list.ToList();
+            }
+            else if (user.Type == KavisUserType.Kurum)
+            {
+                if (user.KurumId > 0)
+                {
+                    var plans = GetListByKurum(user.KurumId);
+
+                    var list = from x in plans
+                               select new StratejikPlanListView() { Id = x.Id, Donem = x.Baslangic.ToString() + " " + x.Bitis.ToString(), Kurum = x.Kurum.Adi, Turu = x.Kurum.Turu.ToString() };
+
+                    return list.ToList();
+                }
+            }
+
+            return new List<StratejikPlanListView>();
+
+
+        }
+
+        
+
         public StratejikPlan GetPlan(int id)
         {
             if (id > 0)
             {
-                var plan = _planDal.Get(x => x.Id == id);
+                var plan = context.StratejikPlanlar.Include("Amaclar").Include("Amaclar.Hedefler").Include("Amaclar.Hedefler.Gostergeler").Include("Amaclar.Hedefler.Stratejiler").SingleOrDefault(x => x.Id == id);
 
                 return plan;
             }
 
-            return new StratejikPlan();
+            return null;
+        }
+
+        public List<Strateji> GetAllStratejiByBirim(int birim = 0)
+        {
+            List<Strateji> liste = new List<Strateji>();
+
+            var stratejiler = context.Stratejiler.Include("Eylemler").ToList();
+
+            foreach (var strateji in stratejiler)
+            {
+                if (strateji.Eylemler != null)
+                {
+                    foreach (var eylem in strateji.Eylemler)
+                    {
+                        if (!String.IsNullOrEmpty(eylem.Birim))
+                        {
+                            string[] birims = eylem.Birim.Split(',');
+
+                            if (birims.Contains(birim.ToString()))
+                            {
+                                liste.Add(strateji);
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+
+            return liste;
+        }
+
+        public List<FaaliyetListView> GetAllFaaliyet(int yil = 0)
+        {
+            var faaliyetler = context.Faaliyetler.Include("Eylem").Select(x => x).ToList();
+
+            if (yil > 0)
+            {
+                faaliyetler = faaliyetler.Where(x => x.Yil == yil).ToList();
+            }
+
+            faaliyetler = faaliyetler.OrderBy(x => x.Eylem.Kod).ThenBy(x => x.SiraNo).ToList();
+
+            return (from x in faaliyetler
+                    join y in context.Birimler on x.Birim equals y.Id
+                    select new FaaliyetListView()
+                    {
+                        Id = x.Id,
+                        EylemAdi = x.Eylem.Kod + " " + x.Eylem.Baslik,
+                        FaaliyetAdi = x.Baslik,
+                        Birim = y.Baslik,
+                        Durum = x.Durum
+                    }).ToList();
+        }
+
+        public List<FaaliyetListView> GetAllFaaliyetByBirim(int birim, int yil)
+        {
+            var faaliyetler = context.Faaliyetler.Include("Eylem").Where(x => x.Birim == birim && x.Yil == yil);
+
+            return (from x in faaliyetler
+                    join y in context.Birimler on x.Birim equals y.Id
+                    select new FaaliyetListView() { Id = x.Id, EylemAdi = x.Eylem.Kod + " " + x.Eylem.Baslik, FaaliyetAdi = x.Baslik, Birim = y.Baslik, Baslama = x.Baslama, Bitis = x.Bitis, Gerceklesme = x.Gerceklesme, Sonuc = x.Sonuc, Durum = x.Durum }).ToList();
         }
 
         public void SavePlan(StratejikPlan plan)
         {
-            if (plan.Id > 0)
-                _planDal.Update(plan);
-            else
-                _planDal.Add(plan);
+            if (plan.Id < 1)
+                context.StratejikPlanlar.Add(plan);
+
         }
 
-        public void DeletePlan(int id)
+        public bool DeletePlan(int id)
         {
             var plan = GetPlan(id);
 
             if (plan != null)
-                _planDal.Delete(plan);
+                context.StratejikPlanlar.Remove(plan);
 
+            return context.SaveChanges() > 0;
         }
-
 
         public Amac GetAmac(int id)
         {
-            return _AmacDal.Get(x => x.Id == id);
+            return context.Amaclar.SingleOrDefault(x => x.Id == id);
         }
 
         public void DeleteAmac(Amac amac)
         {
-            _AmacDal.Delete(amac);
+            context.Amaclar.Remove(amac);
         }
-            
+
         public void SaveAmac(Amac amac)
         {
-            if (amac.Id > 0)
-                _AmacDal.Update(amac);
-            else
-                _AmacDal.Add(amac);
+            if (amac.Id < 1)
+                context.Amaclar.Add(amac);
         }
 
         public Hedef GetHedef(int id)
         {
-            return _HedefDal.Get(x => x.Id == id);
+            return context.Hedefler.SingleOrDefault(x => x.Id == id);
         }
 
         public void DeleteHedef(Hedef hedef)
         {
-            _HedefDal.Delete(hedef);
+            context.Hedefler.Remove(hedef);
         }
 
         public void SaveHedef(Hedef hedef)
         {
-            if (hedef.Id > 0)
-                _HedefDal.Update(hedef);
-            else
-                _HedefDal.Add(hedef);
+            if (hedef.Id < 1)
+                context.Hedefler.Add(hedef);
         }
 
         public Strateji GetStrateji(int id)
         {
-            return _StratejiDal.Get(x => x.Id == id);
+            return context.Stratejiler.SingleOrDefault(x => x.Id == id);
         }
 
         public void DeleteStrateji(Strateji strateji)
         {
-            _StratejiDal.Delete(strateji);
+            context.Stratejiler.Remove(strateji);
         }
 
         public void SaveStrateji(Strateji strateji)
         {
-            if (strateji.Id > 0)
-                _StratejiDal.Update(strateji);
-            else
-                _StratejiDal.Add(strateji);
+            if (strateji.Id < 1)
+                context.Stratejiler.Add(strateji);
         }
 
         public Gosterge GetGosterge(int id)
         {
-            return _GostergeDal.Get(x => x.Id == id);
+            return context.Gostergeler.SingleOrDefault(x => x.Id == id);
         }
 
         public void DeleteGosterge(Gosterge gosterge)
         {
-            _GostergeDal.Delete(gosterge);
+            context.Gostergeler.Remove(gosterge);
         }
 
         public void SaveGosterge(Gosterge gosterge)
         {
-            if (gosterge.Id > 0)
-                _GostergeDal.Update(gosterge);
-            else
-                _GostergeDal.Add(gosterge);
+            if (gosterge.Id < 1)
+                context.Gostergeler.Add(gosterge);
         }
 
         public void SaveChanges()
         {
-           
+            context.SaveChanges();
         }
 
         public List<Strateji> GetAllStrateji(int planId)
         {
-            throw new NotImplementedException();
+            return context.Stratejiler.Where(x => x.Hedef.Amac.StratejikPlanId == planId).ToList();
         }
 
         public List<Eylem> GetListEylemByStrateji(int id)
         {
-            throw new NotImplementedException();
+            return context.Eylemler.Where(x => x.StratejiId == id).ToList();
         }
 
         public Eylem GetEylem(int id)
         {
-            throw new NotImplementedException();
+            return context.Eylemler.SingleOrDefault(x => x.Id == id);
         }
+
+        public Faaliyet GetFaaliyet(int id)
+        {
+            return context.Faaliyetler.SingleOrDefault(x => x.Id == id);
+        }
+
+        public void AddFaaliyet(Faaliyet faaliyet)
+        {
+            context.Faaliyetler.Add(faaliyet);
+        }
+
+        public void DeleteEylem(Eylem eylem)
+        {
+            context.Eylemler.Remove(eylem);
+        }
+
+        public void AddEylem(Eylem eylem)
+        {
+            context.Eylemler.Add(eylem);
+        }
+
+        public void DeleteFaaliyet(Faaliyet faaliyet)
+        {
+            context.Faaliyetler.Remove(faaliyet);
+        }
+
+        public StratejikPlan GetAktifStratejikPlan(int kurumId)
+        {
+            Kurum kurum = context.Kurumlar.SingleOrDefault(x => x.Id == kurumId);
+
+            if (kurum != null && kurum.AktifPlanId > 0)
+            {
+                return GetPlan(kurum.AktifPlanId ?? 0);
+            }
+
+            return null;
+        }
+
     }
 }

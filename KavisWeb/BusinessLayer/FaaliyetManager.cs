@@ -7,7 +7,7 @@ using System.Web;
 
 namespace KavisWeb.BusinessLayer
 {
-    public class FaaliyetManager : IFaaliyetService
+    public class FaaliyetManager 
     {
         IFaaliyetDal faaliyetDal;
 

@@ -1,6 +1,7 @@
 ﻿using KavisWeb.BusinessLayer;
 using KavisWeb.DataLayer;
 using KavisWeb.Entities.DbModels;
+using KavisWeb.Entities.Dto;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,32 +14,32 @@ namespace KavisWeb.Controllers.api
     public class EylemlerController : ApiController
     {
 
-        StratejikPlanManager2 stratejikPlanManager = null;
+        StratejikPlanManager stratejikPlanManager = null;
 
         
         public EylemlerController()
         {
-            this.stratejikPlanManager = new StratejikPlanManager2();
+            this.stratejikPlanManager = new StratejikPlanManager();
         }
 
         // GET: api/Eylemler        
-        public ParentPlanItem Get(int id)
+        public ParentPlanItemDto Get(int id)
         {
             var stratejiler = stratejikPlanManager.GetAllStrateji(id);
 
-            List<ParentPlanItem> parents = new List<ParentPlanItem>();
+            List<ParentPlanItemDto> parents = new List<ParentPlanItemDto>();
 
             int parentSiraNo = 0;
 
             foreach (var item in stratejiler)
             {
-                var stratejiItem = new ParentPlanItem()
+                var stratejiItem = new ParentPlanItemDto()
                 {
                     Id = item.Id,
                     Baslik = item.Baslik,
                     No = item.Kod,
                     SiraNo = ++parentSiraNo,
-                    Items = new List<ParentPlanItem>(),
+                    Items = new List<ParentPlanItemDto>(),
                 };
 
                 List<Eylem> eylemler = stratejikPlanManager.GetListEylemByStrateji(item.Id);
@@ -46,7 +47,7 @@ namespace KavisWeb.Controllers.api
                 int subSiraNo = 0;
                 foreach (var aEylem in eylemler)
                 {
-                    stratejiItem.Items.Add(new ParentPlanItem()
+                    stratejiItem.Items.Add(new ParentPlanItemDto()
                     {
                         Id = aEylem.Id,
                         ParentId = item.Id,
@@ -60,7 +61,7 @@ namespace KavisWeb.Controllers.api
                 parents.Add(stratejiItem);
             }
 
-            return new ParentPlanItem
+            return new ParentPlanItemDto
             {
                 Items = parents
             };
@@ -69,7 +70,7 @@ namespace KavisWeb.Controllers.api
         }
 
         // POST: api/Eylemler
-        public void Post([FromBody]ParentPlanItem model)
+        public void Post([FromBody]ParentPlanItemDto model)
         {
             var manager = this.stratejikPlanManager;
             //Eylemler = list;

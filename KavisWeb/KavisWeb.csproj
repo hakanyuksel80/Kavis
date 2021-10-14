@@ -143,14 +143,8 @@
     <Compile Include="BusinessLayer\BirimManager.cs" />
     <Compile Include="BusinessLayer\FaaliyetManager.cs" />
     <Compile Include="BusinessLayer\GostergeGirisManager.cs" />
-    <Compile Include="BusinessLayer\IBirimService.cs" />
-    <Compile Include="BusinessLayer\IFaaliyetService.cs" />
-    <Compile Include="BusinessLayer\IGostergeGirisService.cs" />
-    <Compile Include="BusinessLayer\IKurumService.cs" />
-    <Compile Include="BusinessLayer\IStratejikPlanService.cs" />
     <Compile Include="BusinessLayer\KavisHelper.cs" />
     <Compile Include="BusinessLayer\KurumManager.cs" />
-    <Compile Include="BusinessLayer\StreatejikPlanManager2.cs" />
     <Compile Include="BusinessLayer\StreatejikPlanManager.cs" />
     <Compile Include="Controllers\api\BirimFaaliyetlerController.cs" />
     <Compile Include="Controllers\api\BirimGostergelerController.cs" />
@@ -180,9 +174,8 @@
     <Compile Include="Entities\DbModels\Birim.cs" />
     <Compile Include="Entities\DbModels\GostergeGiris.cs" />
     <Compile Include="Entities\DbModels\Kurum.cs" />
-    <Compile Include="Entities\DbModels\PlanItem.cs" />
+    <Compile Include="Entities\Dto\PlanItem.cs" />
     <Compile Include="Entities\DbModels\StrategyItem.cs" />
-    <Compile Include="Entities\Dtos\PerformansDto.cs" />
     <Compile Include="Entities\KavisUser.cs" />
     <Compile Include="Entities\Views\FaaliyetDurumView.cs" />
     <Compile Include="Entities\Views\FaaliyetListView.cs" />

@@ -1,6 +1,7 @@
 ﻿using KavisWeb.BusinessLayer;
 using KavisWeb.DataLayer.EF;
 using KavisWeb.Entities.DbModels;
+using KavisWeb.Entities.Dto;
 using KavisWeb.Entities.Views;
 using System;
 using System.Collections.Generic;
@@ -46,7 +47,7 @@ namespace KavisWeb.Controllers.api
 
     public class BirimFaaliyetlerViewModel
     {
-        public List<ParentPlanItem> Stratejiler { get; set; }
+        public List<ParentPlanItemDto> Stratejiler { get; set; }
 
         public List<FaaliyetListView> Faaliyetler { get; set; }
 

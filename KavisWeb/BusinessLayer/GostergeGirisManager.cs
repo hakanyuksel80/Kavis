@@ -8,7 +8,7 @@ using System.Web;
 
 namespace KavisWeb.BusinessLayer
 {
-    public class GostergeGirisManager : IGostergeGirisService
+    public class GostergeGirisManager 
     {
 
         IGostergeGirisDal girisDal;

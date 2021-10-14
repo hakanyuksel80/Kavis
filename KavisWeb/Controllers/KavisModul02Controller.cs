@@ -13,11 +13,11 @@ namespace KavisWeb.Controllers
 {
     public class KavisModul02Controller : KavisBaseController
     {
-        private StratejikPlanManager2 _stratejikPlanManager;
+        private StratejikPlanManager _stratejikPlanManager;
 
         public KavisModul02Controller()
         {
-            _stratejikPlanManager = new StratejikPlanManager2();
+            _stratejikPlanManager = new StratejikPlanManager();
         }
 
 
@@ -41,9 +41,9 @@ namespace KavisWeb.Controllers
         public JsonResult KurumStratejikPlanlar(int id)
         {
 
-            StratejikPlanManager2 manager = new StratejikPlanManager2();
+            StratejikPlanManager manager = new StratejikPlanManager();
 
-            var liste = from x in manager.GetKurumSPList(id)
+            var liste = from x in manager.GetListByKurum(id)
                         select new ListViewItem { Id = x.Id, Adi = x.Baslangic + "-" + x.Bitis };
 
             return Json(liste, JsonRequestBehavior.AllowGet);
@@ -129,7 +129,7 @@ namespace KavisWeb.Controllers
             {
 
 
-                StratejikPlanManager2 manager = new StratejikPlanManager2();
+                StratejikPlanManager manager = new StratejikPlanManager();
 
                 List<FaaliyetListView> faaliyetler = null;
 
@@ -160,7 +160,7 @@ namespace KavisWeb.Controllers
         {
             var kavisUser = KavisHelper.GetUser();
 
-            StratejikPlanManager2 manager = new StratejikPlanManager2();
+            StratejikPlanManager manager = new StratejikPlanManager();
 
             KurumManager kurumManager = new KurumManager();
 
@@ -194,7 +194,7 @@ namespace KavisWeb.Controllers
         {
             var kavisUser = KavisHelper.GetUser();
 
-            StratejikPlanManager2 manager = new StratejikPlanManager2();
+            StratejikPlanManager manager = new StratejikPlanManager();
 
             BirimManager birimManager = new BirimManager(new EfBirimDal());
 

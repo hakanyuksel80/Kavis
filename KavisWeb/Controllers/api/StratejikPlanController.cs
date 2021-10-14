@@ -16,11 +16,11 @@ namespace KavisWeb.Controllers.api
 {
     public class StratejikPlanController : ApiController
     {
-        StratejikPlanManager2 stratejikPlanManager = null;
+        StratejikPlanManager stratejikPlanManager = null;
 
         public StratejikPlanController()
         {
-            this.stratejikPlanManager = new StratejikPlanManager2();
+            this.stratejikPlanManager = new StratejikPlanManager();
         }
 
         // GET: api/StratejikPlan
@@ -95,7 +95,7 @@ namespace KavisWeb.Controllers.api
 
         }
 
-        private void SaveItems(StratejikPlanManager2 manager, List<Amac> amaclar, StratejikPlan plan)
+        private void SaveItems(StratejikPlanManager manager, List<Amac> amaclar, StratejikPlan plan)
         {
             if (amaclar == null) return;
 
@@ -134,7 +134,7 @@ namespace KavisWeb.Controllers.api
             }
         }
 
-        private void SaveItems(StratejikPlanManager2 manager, List<Hedef> hedefler, Amac amac)
+        private void SaveItems(StratejikPlanManager manager, List<Hedef> hedefler, Amac amac)
         {
             if (hedefler == null) return;
 
@@ -169,7 +169,7 @@ namespace KavisWeb.Controllers.api
             }
         }
 
-        private void SaveItems(StratejikPlanManager2 manager, List<Strateji> stratejiler, Hedef hedef)
+        private void SaveItems(StratejikPlanManager manager, List<Strateji> stratejiler, Hedef hedef)
         {
             if (stratejiler == null) return;
             int siraNo = 0;
@@ -197,7 +197,7 @@ namespace KavisWeb.Controllers.api
             }
         }
 
-        private void SaveItems(StratejikPlanManager2 manager, List<Gosterge> gostergeler, Hedef hedef)
+        private void SaveItems(StratejikPlanManager manager, List<Gosterge> gostergeler, Hedef hedef)
         {
             if (gostergeler == null) return;
             int siraNo = 0;

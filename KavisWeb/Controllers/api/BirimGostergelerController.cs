@@ -16,7 +16,7 @@ namespace KavisWeb.Controllers.api
 
         public IResult Post(GostergeModel model)
         {
-            StratejikPlanManager2 manager = new StratejikPlanManager2();
+            StratejikPlanManager manager = new StratejikPlanManager();
 
             GostergeGirisManager gostergeGirisManager = new GostergeGirisManager(new EfGostergeGirisDal());
 

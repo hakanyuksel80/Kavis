@@ -13,11 +13,11 @@ namespace KavisWeb.Controllers
 {
     public class KavisModul03Controller : KavisBaseController
     {
-        StratejikPlanManager2 manager;
+        StratejikPlanManager manager;
 
         public KavisModul03Controller()
         {
-            this.manager = new StratejikPlanManager2();
+            this.manager = new StratejikPlanManager();
         }
 
         // GET: KavisModul03
@@ -140,7 +140,7 @@ namespace KavisWeb.Controllers
             {
                 if (birim.Kurum.AktifPlanId > 0)
                 {
-                    StratejikPlanManager2 stratejikPlanManager = new StratejikPlanManager2();
+                    StratejikPlanManager stratejikPlanManager = new StratejikPlanManager();
 
                     if (birim.KurumId != null)
                     {

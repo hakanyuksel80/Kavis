@@ -9,7 +9,7 @@ using System.Web;
 
 namespace KavisWeb.BusinessLayer
 {
-    public class KurumManager : IKurumService
+    public class KurumManager 
     {
         IKurumDal _dal;
 
