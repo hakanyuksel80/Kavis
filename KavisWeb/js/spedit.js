@@ -5,9 +5,9 @@
         console.log(d);
 
         if (d.Id == "" || d.Id == undefined && d.Id == "0")
-            sp.add_amac(d.Id, d.Baslik);
+            spViewManager.add_amac(d.Id, d.Baslik);
         else {
-            sp.update_amac(d.Index, d.Baslik);
+            spViewManager.update_amac(d.Index, d.Baslik);
         }
         this.Close();
     }
@@ -30,11 +30,13 @@
 
 
 
-class StratejikPlan {
+class StratejikPlanViewManager {
 
     panel_id = "";
 
     templates = new strateji_templates();
+
+     
 
     constructor(panel_id, data) {
 
@@ -52,7 +54,7 @@ class StratejikPlan {
 
         let amac = new AmacPlanItem(id, text, i);
 
-        a.Add(amac);
+        spViewBuilder.Add(amac);
 
         let $obj = amac.Draw("added");
 
@@ -76,7 +78,7 @@ class StratejikPlan {
 
         let hedef = new HedefPlanItem('', "YENİ HEDEF", i + 1, 'added');
 
-        let amac = a.GetItem(amac_index);
+        let amac = spViewBuilder.GetItem(amac_index);
 
         amac.Add(hedef);
 
@@ -94,7 +96,7 @@ class StratejikPlan {
 
         console.log({ amac: amac_index, hedef: hedef_index });
 
-        let amac = a.GetItem(amac_index);
+        let amac = spViewBuilder.GetItem(amac_index);
         let hedef = amac.GetItem(hedef_index);
 
 
@@ -111,7 +113,7 @@ class StratejikPlan {
         let i = $(element).parent().prev().find("tbody").children().length;
         let item = new StratejiPlanItem("", "", i);
 
-        let amac = a.GetItem(amac_index);
+        let amac = spViewBuilder.GetItem(amac_index);
         let hedef = amac.GetItem(hedef_index);
         console.log({ hedef: hedef, index: hedef_index });
         hedef.AddStrateji(item);
@@ -120,18 +122,20 @@ class StratejikPlan {
     }
 
     delete_amac(button) {
-        let i = $(button).parents(".card").index();
-        let amac = a.GetItem(i);
-        a.Remove(amac);
-        let obj = $($(button).parents(".card")[0]);
-        obj.hide();
+        let $amac_card = $(button).parents(".card")
+        let i = $amac_card.index(); //Düğmenin olduğu amaç bölümün sırasını bul
+        let amac = spViewBuilder.GetItem(i); // Bu sıradaki amaç nesnesini al
+        spViewBuilder.Remove(amac);// Hazıfazadan sil
+        let obj = $($amac_card[0]);//Kart elementini al. Üst kartlara dokunmayalım
+        obj.hide(); //Gizle
 
+        //Eğer veritabanında kaydı varsa state özelliğini deleted yap
         if (obj.data("id") != undefined)
             obj.data("state", "deleted");
         else
-            obj.remove();
+            obj.remove();//Kaydı yoksa yok et gitsin.
 
-        this.reorder(this.panel_id, ".amac-order:visible");
+        this.reorder(this.panel_id, ".amac-order:visible"); //Amaç numaralarını tekrar oluştur
     }
 
     delete_hedef(button) {
@@ -185,13 +189,71 @@ class StratejikPlan {
     }
 
     update_amac(index, text) {
-        let a = $($('#accordionSP>.card')[index]);
-        a.find(".amac-title").text(text);
-        a.data("state", "modified");
+        let amac = $($('#accordionSP>.card')[index]);
+        amac.find(".amac-title").text(text);
+        amac.data("state", "modified");
     }
 
 }
 
+
+class StratejikPlanCRUDManager {
+
+    constructor(buildManager) {
+        this.buildManager = buildManager;
+    }
+
+    Get(id) {
+
+        let THIS = this;
+        return api_get("/api/StratejikPlan/" + id).done(function (d) {
+            console.log({ sp: d });
+            THIS.buildManager.Build(d);
+            THIS.buildManager.Draw("#accordionSP");
+        });
+    }
+
+    Post() {
+        let THIS = this;
+
+        let data = this.buildManager.Collect();
+
+        data.Id = this.buildManager.Id;
+        data.KurumAdi = this.buildManager.KurumAdi;
+        data.KurumId = this.buildManager.KurumId;
+        data.Baslangic = this.buildManager.Baslangic;
+        data.Tur = this.buildManager.Tur;
+
+        return api_post("/api/StratejikPlan", data).done(function (d) {
+
+            if (d.Success) {
+                successMessage("Kayıt Yapıldı");
+                THIS.Get(data.Id);
+            } else {
+                errorMessage(d.Message);
+            }
+
+
+        });
+    }
+
+    Delete(id) {
+
+        if (id == 1)
+            return errorMessage("Bu Kayıt Silinemez");
+
+        return api_delete("/api/StratejikPlan/" + id, function (d) {
+            if (d.Success) {
+                successMessage("Stratejik Plan Silindi");
+
+            } else {
+                errorMessage(d.Message);
+            }
+        });
+
+    }
+
+}
 
 /* Events Handlers */
 
@@ -211,16 +273,16 @@ function add_click_event() {
 
 
 function add_performans_click_event() {
-    sp.add_performans(this);
+    spViewManager.add_performans(this);
     $('select.birim-select').select2({ width: "100%" });
 }
 
 function add_strateji_click_event() {
-    sp.add_strateji(this);
+    spViewManager.add_strateji(this);
 }
 
 function add_hedef_click_event() {
-    sp.add_hedef(this);
+    spViewManager.add_hedef(this);
 }
 
 function add_amac_click_event() {
@@ -232,10 +294,10 @@ function on_btnDelete_click_event() {
     let target = $(this).data("target");
 
     switch (target) {
-        case "amac": sp.delete_amac(this); break;
-        case "hedef": sp.delete_hedef(this); break;
-        case "performans": sp.delete_performans(this); break;
-        case "strateji": sp.delete_strateji(this); break;
+        case "amac": spViewManager.delete_amac(this); break;
+        case "hedef": spViewManager.delete_hedef(this); break;
+        case "performans": spViewManager.delete_performans(this); break;
+        case "strateji": spViewManager.delete_strateji(this); break;
         case "sp": on_delete_sp_click_event(this);
     }
 }
@@ -252,18 +314,19 @@ function on_btnEdit_click_event() {
 /* Global Vars */
 
 
-var a;
+var spViewBuilder;
 
 var formEditAmac = new FormEditAmac("#amacDuzenle");
 
-var sp = new StratejikPlan("#accordionSP");
+var spViewManager = new StratejikPlanViewManager("#accordionSP");
 
-
+var spManager;
 
 $(function () {
 
-    a = new StratejikPlanItem();
-    //$(document).on("click", ".btn-add", add_click_event);
+    spViewBuilder = new StratejikPlanItem();
+
+    spManager = new StratejikPlanCRUDManager(spViewBuilder);
 
     $(document).on("click", ".btn-add-performans", add_performans_click_event);
 

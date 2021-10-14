@@ -468,12 +468,12 @@ class GostergePlanItem extends PlanItem {
 
 class StratejikPlanItem extends PlanItem {
 
-    constructor(data) {
+    constructor(data,panel_id) {
         if (data != undefined) {
             super(data.Id, data.Baslik);
             this.Build(data);
-
-            this.Draw("#accordionSP");
+            this.panel_id = panel_id;
+            this.Draw(panel_id);
         } else {
             super(0, "");
         }
@@ -516,56 +516,11 @@ class StratejikPlanItem extends PlanItem {
         return { Id: 0, Baslik: "Deneme", Amaclar: amac_data };
     }
 
-    Get(id) {
+   
 
-        let THIS = this;
-        return api_get("/api/StratejikPlan/" + id).done(function (d) {
-            console.log({ sp: d });
-            THIS.Build(d);
-            THIS.Draw("#accordionSP");
-        });
-    }
+    
 
-    Post() {
-        let THIS = this;
-
-        let data = this.Collect();
-
-        data.Id = this.Id;
-        data.KurumAdi = this.KurumAdi;
-        data.KurumId = this.KurumId;
-        data.Baslangic = this.Baslangic;
-        data.Tur = this.Tur;
-
-        api_post("/api/StratejikPlan", data).done(function (d) {
-
-
-            if (d.Success) {
-                successMessage("Kayıt Yapıldı");
-                THIS.Get(data.Id);
-            } else {
-                errorMessage(d.Message);
-            }
-
-
-        });
-    }
-
-    Delete(id) {
-       
-        if (id == 1)
-            return errorMessage("Bu Kayıt Silinemez");
-
-        return api_delete("/api/StratejikPlan/" + id, function (d) {
-            if (d.Success) {
-                successMessage("Stratejik Plan Silindi");
-                
-            } else {
-                errorMessage(d.Message);
-            }
-        });
-
-    }
+    
 }
 
 

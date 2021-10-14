@@ -3,6 +3,8 @@
 
 @{
     ViewBag.Title = "StratejikPlan";
+
+    Layout = "~/Views/Shared/_LayoutKurum.cshtml";
 }
 
 <style type="text/css">
@@ -149,7 +151,7 @@
 
             LoadKurumList();
 
-            a.Get(id).then(function (d) {
+            spManager.Get(id).then(function (d) {
 
                     $("#StratejikPlanId").val(d.Id);
                     $("#KurumAdi").val(d.KurumId);
@@ -162,12 +164,16 @@
             });
 
             $('.btn-kaydet').on("click", function () {
-                a.Id = id;
-                a.Baslik = a.Kurum = $("#KurumAdi option:selected").text();
-                a.KurumId = $("#KurumAdi").val();
-                a.Baslangic = $("#DonemBaslangic").val();
-                a.Tur = 0;
-                a.Post();
+                spViewBuilder.Id = id;
+                spViewBuilder.Baslik = spViewBuilder.Kurum = $("#KurumAdi option:selected").text();
+                spViewBuilder.KurumId = $("#KurumAdi").val();
+                spViewBuilder.Baslangic = $("#DonemBaslangic").val();
+                spViewBuilder.Tur = 0;
+                spManager.Post().then(function (r) {
+                    
+                    $('select.birim-select').select2({ width: "100%" });
+                    
+                });
             });
         });
 
