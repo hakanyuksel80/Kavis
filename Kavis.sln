@@ -10,6 +10,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{C7EB1AFB-7EE4-4E4E-BD67-E0E8A5A3440F}"
 	ProjectSection(SolutionItems) = preProject
 		Readme.rm = Readme.rm
+		..\..\..\Downloads\usecasediagram.png = ..\..\..\Downloads\usecasediagram.png
 	EndProjectSection
 EndProject
 Global

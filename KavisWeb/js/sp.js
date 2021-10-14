@@ -25,7 +25,7 @@ class PlanItem {
 
     Id = 0;//Veritabanı kayıt no
 
-    Order = 0;//Sıralama yapılırsa öğeler çizilirken buna göre çizilkece
+    Order = 0;//Sıralama yapılırsa öğeler oluşturulurken bu sırayla çizilecek
 
     No = "";
 
@@ -46,6 +46,7 @@ class PlanItem {
         item.deleted = true;
     }
 
+    //Alt öğeye indeks numarıan göre ulaşım
     GetItem(index) {
         return this.Items[index];
     }
