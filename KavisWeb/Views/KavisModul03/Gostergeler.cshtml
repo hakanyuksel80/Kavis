@@ -172,7 +172,7 @@ else
                     data.push({ GostergeId: id, Value: val, Yil: aktifYil });
                 });
 
-                api_post("/api/BirimGostergeler", { Items: data, BirimId: birim }, function (d) {
+                api_post(base_url("api/BirimGostergeler"), { Items: data, BirimId: birim }, function (d) {
                     if (d.Success) {
                         successMessage("Kayıt Yapıldı");
                     } else {

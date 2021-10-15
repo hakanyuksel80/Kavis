@@ -23,7 +23,7 @@ class FaaliyetForm extends Form {
 
         let THIS = this;
 
-        api_get("/api/Faaliyet/" + id, function (d) {           
+        api_get(base_url("api/Faaliyet/" + id), function (d) {           
             
             $(THIS.modalId + " .eylemAdi").text(eylemAdi);            
             THIS.PutValues(d);
@@ -36,7 +36,7 @@ class FaaliyetForm extends Form {
         let data = this.GetValues();
         let eylem = $("#faaliyetEkle .eylemAdi").text();
 
-        api_post("/api/Faaliyet", data).done(function (d) {
+        api_post(base_url("api/Faaliyet"), data).done(function (d) {
 
             if (d.Success) {
                 faaliyet.LoadFaaliyetler();
@@ -59,7 +59,7 @@ class FaaliyetDurumForm extends Form {
     Edit(id, EylemAdi) {
         let THIS = this;
 
-        api_get("/api/FaaliyetDurum/" + id, function (d) {
+        api_get(base_url("api/FaaliyetDurum/" + id), function (d) {
             console.log(d);
             d.Baslama = d.Baslama != null ? d.Baslama.substr(0, 10) : "";
             d.Bitis = d.Bitis != null ? d.Bitis.substr(0, 10) : "";
@@ -77,7 +77,7 @@ class FaaliyetDurumForm extends Form {
         let data = this.GetValues();
         console.log(data);
 
-        api_post("/api/FaaliyetDurum", data).done(function (d) {
+        api_post(base_url("api/FaaliyetDurum"), data).done(function (d) {
 
             if (d.Success) {
                 faaliyet.LoadFaaliyetler();

@@ -192,7 +192,7 @@
 
             Load() {
                 let id = $('#seciliBirimId').val();
-                api_get("/api/BirimFaaliyetler/" + id, function (d) {
+                api_get(base_url("api/BirimFaaliyetler/" + id), function (d) {
                     LoadList(d.Stratejiler);
                     LoadTable(d.Faaliyetler);
                 });
@@ -201,7 +201,7 @@
             LoadFaaliyetler() {
                 let THIS = this;
                 let id = $('#seciliBirimId').val();
-                api_get("/api/BirimFaaliyetler/" + id, function (d) {                    
+                api_get(base_url("api/BirimFaaliyetler/" + id), function (d) {                    
                     THIS.LoadFaaliyetTable(d.Faaliyetler);
                 });
             }
@@ -209,7 +209,7 @@
 
             Delete(id) {
                 let THIS = this;
-                api_delete("/api/Faaliyet/" + id, function (d) {
+                api_delete(base_url("api/Faaliyet/" + id), function (d) {
                     if (d.Success) {
                         successMessage("Silindi");
                         THIS.LoadFaaliyetler();

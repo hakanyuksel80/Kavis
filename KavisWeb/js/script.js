@@ -1,20 +1,15 @@
 ﻿
-
-
-
 var birimler;
 
-var birimListStr = "";
+$(function () {
 
-$(function () {    
-
-    api_get("/api/Birimler").done(function (d) {
-        birimler = d;        
+    api_get(base_url("api/Birimler")).done(function (d) {
+        birimler = d;
     });
 
 });
 
-function birimListe(selectedValue,multiselect = false) {
+function birimListe(selectedValue, multiselect = false) {
 
     let html = "";
     selectedValue = selectedValue ?? "";
@@ -28,7 +23,7 @@ function birimListe(selectedValue,multiselect = false) {
             html += `<option value="${birim.Id}">${birim.Baslik}</option>`;
     }
 
-    return `<select class="select-mini birim-select" ${multiselect?"multiple":""}><option value="">(BİRİM SEÇİNİZ)</option>${html}</select>`;
+    return `<select class="select-mini birim-select" ${multiselect ? "multiple" : ""}><option value="">(BİRİM SEÇİNİZ)</option>${html}</select>`;
 
 }
 
@@ -41,7 +36,7 @@ function loadSelectList(ID, list, selected, addEmpty = false, valueName = "value
         $obj.append(`<option value="">(SEÇİNİZ)</option>`);
 
     for (var i = 0; i < list.length; i++) {
-        const eleman = list[i]; 
+        const eleman = list[i];
         let isSelected = (Array.isArray(selected) && selected.indexOf(eleman["value"]) > -1) || (!Array.isArray(selected) && eleman[valueName] == selected);
         let $option = $(`<option value="${eleman[valueName]}" ${isSelected ? "selected" : ""}>${eleman[textName]}</option>`);
         $obj.append($option);
@@ -50,12 +45,24 @@ function loadSelectList(ID, list, selected, addEmpty = false, valueName = "value
 }
 
 function showTab(tab) {
-    return $('.nav-tabs a[href="#' + tab + '"]').tab('show',true);
+    return $('.nav-tabs a[href="#' + tab + '"]').tab('show', true);
 }
 
 
 function base_url(l = "") {
 
-    return "/"+l;
+    return "/" + l;
+
+}
+
+
+var api_url = {
+
+    "stratejikPlan": "/api/StratejikPlan",
+    "eylemler": "api/Eylemler/",
+    "faaliyet": "/api/Faaliyet",
+    "faaliyetDurum": "/api/FaaliyetDurum",
+    "birimler": "/api/Birimler/",
+    "birimFaaliyetler" : "api/BirimFaaliyetler/",
 
 }

@@ -34,9 +34,7 @@ class StratejikPlanViewManager {
 
     panel_id = "";
 
-    templates = new strateji_templates();
-
-     
+    //templates = new strateji_templates();
 
     constructor(panel_id, data) {
 
@@ -206,7 +204,7 @@ class StratejikPlanCRUDManager {
     Get(id) {
 
         let THIS = this;
-        return api_get("/api/StratejikPlan/" + id).done(function (d) {
+        return api_get(base_url("api/StratejikPlan/" + id)).done(function (d) {
             console.log({ sp: d });
             THIS.buildManager.Build(d);
             THIS.buildManager.Draw("#accordionSP");
@@ -224,7 +222,7 @@ class StratejikPlanCRUDManager {
         data.Baslangic = this.buildManager.Baslangic;
         data.Tur = this.buildManager.Tur;
 
-        return api_post("/api/StratejikPlan", data).done(function (d) {
+        return api_post(base_url("api/StratejikPlan"), data).done(function (d) {
 
             if (d.Success) {
                 successMessage("Kayıt Yapıldı");
@@ -242,7 +240,7 @@ class StratejikPlanCRUDManager {
         if (id == 1)
             return errorMessage("Bu Kayıt Silinemez");
 
-        return api_delete("/api/StratejikPlan/" + id, function (d) {
+        return api_delete(base_url("api/StratejikPlan/" + id), function (d) {
             if (d.Success) {
                 successMessage("Stratejik Plan Silindi");
 
@@ -340,9 +338,7 @@ $(function () {
 
     $(document).on("click", ".btn-edit", on_btnEdit_click_event);
 
-    $('#uyarilarTextArea').summernote({
-        height: 300,
-    });
+   
 
 
    
