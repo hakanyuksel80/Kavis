@@ -2045,6 +2045,7 @@
     <Content Include="Areas\Kavis\Content\css\select2.min.css" />
     <Content Include="Areas\Kavis\Content\font-awesome.css" />
     <Content Include="Areas\Kavis\Content\font-awesome.min.css" />
+    <Content Include="database.sql" />
     <Content Include="favicon.ico" />
     <Content Include="Areas\Kavis\images\2953998.jpg" />
     <Content Include="Areas\Kavis\fonts\fontawesome-webfont.svg" />
