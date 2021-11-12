@@ -14,6 +14,8 @@ namespace KavisWeb.Migrations
             ContextKey = "KavisWeb.DataLayer.StrategyDBContext";
         }
 
+
+
         protected override void Seed(KavisWeb.DataLayer.StrategyDBContext context)
         {
             //  This method will be called after migrating to the latest version.

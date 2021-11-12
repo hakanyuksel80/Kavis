@@ -1,0 +1,263 @@
+﻿@model  KavisWeb.Entities.Views.ViewPerformansGirisModel
+
+@{
+    ViewBag.Title = "Birim";
+
+    Layout = "~/Areas/Kavis/Views/Shared/_LayoutBirim.cshtml";
+
+    List<SelectListItem> birimListe = ViewBag.BirimSelectList as List<SelectListItem>;
+
+}
+
+
+<style type="text/css">
+
+    .sp div {
+        border: solid 1px black;
+        margin-bottom: 10px;
+        padding: 10px;
+    }
+</style>
+
+<input type="hidden" id="seciliBirimId" name="seciliBirimId" value="@(Model.Birim.Id)" />
+
+<h4>PERFORMANS PROGRAMI GİRİŞ</h4>
+
+@if (!String.IsNullOrEmpty(ViewBag.Hata))
+{
+    <div class="alert alert-danger">
+        <p><span class="fa fa-error"></span>@ViewBag.Hata</p>
+    </div>
+}
+
+@if (ViewBag.BirimListesiGoster != null)
+{
+    <div class="row mt-4 mb-4">
+        <div class="col">
+            <div class="form-group">
+                <label for="id">Birim</label>
+                @Html.DropDownList("id", birimListe, "SEÇİNİZ", new { @class = "form-control" })
+            </div>
+        </div>
+    </div>
+}
+
+
+<ul class="nav nav-tabs">
+    <li class="nav-item"><a class="nav-link active" href="#eylemler" data-toggle="tab">Sorumlu Olduğunuz Eylemler</a></li>
+    <li class="nav-item"><a class="nav-link" href="#faaliyetler" data-toggle="tab">Planladığınız Faaliyetler</a></li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane active show fade in p-2" id="eylemler">
+
+        <div class="sp">
+            @if (Model != null)
+            {
+                foreach (var strateji in Model.Stratejiler)
+                {
+                    <div class="strateji">@strateji.Kod - @strateji.Baslik</div>
+                    <ul class="list-group">
+                        @foreach (var eylem in strateji.Eylemler)
+                        {
+                            <li class="list-group-item" data-id="@eylem.Id">
+                                <span>@eylem.SiraNo. @eylem.Baslik</span>
+                                @if (Model.Birim.Kurum.FaaliyetGirisAcik)
+                                {
+                                    <button class="btn btn-sm btn-success float-right btn-faaliyetEkle"><span class="fa fa-plus"></span> Faaliyet Ekle</button>
+
+                                }
+                            </li>
+                        }
+                    </ul>
+                    <br />
+                }
+            }
+
+        </div>
+    </div>
+    <div class="tab-pane fade in p-2" id="faaliyetler">
+        <br />
+        <table class="table table-sm table-bordered table-striped" id="tableFaliyetler">
+            <thead>
+                <tr>
+                    <th>Eylem Adı</th>
+                    <th>Faaliyet Adı</th>
+                    @if (!Model.Birim.Kurum.FaaliyetGirisAcik)
+                    {
+                        <th>Başlama ve Bitiş Tarihi</th>
+                        <th>Faaliyet Kapsamında Gerçekleştirilenler</th>
+                        <th>Çıktı ve Sonuç</th>
+                        <th>Durum</th>
+                    }
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null)
+                {
+                    foreach (var item in Model.Faaliyetler)
+                    {
+                        <tr>
+                            <td>@item.EylemAdi</td>
+                            <td>@item.FaaliyetAdi</td>
+                            @if (!Model.Birim.Kurum.FaaliyetGirisAcik)
+                            {
+                                <td>@item.Tarihler</td>
+                                <td>@item.Gerceklesme</td>
+                                <td>@item.Sonuc</td>
+                                <td>@item.Durum</td>
+                            }
+                            <td>
+                                <div style="width:200px">
+                                    @if (Model.Birim.Kurum.FaaliyetGirisAcik)
+                                    {
+                                        <button class="btn btn-sm btn-success btn-faaliyetDuzenle" data-id="@item.Id">Düzenle</button>
+                                        <button class="btn btn-sm btn-success btn-faaliyetSil" data-id="@item.Id">Sil</button>
+                                    }
+                                    @if (Model.Birim.Kurum.FaaliyetDurumGirisAcik)
+                                    {
+                                        <button class="btn btn-sm btn-success btn-faaliyetDurum" data-id="@item.Id">Durum Gir</button>
+                                    }
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+
+    </div>
+
+</div>
+<br />
+
+
+
+
+@Html.Partial("_FaaliyetDuzenPartial")
+
+@Html.Partial("_FaaliyetDurumDuzenPartial")
+
+@section scripts {
+
+    <script src="~/Areas/Kavis/js/faaliyet.js"></script>
+    <script type="text/javascript">
+
+        var states = [@(Model.Birim.Kurum.FaaliyetGirisAcik?"true":"false"),@(Model.Birim.Kurum.FaaliyetDurumGirisAcik ? "true" : "false")];
+
+        var aktifYil = @(ViewBag.AktifYil??0);
+
+        class Faaliyetler {
+
+            //ekle(eylem, faaliyet) {
+            //    let dugmelerHtml = this.tabloSatirDugmeSablon(true, true, true);
+            //    let st = $(this.tabloSatirSablon(eylem, faaliyet, dugmelerHtml));
+            //    $('#tableFaliyetler tbody').append(st);
+            //    showTab("faaliyetler");
+            //}
+
+            //guncelle(row, faaliyet) {
+            //    let satir = $('#faaliyetEkle')[0].row;
+            //    $($(row).children()[1]).text(faaliyet);
+            //    console.log(faaliyet);
+            //    this.SaveFaaliyet(faaliyet);
+            //}
+
+            //sil(button) {
+            //    let satir = $(button).parents("tr");
+            //    console.log(satir);
+            //    satir.hide();
+            //}
+
+            tabloSatirSablon(faaliyet, dugmelerHtml = "", durum) {
+                let satir = `<tr><td>${faaliyet.EylemAdi}</td><td>${faaliyet.FaaliyetAdi}</td>`;
+                if (durum)
+                    satir += `<td>${faaliyet.Tarihler}</td><td>${faaliyet.Gerceklesme??""}</td><td>${faaliyet.Sonuc??""}</td><td>${faaliyet.Durum??""}</td>`;
+                    satir += `<td>${dugmelerHtml}</td></tr>`;
+                return satir;
+            }
+
+
+
+            tabloSatirDugmeSablon(duzenle, sil, durumGir, id) {
+
+                let a = "";
+                a += duzenle == true ? `<button class="btn btn-sm btn-success btn-faaliyetDuzenle" data-id="${id}">Düzenle</button> | ` : '';
+                a += sil == true ? `<button class="btn btn-sm btn-success btn-faaliyetSil" data-id="${id}">Sil</button> | ` : '';
+                a += durumGir == true ? `<button class="btn btn-sm btn-success btn-faaliyetDurum" data-id="${id}">Durum Gir</button>` : '';
+                return a;
+
+            }
+
+            Load() {
+                let id = $('#seciliBirimId').val();
+                api_get(base_url("api/BirimFaaliyetler/" + id), function (d) {
+                    LoadList(d.Stratejiler);
+                    LoadTable(d.Faaliyetler);
+                });
+            }
+
+            LoadFaaliyetler() {
+                let THIS = this;
+                let id = $('#seciliBirimId').val();
+                api_get(base_url("api/BirimFaaliyetler/" + id), function (d) {                    
+                    THIS.LoadFaaliyetTable(d.Faaliyetler);
+                });
+            }
+            
+
+            Delete(id) {
+                let THIS = this;
+                api_delete(base_url("api/Faaliyet/" + id), function (d) {
+                    if (d.Success) {
+                        successMessage("Silindi");
+                        THIS.LoadFaaliyetler();
+                    }
+                });
+            }
+
+            LoadFaaliyetTable(faaliyetler) {
+                $('#tableFaliyetler tbody').empty();
+                for (var i = 0; i < faaliyetler.length; i++) {
+                    const item = faaliyetler[i];
+                    console.log(item);
+                    let dugmelerHtml = this.tabloSatirDugmeSablon(states[0], states[0], states[1], item.Id);
+                    let st = $(this.tabloSatirSablon(item, dugmelerHtml, !states[0]));
+                    $('#tableFaliyetler tbody').append(st);
+                }
+
+            }
+        }
+
+
+       
+
+        
+
+        var faaliyet = new Faaliyetler();
+
+        function onFaaliyetEkleClickEvent() {
+            let eylemAdi = $(this).prev().text();
+            let eylemId = $(this).parent().data("id");
+            faaliyetForm.New(eylemId, eylemAdi);
+        }
+
+        $(document).ready(function () {
+
+            $('.btn-faaliyetEkle').on("click", onFaaliyetEkleClickEvent);
+            $(document).on("click", '.btn-faaliyetDuzenle', onFaaliyetDuzenleClickEvent);
+            $(document).on("click", '.btn-faaliyetSil', onFaaliyetSilClickEvent);
+            $(document).on("click", '.btn-faaliyetDurum', onFaaliyetDurumClickEvent);
+
+            $('#id').change(function () {
+                let birimId = $(this).val();
+                window.location = base_url("Kavis/KavisModul03/Faaliyetler/" + birimId);
+            });
+
+        });
+
+
+    </script>
+
+}
