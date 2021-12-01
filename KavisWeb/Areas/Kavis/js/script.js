@@ -3,7 +3,7 @@ var birimler;
 
 $(function () {
 
-    api_get(base_url("api/Birimler")).done(function (d) {
+    api_get(base_url("api/Birimler/get")).done(function (d) {
         birimler = d;
     });
 
@@ -51,18 +51,18 @@ function showTab(tab) {
 
 function base_url(l = "") {
 
-    return "/" + l;
+    return "/burbis/" + l;
 
 }
 
 
 var api_url = {
 
-    "stratejikPlan": "/api/StratejikPlan",
+    "stratejikPlan": "api/StratejikPlan",
     "eylemler": "api/Eylemler/",
-    "faaliyet": "/api/Faaliyet",
-    "faaliyetDurum": "/api/FaaliyetDurum",
-    "birimler": "/api/Birimler/",
-    "birimFaaliyetler" : "api/BirimFaaliyetler/",
+    "faaliyet": "api/Faaliyet",
+    "faaliyetDurum": "api/FaaliyetDurum",
+    "birimler": "api/Birimler/",
+    "birimFaaliyetler": "api/BirimFaaliyetler/",
 
 }

@@ -237,11 +237,11 @@ class HedefPlanItem extends PlanItem {
 
                                             <th>Hedef Etkisi</th>
                                             <th>Başlangıç</th>
-                                            <th>2019</th>
-                                            <th>2020</th>
-                                            <th>2021</th>
-                                            <th>2022</th>
-                                            <th>2023</th>
+                                            <th>1. Yıl</th>
+                                            <th>2. Yıl</th>
+                                            <th>3. Yıl</th>
+                                            <th>4. Yıl</th>
+                                            <th>5. Yıl</th>
                                             <th>İzleme<br />Sıklığı</th>
                                             <th>Rapor<br />Sıklığı</th>
                                             <th>Sorumlu Birim</th>

@@ -106,7 +106,7 @@
 
             Load(id) {
                 let THIS = this;
-                api_get(base_url("api/Birimler/" + id), function (d) {
+                api_get(base_url("api/Birimler/get/" + id), function (d) {
                     console.log(d);
                     THIS.PutValues(d);
                 });
@@ -117,7 +117,7 @@
 
                 console.log(data);
 
-                api_post(base_url("api/Birimler/"), data).done(function () {
+                api_post(base_url("api/Birimler/post"), data).done(function () {
                     location.reload();
                 });
 
@@ -126,7 +126,7 @@
 
             Delete(id) {
                 let THIS = this;
-                api_delete(base_url("api/Birimler/" + id), function (d) {
+                api_delete(base_url("api/Birimler/delete/" + id), function (d) {
                     location.reload();
                 });
             }

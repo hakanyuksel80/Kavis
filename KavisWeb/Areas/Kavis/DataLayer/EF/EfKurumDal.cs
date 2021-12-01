@@ -10,6 +10,6 @@ namespace KavisWeb.DataLayer.EF
 {
     public class EfKurumDal : EfEntityRepositoryBase<Kurum, StrategyDBContext>, IKurumDal
     {
-
+        
     }
 }

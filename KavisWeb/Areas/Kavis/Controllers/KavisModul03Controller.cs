@@ -10,7 +10,8 @@ using System.Web;
 using System.Web.Mvc;
 
 namespace KavisWeb.Areas.Kavis.Controllers
-{
+{    
+    [SessionState(System.Web.SessionState.SessionStateBehavior.Required)]
     public class KavisModul03Controller : KavisBaseController
     {
         StratejikPlanManager manager;
@@ -23,7 +24,7 @@ namespace KavisWeb.Areas.Kavis.Controllers
         // GET: KavisModul03
         public ActionResult Index()
         {
-            KavisUser kavisUser = KavisHelper.GetUser();
+            KavisUser kavisUser = kavisHelper.GetUser();
 
             KurumManager kurumManager = new KurumManager();
 
@@ -41,7 +42,7 @@ namespace KavisWeb.Areas.Kavis.Controllers
         // GET: Birim Faaliyet Listesi
         public ActionResult Faaliyetler(int id = 0)
         {
-            KavisUser kavisUser = KavisHelper.GetUser();
+            KavisUser kavisUser =kavisHelper.GetUser();
 
             if (kavisUser.Type == KavisUserType.Birim)
             {
@@ -69,7 +70,7 @@ namespace KavisWeb.Areas.Kavis.Controllers
             {
                 // Kurum aktif sp'sine göre birim seçerek girebilir
 
-                KavisHelper.BirimListesiYukle(this, kavisUser.KurumId);
+                kavisHelper.BirimListesiYukle(this, kavisUser.KurumId);
 
                 ViewBag.BirimListesiGoster = true;
 
@@ -91,7 +92,7 @@ namespace KavisWeb.Areas.Kavis.Controllers
 
         public ActionResult Gostergeler(int id = 0)
         {
-            KavisUser kavisUser = KavisHelper.GetUser();
+            KavisUser kavisUser = kavisHelper.GetUser();
 
             if (kavisUser.Type == KavisUserType.Birim)
             {
@@ -114,7 +115,7 @@ namespace KavisWeb.Areas.Kavis.Controllers
 
                 ViewBag.BirimListesiGoster = true;
 
-                KavisHelper.BirimListesiYukle(this, kavisUser.KurumId);
+                kavisHelper.BirimListesiYukle(this, kavisUser.KurumId);
 
                 if (id > 0)
                 {
@@ -197,7 +198,7 @@ namespace KavisWeb.Areas.Kavis.Controllers
 
                     ViewBag.AktifYil = birim.Kurum.AktifYil;
 
-                    KavisHelper.BirimListesiYukle(this, birim.Kurum.Id);
+                    kavisHelper.BirimListesiYukle(this, birim.Kurum.Id);
 
                     GostergeGirisManager girisManager = new GostergeGirisManager(new EfGostergeGirisDal());
 

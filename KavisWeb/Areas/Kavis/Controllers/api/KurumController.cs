@@ -7,9 +7,11 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Mvc;
 
 namespace KavisWeb.Controllers.api
 {
+    [SessionState(System.Web.SessionState.SessionStateBehavior.Required)]
     public class KurumController : ApiController
     {
         // GET: api/Kurum
@@ -17,9 +19,10 @@ namespace KavisWeb.Controllers.api
         {
             KurumManager manager = new KurumManager();
 
-            var liste = manager.GetListByUser(KavisHelper.GetUser());
+            //var liste = manager.GetListByUser(KavisHelper.GetUser());
+            var liste = manager.GetList();
 
-            return liste;
+            return liste ?? new List<Kurum>();
         }
 
         // GET: api/Kurum/5
@@ -83,8 +86,8 @@ namespace KavisWeb.Controllers.api
                     return new ErrorResult();
             }
 
-            return new ErrorResult("Bu yetkiye sahip değilsiniz");            
-          
+            return new ErrorResult("Bu yetkiye sahip değilsiniz");
+
         }
     }
 }

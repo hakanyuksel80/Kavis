@@ -178,19 +178,19 @@
 
             LoadList() {
                 let THIS = this;
-                api_get(base_url("api/Kurum"), function (d) {
+                api_get(base_url("api/Kurum/get"), function (d) {
                     THIS.LoadTable(d);
                 });
             }
 
             SaveKurum(d) {
-                api_post(base_url("api/Kurum"), d).done(function () {
+                api_post(base_url("api/Kurum/post"), d).done(function () {
                 });
             }
 
             DeleteKurum(id) {
                 let THIS = this;
-                return api_delete(base_url("api/Kurum/" + id), function (d) {
+                return api_delete(base_url("api/Kurum/delete" + id), function (d) {
                     if (d.Success) {
                         THIS.LoadList();
                     } else
@@ -228,14 +228,16 @@
                 //$(this.modalId + " #KurumAdi").text(kurum.Adi);
                 //$(this.modalId + " #KurumKodu").val(kurum.Kodu);
                 //$(this.modalId + " #KurumTuru").val(kurum.Turu);
-                this.Load(kurum);
-                this.LoadSPList(kurum);
-                this.Show();
+                let THIS = this;
+                this.LoadSPList(kurum).then( function() {
+                    THIS.Load(kurum);
+                    THIS.Show();
+                }); 
             }
 
             Load(id) {
                 let THIS = this;
-                api_get("/api/Kurum/" + id, function (d) {
+                api_get(base_url("api/Kurum/get/" + id), function (d) {
                     console.log(d);
                     THIS.PutValues(d);
                     $('#uyarilarTextArea').summernote("code", d.Mesaj);
@@ -245,7 +247,7 @@
             Save() {
                 let data = this.GetValues();
 
-                api_post("/api/Kurum/", data).done(function () {
+                api_post(base_url("api/Kurum/post"), data).done(function () {
                     kurumlar.LoadList();
                 });
 
@@ -254,7 +256,7 @@
 
             LoadSPList(id) {
                 let THIS = this;
-                api_get(base_url("KavisModul02/KurumStratejikPlanlar/" + id), function (d) {
+                return api_get(base_url("KavisModul02/KurumStratejikPlanlar/get/" + id), function (d) {
 
                     loadSelectList("#AktifPlanId", d, null, true, "Id", "Adi");
                 });

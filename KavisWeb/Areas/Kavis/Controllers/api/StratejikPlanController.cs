@@ -3,7 +3,6 @@ using Core.Utilities.Results;
 using KavisWeb.BusinessLayer;
 using KavisWeb.DataLayer;
 using KavisWeb.Entities.DbModels;
-using KavisWeb.Entities.DbModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,9 +10,12 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Results;
+using System.Web.Mvc;
+using System.Web.SessionState;
 
 namespace KavisWeb.Controllers.api
 {
+    [SessionState(SessionStateBehavior.Required)]
     public class StratejikPlanController : ApiController
     {
         StratejikPlanManager stratejikPlanManager = null;
@@ -25,8 +27,7 @@ namespace KavisWeb.Controllers.api
 
         // GET: api/StratejikPlan
         public List<KavisWeb.Entities.Views.StratejikPlanListView> Get()
-        {
-            
+        {            
             return stratejikPlanManager.GetViewListByUser(KavisHelper.GetUser());
         }
 

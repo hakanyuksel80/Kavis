@@ -57,6 +57,9 @@
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.3.6.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="PortableArea, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\PortableArea.1.0.0.0\lib\net40\PortableArea.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -140,6 +143,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Areas\Kavis\BusinessLayer\DalGenerate.cs" />
     <Compile Include="Areas\Kavis\Controllers\HomeController.cs" />
     <Compile Include="Areas\Kavis\DataLayer\DefaultTableConvention.cs" />
     <Compile Include="Areas\Kavis\KavisAreaRegistration.cs" />
@@ -152,7 +156,6 @@
     <Compile Include="Areas\Kavis\Controllers\api\BirimFaaliyetlerController.cs" />
     <Compile Include="Areas\Kavis\Controllers\api\BirimGostergelerController.cs" />
     <Compile Include="Areas\Kavis\Controllers\api\BirimlerController.cs" />
-    <Compile Include="Areas\Kavis\Controllers\api\DenemeController.cs" />
     <Compile Include="Areas\Kavis\Controllers\api\EylemlerController.cs" />
     <Compile Include="Areas\Kavis\Controllers\api\FaaliyetController.cs" />
     <Compile Include="Areas\Kavis\Controllers\api\FaaliyetDurumController.cs" />
@@ -268,6 +271,10 @@
     <Compile Include="Migrations\202111121100223_tableNamePrefix.cs" />
     <Compile Include="Migrations\202111121100223_tableNamePrefix.Designer.cs">
       <DependentUpon>202111121100223_tableNamePrefix.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202111151129489_TableNameBurbis.cs" />
+    <Compile Include="Migrations\202111151129489_TableNameBurbis.Designer.cs">
+      <DependentUpon>202111151129489_TableNameBurbis.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Areas\Kavis\Entities\Views\ViewPerformansGirisModel.cs" />
@@ -2045,6 +2052,7 @@
     <Content Include="Areas\Kavis\Content\css\select2.min.css" />
     <Content Include="Areas\Kavis\Content\font-awesome.css" />
     <Content Include="Areas\Kavis\Content\font-awesome.min.css" />
+    <Content Include="Areas\Kavis\kavis_database.sql" />
     <Content Include="database.sql" />
     <Content Include="favicon.ico" />
     <Content Include="Areas\Kavis\images\2953998.jpg" />
@@ -2484,6 +2492,7 @@
     <Content Include="Areas\Kavis\Views\KavisModul01\Kurumlar.cshtml" />
     <Content Include="Areas\Kavis\Views\KavisModul01\Index.cshtml" />
     <Content Include="Areas\Kavis\Views\KavisModul01\StratejikPlanlar.cshtml" />
+    <Content Include="Views\Auth\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Kavis\assets\file-uploader\server\node\public\files\" />
@@ -2569,6 +2578,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202111121100223_tableNamePrefix.resx">
       <DependentUpon>202111121100223_tableNamePrefix.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202111151129489_TableNameBurbis.resx">
+      <DependentUpon>202111151129489_TableNameBurbis.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

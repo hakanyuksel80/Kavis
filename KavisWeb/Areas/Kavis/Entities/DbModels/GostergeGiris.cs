@@ -7,7 +7,7 @@ using System.Web;
 
 namespace KavisWeb.Entities.DbModels
 {
-    [Table("Kavis_GostergeGirisleri")]
+    [Table("burbis_11_GostergeGirisleri")]
     public class GostergeGiris : IEntity
     {
         public int Id { get; set; }

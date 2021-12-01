@@ -8,9 +8,12 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Mvc;
+using System.Web.SessionState;
 
 namespace KavisWeb.Controllers.api
 {
+    [SessionState(SessionStateBehavior.Required)]
     public class FaaliyetDurumController : ApiController
     {
         FaaliyetManager manager = new FaaliyetManager(new EfFaaliyetDal());

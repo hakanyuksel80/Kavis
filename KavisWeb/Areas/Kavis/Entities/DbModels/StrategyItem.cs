@@ -34,7 +34,7 @@ namespace KavisWeb.Entities.DbModels
 
     }
 
-    [Table("Kavis_Plans")]
+    [Table("burbis_11_Plans")]
     public class StratejikPlan : IEntity
     {
         public int Id { get; set; }
@@ -52,7 +52,7 @@ namespace KavisWeb.Entities.DbModels
 
     }
 
-    [Table("Kavis_Amaclar")]
+    [Table("burbis_11_Amaclar")]
     public class Amac : StratejiTipi
     {
 
@@ -65,7 +65,7 @@ namespace KavisWeb.Entities.DbModels
         public virtual List<Hedef> Hedefler { get; set; }
     }
 
-    [Table("Kavis_Hedefler")]
+    [Table("burbis_11_Hedefler")]
     public class Hedef : StratejiTipi
     {
         [JsonIgnore]
@@ -78,7 +78,7 @@ namespace KavisWeb.Entities.DbModels
         public virtual List<Strateji> Stratejiler { get; set; }
     }
 
-    [Table("Kavis_Stratejiler")]
+    [Table("burbis_11_Stratejiler")]
     public class Strateji : StratejiTipi
     {
         [JsonIgnore]
@@ -87,7 +87,7 @@ namespace KavisWeb.Entities.DbModels
         public List<Eylem> Eylemler { get; set; }
     }
 
-    [Table("Kavis_Gostergeler")]
+    [Table("burbis_11_Gostergeler")]
     public class Gosterge : StratejiTipi
     {
         [JsonIgnore]
@@ -181,7 +181,7 @@ namespace KavisWeb.Entities.DbModels
 
     }
 
-    [Table("Kavis_Eylemler")]
+    [Table("burbis_11_Eylemler")]
     public class Eylem : StratejiTipi
     {
         public string Birim { get; set; }
@@ -195,7 +195,7 @@ namespace KavisWeb.Entities.DbModels
         public string KodVeBaslik { get { return this.Kod + " " + this.Baslik; } }
     }
 
-    [Table("Kavis_Faaliyetler")]
+    [Table("burbis_11_Faaliyetler")]
     public class Faaliyet : StratejiTipi
     {
 

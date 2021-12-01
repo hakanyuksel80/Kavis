@@ -8,7 +8,7 @@ using System.Web;
 
 namespace KavisWeb.Entities.DbModels
 {
-    [Table("Kavis_Birimler")]
+    [Table("burbis_11_Birimler")]
     public class Birim : IEntity
     {
         public int Id { get; set; }

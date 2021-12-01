@@ -11,6 +11,8 @@ using System.Web.Mvc;
 
 namespace KavisWeb.Areas.Kavis.Controllers
 {
+   
+    [SessionState(System.Web.SessionState.SessionStateBehavior.Required)]
     public class KavisModul02Controller : KavisBaseController
     {
         private StratejikPlanManager _stratejikPlanManager;
@@ -19,7 +21,6 @@ namespace KavisWeb.Areas.Kavis.Controllers
         {
             _stratejikPlanManager = new StratejikPlanManager();
         }
-
 
         // GET: KavisModul02
         public ActionResult Index()
@@ -30,12 +31,11 @@ namespace KavisWeb.Areas.Kavis.Controllers
         // GET: Kurum
         public ActionResult Kurumlar()
         {
-            KavisUser kavisUser = KavisHelper.GetUser();
+            KavisUser kavisUser = kavisHelper.GetUser();
 
             ViewBag.KavisUser = kavisUser;
 
             return View();
-
         }
 
         public JsonResult KurumStratejikPlanlar(int id)
@@ -49,10 +49,10 @@ namespace KavisWeb.Areas.Kavis.Controllers
             return Json(liste, JsonRequestBehavior.AllowGet);
 
         }
-
+                
         public ActionResult Birimler()
         {
-            KavisUser kavisUser = KavisHelper.GetUser();
+            KavisUser kavisUser = kavisHelper.GetUser();
 
             if (kavisUser.KurumId > 0)
             {
@@ -77,12 +77,10 @@ namespace KavisWeb.Areas.Kavis.Controllers
         }
 
 
-
-
         // GET: StratejikPlan
         public ActionResult StratejikPlanlar()
         {
-            KavisUser kavisUser = KavisHelper.GetUser();
+            KavisUser kavisUser = kavisHelper.GetUser();
 
             var list = _stratejikPlanManager.GetViewListByUser(kavisUser);
 
@@ -97,7 +95,7 @@ namespace KavisWeb.Areas.Kavis.Controllers
 
         public ActionResult StratejikPlanEdit(int id = 0)
         {
-            KavisUser kavisUser = KavisHelper.GetUser();
+            KavisUser kavisUser = kavisHelper.GetUser();
 
             ViewBag.KavisUser = kavisUser;
 
@@ -123,7 +121,7 @@ namespace KavisWeb.Areas.Kavis.Controllers
 
         public ActionResult PerformansProgrami(int id = 0, int yil = 0)
         {
-            KavisUser kavisUser = KavisHelper.GetUser();
+            KavisUser kavisUser = kavisHelper.GetUser();
 
             if (kavisUser.KurumId > 0)
             {
@@ -143,10 +141,10 @@ namespace KavisWeb.Areas.Kavis.Controllers
 
                 if (sp != null)
                 {
-                    KavisHelper.YilListesiYukle(this, sp);
+                    kavisHelper.YilListesiYukle(this, sp);
                 }
 
-                KavisHelper.BirimListesiYukle(this, KavisHelper.GetUser().KurumId);
+                kavisHelper.BirimListesiYukle(this, kavisHelper.GetUser().KurumId);
 
                 return View(faaliyetler);
             }
@@ -157,7 +155,7 @@ namespace KavisWeb.Areas.Kavis.Controllers
 
         public ActionResult FaaliyetRaporu(int id = 0, int yil = 0)
         {
-            var kavisUser = KavisHelper.GetUser();
+            var kavisUser = kavisHelper.GetUser();
 
             StratejikPlanManager manager = new StratejikPlanManager();
 
@@ -169,11 +167,11 @@ namespace KavisWeb.Areas.Kavis.Controllers
             {
                 List<FaaliyetListView> faaliyetler = null;
 
-                KavisHelper.BirimListesiYukle(this, kavisUser.KurumId);
+                kavisHelper.BirimListesiYukle(this, kavisUser.KurumId);
 
                 var sp = manager.GetAktifStratejikPlan(kavisUser.KurumId);
 
-                KavisHelper.YilListesiYukle(this, sp);
+                kavisHelper.YilListesiYukle(this, sp);
 
                 if (id > 0)
                     faaliyetler = manager.GetAllFaaliyetByBirim(id, yil == 0 ? kurum.AktifYil : yil);
@@ -191,7 +189,7 @@ namespace KavisWeb.Areas.Kavis.Controllers
 
         public ActionResult Gostergeler(int birimId = 0)
         {
-            var kavisUser = KavisHelper.GetUser();
+            var kavisUser = kavisHelper.GetUser();
 
             StratejikPlanManager manager = new StratejikPlanManager();
 
@@ -203,7 +201,7 @@ namespace KavisWeb.Areas.Kavis.Controllers
                 {
                     StratejikPlan stratejikPlan = manager.GetAktifStratejikPlan(kavisUser.KurumId);
 
-                    KavisHelper.BirimListesiYukle(this, kavisUser.KurumId);
+                    kavisHelper.BirimListesiYukle(this, kavisUser.KurumId);
 
                     if (stratejikPlan != null)
                     {

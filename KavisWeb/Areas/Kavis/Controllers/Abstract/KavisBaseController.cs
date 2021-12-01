@@ -9,9 +9,17 @@ namespace KavisWeb.Areas.Kavis.Controllers
 {
     public abstract class KavisBaseController : Controller
     {
+
+        protected IKavisHelper kavisHelper;
+
+        public KavisBaseController()
+        {
+            
+        }
+
         public PartialViewResult UserMenu()
         {
-            var kavisUser = KavisHelper.GetUser();
+            var kavisUser = kavisHelper.GetUser();
 
             return PartialView(kavisUser);
         }

@@ -1,4 +1,6 @@
-﻿using KavisWeb.DataLayer.Abstract;
+﻿
+using KavisWeb.DataLayer.Abstract;
+using KavisWeb.DataLayer.EF;
 using KavisWeb.Entities.DbModels;
 using System;
 using System.Collections.Generic;
@@ -14,6 +16,11 @@ namespace KavisWeb.BusinessLayer
         public BirimManager(IBirimDal birimDal)
         {
             this.birimDal = birimDal;
+        }
+
+        public BirimManager()
+        {
+            this.birimDal = new EfBirimDal();
         }
 
         public List<Birim> GetAll(int kurumId = 0)
@@ -39,6 +46,11 @@ namespace KavisWeb.BusinessLayer
                 return birimDal.Delete(birim);
 
             return false;
+        }
+
+        internal Birim GetByBurbisId(int bolumId)
+        {
+            return birimDal.Get(x => x.BurbisId == bolumId);
         }
 
         public bool Update(Birim model)

@@ -9,7 +9,7 @@ using System.Web;
 
 namespace KavisWeb.BusinessLayer
 {
-    public class KurumManager 
+    public class KurumManager
     {
         IKurumDal _dal;
 
@@ -24,22 +24,32 @@ namespace KavisWeb.BusinessLayer
 
         public List<Kurum> GetListByUser(KavisUser kavisUser)
         {
-            if (kavisUser.Type == KavisUserType.Admin)
+            if (kavisUser != null)
             {
-                return GetList();
-            }
-            else if (kavisUser.Type == KavisUserType.Kurum)
-            {
-                return _dal.GetAll(x=>x.Id == kavisUser.KurumId);
-            }
 
-            return new List<Kurum>();
+                if (kavisUser.Type == KavisUserType.Admin)
+                {
+                    return GetList();
+                }
+                else if (kavisUser.Type == KavisUserType.Kurum)
+                {
+                    return _dal.GetAll(x => x.Id == kavisUser.KurumId);
+                }
+
+                return new List<Kurum>();
+            }
+            return null;
         }
 
         public Kurum Get(int id)
         {
             return _dal.Get(x => x.Id == id);
         }
+
+        internal Kurum GetByKurumKodu(int kurumKodu)
+        {
+            return _dal.Get(x => x.KurumKodu == kurumKodu);
+        }       
 
         public bool Update(Kurum model)
         {

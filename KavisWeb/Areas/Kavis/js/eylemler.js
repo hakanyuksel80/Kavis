@@ -126,7 +126,7 @@ class Eylemler extends PlanItem {
 
     Get(id) {
         let THIS = this;
-        return api_get(base_url("api/Eylemler/" + id)).done(function (d) {
+        return api_get(base_url("api/Eylemler/get/" + id)).done(function (d) {
             console.log(d);
             THIS.Build(d);
             THIS.Draw();
@@ -139,7 +139,7 @@ class Eylemler extends PlanItem {
         let data = this.Collect();
         console.log(data);
 
-        api_post(base_url("/api/Eylemler"), { Items: data }, function (d) {
+        api_post(base_url("/api/Eylemler/post"), { Items: data }, function (d) {
             successMessage("Kaydedildi.");
         });
     }

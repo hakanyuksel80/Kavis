@@ -14,7 +14,7 @@ namespace KavisWeb.Entities.DbModels
         Okul,
     }
 
-    [Table("Kavis_Kurumlar")]
+    [Table("burbis_11_Kurumlar")]
     public class Kurum : IEntity
     {
         public int Id { get; set; }

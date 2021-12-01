@@ -11,7 +11,7 @@ namespace KavisWeb.DataLayer
     public class StrategyDBContext : DbContext
     {
        
-        public StrategyDBContext()
+        public StrategyDBContext() : base("name=KullaniciBaglantisi")
         {
             //this.Configuration.ProxyCreationEnabled = false;
 
